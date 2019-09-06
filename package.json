@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www --ignore './public/'  --ignore './public/'",
-    "webpack:build": "./node_modules/.bin/webpack --mode production --config webpack.config.js"
+    "webpack:build": "./node_modules/.bin/webpack --mode production --config webpack.config.js",
+    "webpack:dev": "./node_modules/.bin/webpack --mode development --config webpack.config.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

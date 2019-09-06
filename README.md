@@ -8,9 +8,13 @@ Arrancar backend modo de desarrollo:
 
     $ npm run start:dev
 
-Arrancar webpack modo build:
+Arrancar webpack modo producción:
 
-    $ npm run webpack:build    
+    $ npm run webpack:build   
+
+Arrancar webpack modo desarrollo:
+
+    $ npm run webpack:dev
 
 Solucionar problema nodemon ENOSPC
 
@@ -24,3 +28,4 @@ Fuentes:
 + https://webpack.js.org/plugins/provide-plugin/
 + https://stackoverflow.com/questions/23305599/webpack-provideplugin-vs-externals
 + https://stackoverflow.com/questions/49652900/how-to-properly-split-common-dependencies-with-webpack4
++ https://webpack.js.org/configuration/mode/

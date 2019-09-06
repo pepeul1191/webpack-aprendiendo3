@@ -14,9 +14,14 @@ var plugins = [
   }),
 ];
 
-var output = {
+var output_development = {
   path: path.resolve(__dirname, 'public/dist'),
-  filename: '[name].bundle.js',
+  filename: '[name].js',
+};
+
+var output_production = {
+  path: path.resolve(__dirname, 'public/dist'),
+  filename: '[name].min.js',
 };
 
 var optimization = {
@@ -32,9 +37,21 @@ var optimization = {
   }
 }
 
-module.exports = {
+var config = {
   entry: entries,
   plugins: plugins,
-  output: output,
   optimization: optimization,
+};
+
+module.exports = (env, argv) => {
+
+  if (argv.mode === 'development') {
+    config.output = output_development;
+  }
+
+  if (argv.mode === 'production') {
+    config.output = output_production;
+  }
+
+  return config;
 };
