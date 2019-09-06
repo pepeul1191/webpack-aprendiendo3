@@ -23,3 +23,4 @@ Fuentes:
 + https://github.com/pepeul1191/koa-access-admin
 + https://webpack.js.org/plugins/provide-plugin/
 + https://stackoverflow.com/questions/23305599/webpack-provideplugin-vs-externals
++ https://stackoverflow.com/questions/49652900/how-to-properly-split-common-dependencies-with-webpack4

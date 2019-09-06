@@ -1,8 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
-var entry = {
+var entries = {
   main: './resources/index.js',
+  vendors: ['backbone', 'jquery', ],
+  vendors_login: ['jquery', ],
 };
 
 var plugins = [
@@ -17,8 +19,23 @@ var output = {
   filename: '[name].bundle.js',
 };
 
+var optimization = {
+  splitChunks: {
+    cacheGroups: {       
+      vendor: {
+        test: /node_modules/,
+        name: 'vendors',
+        chunks: 'all', 
+        enforce: true
+      }
+    }
+  }
+}
+
 module.exports = {
-  entry: entry,
+  entry: entries,
   plugins: plugins,
   output: output,
+  optimization: optimization,
+  mode: 'development',
 };
