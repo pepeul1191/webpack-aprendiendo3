@@ -1,17 +1,24 @@
 const path = require('path');
 const webpack = require('webpack');
 
+var entry = {
+  main: './resources/index.js',
+};
+
+var plugins = [
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    'Backbone': 'backbone',
+  }),
+];
+
+var output = {
+  path: path.resolve(__dirname, 'public/dist'),
+  filename: '[name].bundle.js',
+};
+
 module.exports = {
-  entry: './resources/index.js',
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      'Backbone': 'backbone',
-    })
-],
-  output: {
-    path: path.resolve(__dirname, 'public/dist'),
-    filename: 'bundle.js',
-    chunkFilename: '[name]-[chunkhash].js'
-  }
+  entry: entry,
+  plugins: plugins,
+  output: output,
 };
