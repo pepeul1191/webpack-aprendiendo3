@@ -21,3 +21,5 @@ Solucionar problema nodemon ENOSPC
 Fuentes:
 
 + https://github.com/pepeul1191/koa-access-admin
++ https://webpack.js.org/plugins/provide-plugin/
++ https://stackoverflow.com/questions/23305599/webpack-provideplugin-vs-externals
