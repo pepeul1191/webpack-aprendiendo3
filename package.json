@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www --ignore './public/'"
+    "start:dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www --ignore './public/'  --ignore './public/'"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
