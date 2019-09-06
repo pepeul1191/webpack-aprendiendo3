@@ -37,5 +37,4 @@ module.exports = {
   plugins: plugins,
   output: output,
   optimization: optimization,
-  mode: 'development',
 };
