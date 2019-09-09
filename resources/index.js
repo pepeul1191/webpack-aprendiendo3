@@ -1,3 +1,5 @@
+
+
 var District = Backbone.Model.extend({
   initialize : function() {
     console.log(' nuevo distrito');

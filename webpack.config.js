@@ -24,6 +24,10 @@ var output_production = {
   filename: '[name].min.js',
 };
 
+var rules = [
+
+];
+
 var optimization = {
   splitChunks: {
     cacheGroups: {       
@@ -44,14 +48,13 @@ var config = {
 };
 
 module.exports = (env, argv) => {
-
   if (argv.mode === 'development') {
     config.output = output_development;
+    config.watch = true;
   }
-
   if (argv.mode === 'production') {
     config.output = output_production;
+    config.watch = false;
   }
-
   return config;
 };
