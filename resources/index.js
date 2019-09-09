@@ -1,4 +1,6 @@
 import '../public/css/styles.css';
+import 'materialize-css/dist/css/materialize.min.css'
+import 'materialize-css/dist/js/materialize.min.js'
 
 var District = Backbone.Model.extend({
   initialize : function() {
