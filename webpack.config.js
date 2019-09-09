@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var entries = {
   main: './resources/index.js',
@@ -11,6 +12,12 @@ var plugins = [
   new webpack.ProvidePlugin({
     $: 'jquery',
     'Backbone': 'backbone',
+  }),
+  new MiniCssExtractPlugin({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: '[name].css',
+    chunkFilename: '[id].css'
   }),
 ];
 
@@ -25,7 +32,20 @@ var output_production = {
 };
 
 var rules = [
-
+  {
+    test: /\.css$/,
+    use: [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          // you can specify a publicPath here
+          // by default it use publicPath in webpackOptions.output
+          publicPath: '../'
+        }
+      },
+      'css-loader'
+    ]
+  },
 ];
 
 var optimization = {
@@ -39,12 +59,15 @@ var optimization = {
       }
     }
   }
-}
+};
 
 var config = {
   entry: entries,
   plugins: plugins,
   optimization: optimization,
+  module: {
+    rules: rules,
+  },
 };
 
 module.exports = (env, argv) => {

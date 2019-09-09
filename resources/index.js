@@ -1,4 +1,4 @@
-
+import '../public/css/styles.css';
 
 var District = Backbone.Model.extend({
   initialize : function() {
