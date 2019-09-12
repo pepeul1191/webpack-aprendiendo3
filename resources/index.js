@@ -11,11 +11,34 @@ var District = Backbone.Model.extend({
 
 var x = new District();
 
-console.log(x);
+// console.log(x);
 /**/
 
 alert("ZS");
 
-$(document).ready(function() {
-  alert("document ready occurred!");
+var router = Backbone.Router.extend({
+  initialize: function() {
+  },
+  routes:{
+    '': 'index',
+    'user/create': 'userCreate',
+    'user/edit/:id' : 'userEdit',
+    // others
+    '*actions' : 'default',
+  },
+  index: function(){
+    alert('index');    
+  },
+  userCreate: function(){
+    alert('userCreate');
+  },
+  userEdit: function(id){
+    alert('userEdit ' + id);
+  },
+});
+
+$(document).ready(function(){
+  // alert("document ready occurred!");
+  new router();
+  Backbone.history.start();
 });
