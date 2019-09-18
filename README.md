@@ -20,6 +20,10 @@ Solucionar problema nodemon ENOSPC
 
     $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+Backbone router no hash:
+
+    https://www.youtube.com/watch?v=cIq6Z_Vv4nY
+
 ---
 
 Fuentes:
@@ -31,3 +35,4 @@ Fuentes:
 + https://stackoverflow.com/questions/49652900/how-to-properly-split-common-dependencies-with-webpack4
 + https://webpack.js.org/configuration/mode/
 + https://chriscourses.com/blog/loading-fonts-webpack
++ https://www.youtube.com/watch?v=cIq6Z_Vv4nY

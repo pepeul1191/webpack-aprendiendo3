@@ -37,8 +37,17 @@ var router = Backbone.Router.extend({
   },
 });
 
+var router = new router();
+
 $(document).ready(function(){
   // alert("document ready occurred!");
-  new router();
-  Backbone.history.start();
+  Backbone.history.start({
+    pushState: true, 
+    root: '/',
+  });
+});
+
+$('body').on("click", 'a[href^="/"]', function(evt) {
+  evt.preventDefault();
+  router.navigate($(this).attr('href'), {trigger: true});
 });
