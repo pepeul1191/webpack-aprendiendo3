@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www --ignore './public/'  --ignore './public/'",
     "webpack:build": "./node_modules/.bin/webpack --mode production --config webpack.config.js",
-    "webpack:dev": "./node_modules/.bin/webpack --mode development --config webpack.config.js"
+    "webpack:dev": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js --watch"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -27,6 +27,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.18.9",
     "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8"
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.1"
   }
 }

@@ -9,7 +9,7 @@ var HomeRouter = Backbone.Router.extend({
         '*path' : 'default',
     },
     index: function(){
-        alert('index');    
+        alert('index???!!!');    
     },
     userCreate: function(){
         alert('userCreate');

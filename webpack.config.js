@@ -30,12 +30,12 @@ var plugins = [
   ]),
 ];
 
-var output_development = {
+var outputDevelopment = {
   path: path.resolve(__dirname, 'public/dist'),
   filename: '[name].js',
 };
 
-var output_production = {
+var outputProduction = {
   path: path.resolve(__dirname, 'public/dist'),
   filename: '[name].min.js',
 };
@@ -70,6 +70,27 @@ var optimization = {
   }
 };
 
+var devServer = {
+  host: '0.0.0.0',
+  port: 8080,
+  contentBase: [
+    path.join(__dirname, 'public'),
+  ],
+  publicPath: path.join(__dirname, 'resources'),
+  writeToDisk: true,
+  compress: true,
+  watchContentBase: true,
+  hot: true,
+  inline:true,
+  allowedHosts: [
+    'host.com',
+    '*',
+  ],
+  headers: {
+    'Server': 'Ubuntu',
+  },
+};
+
 var config = {
   entry: entries,
   plugins: plugins,
@@ -77,16 +98,18 @@ var config = {
   module: {
     rules: rules,
   },
+  devServer: devServer,
 };
 
 module.exports = (env, argv) => {
   if (argv.mode === 'development') {
-    config.output = output_development;
+    config.output = outputDevelopment;
     config.watch = true;
   }
   if (argv.mode === 'production') {
-    config.output = output_production;
+    config.output = outputProduction;
     config.watch = false;
+    config.devServer = {};
   }
   return config;
 };
