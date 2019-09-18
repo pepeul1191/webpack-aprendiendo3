@@ -36,3 +36,5 @@ Fuentes:
 + https://webpack.js.org/configuration/mode/
 + https://chriscourses.com/blog/loading-fonts-webpack
 + https://www.youtube.com/watch?v=cIq6Z_Vv4nY
++ https://ejs.co/
++ https://github.com/webpack-contrib/copy-webpack-plugin

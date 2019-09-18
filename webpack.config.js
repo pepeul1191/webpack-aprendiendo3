@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 var entries = {
   main: ['./resources/entries/index.js'],
@@ -10,6 +11,7 @@ var entries = {
 
 var plugins = [
   new webpack.ProvidePlugin({
+    // import globally this libs
     $: 'jquery',
     'Backbone': 'backbone',
   }),
@@ -19,6 +21,13 @@ var plugins = [
     filename: '[name].css',
     chunkFilename: '[id].css'
   }),
+  new CopyPlugin([
+    // move ejs files to public
+    { 
+      from: 'resources/templates', 
+      to: '../templates' 
+    },
+  ]),
 ];
 
 var output_development = {
