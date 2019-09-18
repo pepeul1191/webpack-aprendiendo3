@@ -6,7 +6,7 @@ var HomeRouter = Backbone.Router.extend({
         'user/create': 'userCreate',
         'user/edit/:id' : 'userEdit',
         // others
-        '*actions' : 'default',
+        '*path' : 'default',
     },
     index: function(){
         alert('index');    
@@ -16,6 +16,11 @@ var HomeRouter = Backbone.Router.extend({
     },
     userEdit: function(id){
         alert('userEdit ' + id);
+    },
+    default: function(path){
+        alert(path);
+        var newURL = '/' + path;
+        window.location = newURL;
     },
 });
 
