@@ -1,4 +1,4 @@
-return Backbone.Router.extend({
+var HomeRouter = Backbone.Router.extend({
     initialize: function() {
     },
     routes:{
@@ -18,3 +18,5 @@ return Backbone.Router.extend({
         alert('userEdit ' + id);
     },
 });
+
+export default HomeRouter;
