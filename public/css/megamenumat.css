@@ -58,13 +58,18 @@ nav li:hover .menu-sub {
   width: 50%;
 }
 
+/* Menu inferior */
+
 menu{
   position: fixed;
   bottom: 0;
   width: 100%;
   height: fit-content;
+  margin-bottom: 0px;
 }
 
 .menu-top{
-  top: 64px;
+  top: 49px;
 }
+
+/*-- slider--*/

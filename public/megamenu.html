@@ -14,12 +14,7 @@
       position: fixed;
       background: rgba(0, 0, 0, 0.2);
       padding: 0px 20px;
-    }
-    section{
-      background-image: url('../img/priroda-voda-reka-more-most.jpg');
-      background-size: cover;
-      width: 100%;
-      height: 700px;
+      z-index: 10;
     }
     .box{
       margin-top: 20px;
@@ -90,7 +85,13 @@
   </li>
 </ul>
 <!-- end sidebar -->
-<section></section>
+<!-- slider -->
+<div class="carousel carousel-slider ">
+    <a class="carousel-item"><img src="/img/foto01.jpg"></a>
+    <a class="carousel-item"><img src="/img/foto02.jpg"></a>
+    <a class="carousel-item"><img src="/img/foto03.jpg"></a>
+</div>
+<!-- /slider -->
 <div class="box container green">
 </div>
 <menu id="menu" class="blue">
@@ -116,7 +117,7 @@
   $(document).ready(function(){
     $(window).scroll(function(event){
       var sc = $(window).scrollTop();
-      console.log(sc);
+      // console.log(sc);
       if($(window).scrollTop() >= 700){
         $('nav').addClass('red', 1000);
         $('menu').addClass('menu-top', 1000);
@@ -126,6 +127,10 @@
       }
     });
     $('.sidenav').sidenav();
+    $('.carousel.carousel-slider').carousel({
+fullWidth: true,
+indicators: true
+});
   });
 </script>
 </body>
