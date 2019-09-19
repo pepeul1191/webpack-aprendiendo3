@@ -5,15 +5,16 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 var entries = {
   main: ['./resources/entries/index.js'],
-  vendors: ['backbone', 'jquery', ],
+  vendors: ['backbone', 'jquery', 'underscore', ],
   vendors_login: ['jquery', ],
 };
 
 var plugins = [
   new webpack.ProvidePlugin({
     // import globally this libs
-    $: 'jquery',
+    '$': 'jquery',
     'Backbone': 'backbone',
+    '_': 'underscore',
   }),
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output

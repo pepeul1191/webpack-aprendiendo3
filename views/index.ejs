@@ -4,6 +4,9 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/dist/vendors.css' />
     <link rel='stylesheet' href='/dist/main.css' />
+    <script>
+      const STATIC_URL = '/';
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
@@ -12,6 +15,7 @@
     <a href="/user/create">Crear</a>
     <a href="/user/edit/2">Editar</a>
     <a href="/login">Login</a>
+    <div id="workspace"></div>
     <script src="/dist/vendors.js"></script>
     <script src="/dist/main.js"></script>
   </body>
