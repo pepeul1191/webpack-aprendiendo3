@@ -54,4 +54,4 @@ Fuentes:
 + https://stackoverflow.com/questions/42202824/how-to-get-url-parameters-in-backbone
 + https://www.w3docs.com/learn-html/html-menu-tag.html
 + https://evilnapsis.com/2018/06/22/crear-un-carousel-o-slider-de-imagenes-con-materialize-css/
-
++ https://stackoverflow.com/questions/10422105/add-text-above-html5-video

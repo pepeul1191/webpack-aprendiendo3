@@ -86,12 +86,33 @@
 </ul>
 <!-- end sidebar -->
 <!-- slider -->
+<!--
 <div class="carousel carousel-slider ">
-    <a class="carousel-item"><img src="/img/foto01.jpg"></a>
-    <a class="carousel-item"><img src="/img/foto02.jpg"></a>
-    <a class="carousel-item"><img src="/img/foto03.jpg"></a>
+  <a class="carousel-item"><img src="/img/foto01.jpg"></a>
+  <a class="carousel-item"><img src="/img/foto02.jpg"></a>
+  <a class="carousel-item"><img src="/img/foto03.jpg"></a>
 </div>
+-->
 <!-- /slider -->
+<!-- video -->
+<div class="video-container">
+  <video loop autoplay muted id="homeVideo">
+    <source src=http://techslides.com/demos/sample-videos/small.webm type=video/webm> 
+    <source src=http://techslides.com/demos/sample-videos/small.ogv type=video/ogg> 
+    <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+    <source src=http://techslides.com/demos/sample-videos/small.3gp type=video/3gp>
+  </video>
+  <div class="overlay">
+    <p>Content above your video</p>
+    <form>
+        <p>Content Below Your Video</p>
+        <label for="input">Form Input Label</label>
+        <input id="input" name="input" value="" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</div>
+<!-- end -->
 <div class="box container green">
 </div>
 <menu id="menu" class="blue">
@@ -118,7 +139,7 @@
     $(window).scroll(function(event){
       var sc = $(window).scrollTop();
       // console.log(sc);
-      if($(window).scrollTop() >= 700){
+      if($(window).scrollTop() >= 650){
         $('nav').addClass('red', 1000);
         $('menu').addClass('menu-top', 1000);
       }else{
@@ -128,9 +149,9 @@
     });
     $('.sidenav').sidenav();
     $('.carousel.carousel-slider').carousel({
-fullWidth: true,
-indicators: true
-});
+      fullWidth: true,
+      indicators: true
+    });
   });
 </script>
 </body>
