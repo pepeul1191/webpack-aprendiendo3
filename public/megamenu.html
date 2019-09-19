@@ -91,7 +91,24 @@
 </ul>
 <!-- end sidebar -->
 <section></section>
-<div class="box container green"></div>
+<div class="box container green">
+</div>
+<menu id="menu" class="blue">
+  <div class="row">
+    <div class="col s1 m1">1</div>
+    <div class="col s1 m1">2</div>
+    <div class="col s1 m1">3</div>
+    <div class="col s1 m1">4</div>
+    <div class="col s1 m1">5</div>
+    <div class="col s1 m1">6</div>
+    <div class="col s1 m1">7</div>
+    <div class="col s1 m1">8</div>
+    <div class="col s1 m1">9</div>
+    <div class="col s1 m1">10</div>
+    <div class="col s1 m1">11</div>
+    <div class="col s1 m1">12</div>
+  </div>
+</menu>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -102,8 +119,10 @@
       console.log(sc);
       if($(window).scrollTop() >= 700){
         $('nav').addClass('red', 1000);
+        $('menu').addClass('menu-top', 1000);
       }else{
         $('nav').removeClass('red', 1000);
+        $('menu').removeClass('menu-top', 1000);
       }
     });
     $('.sidenav').sidenav();

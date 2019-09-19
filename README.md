@@ -24,6 +24,18 @@ Backbone router no hash:
 
     https://www.youtube.com/watch?v=cIq6Z_Vv4nY
 
+Megamenu:
+
+    https://www.youtube.com/watch?v=mPLIIUcjpCA
+
+Menu transparente Materialize
+
+    https://www.youtube.com/watch?v=aqx6WLdIpJk&t=18
+
+Sidemenu:
+
+    https://www.youtube.com/watch?v=AhioxFWkYRg
+
 ---
 
 Fuentes:
@@ -40,4 +52,5 @@ Fuentes:
 + https://github.com/webpack-contrib/copy-webpack-plugin
 + https://stackoverflow.com/questions/11671400/navigate-route-with-querystring
 + https://stackoverflow.com/questions/42202824/how-to-get-url-parameters-in-backbone
++ https://www.w3docs.com/learn-html/html-menu-tag.html
 

@@ -57,3 +57,14 @@ nav li:hover .menu-sub {
 .menu-col-2 {
   width: 50%;
 }
+
+menu{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: fit-content;
+}
+
+.menu-top{
+  top: 64px;
+}
