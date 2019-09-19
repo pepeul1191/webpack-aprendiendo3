@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>title</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <link rel="stylesheet" href="css/megamenumat.css" type="text/css">
+  <style>
+    nav{
+      position: fixed;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0px 20px;
+    }
+    section{
+      background-image: url('../img/priroda-voda-reka-more-most.jpg');
+      background-size: cover;
+      width: 100%;
+      height: 700px;
+    }
+    .box{
+      margin-top: 20px;
+      height: 1000px;
+    }
+  </style>
+</head>
+<body>
+<!-- navbar -->
+<nav>
+  <div class="">
+    <a href="#" class="brand-logo">Web Zone</a>
+    <a href="#" class="sidenav-trigger" data-target="mobile-nav">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li>
+        <a href="#">Home</a>
+        <div class="menu-sub">
+          <div class="menu-col-1">
+            <h3 class="menu-category">Category</h3>
+            <ul>
+              <li><a href="">Link 01</a></li>
+              <li><a href="">Link 02</a></li>
+              <li><a href="">Link 03</a></li>
+              <li><a href="">Link 04</a></li>
+              <li><a href="">Link 05</a></li>
+            </ul>
+            <h3 class="menu-category">Category</h3>
+            <ul>
+            <li><a href="">Link 01</a></li>
+            <li><a href="">Link 02</a></li>
+            </ul>
+            <h3 class="menu-category">Category</h3>
+            <ul>
+              <li><a href="">Link 01</a></li>
+              <li><a href="">Link 02</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="#">Blog</a>
+      </li>
+      <li>
+        <a href="#">Tutorial</a>
+      </li>
+      <li>
+        <a href="#">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- end navbar -->
+<!-- sidebar -->
+<ul class="sidenav" id="mobile-nav">
+  <li>
+    <a href="#">Blog</a>
+  </li>
+  <li>
+    <a href="#">Blog</a>
+  </li>
+  <li>
+    <a href="#">Tutorial</a>
+  </li>
+  <li>
+    <a href="#">Contact</a>
+  </li>
+</ul>
+<!-- end sidebar -->
+<section></section>
+<div class="box container green"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $(window).scroll(function(event){
+      var sc = $(window).scrollTop();
+      console.log(sc);
+      if($(window).scrollTop() >= 700){
+        $('nav').addClass('red', 1000);
+      }else{
+        $('nav').removeClass('red', 1000);
+      }
+    });
+    $('.sidenav').sidenav();
+  });
+</script>
+</body>
+</html>
