@@ -1,15 +1,17 @@
-var UserCreateView = Backbone.View.extend({
+var UserEditView = Backbone.View.extend({
   el: '#workspace',
   system_id: null,
 	initialize: function(){
 	},
 	events: {
   },
-  render: function(){
-		var data = { };
+  render: function(id){
+		var data = { 
+      id: id,
+    };
 		var templateCompiled = null;
 		$.ajax({
-		  url: STATIC_URL + 'templates/user/create.html',
+		  url: STATIC_URL + 'templates/user/edit.html',
 		  type: 'GET',
 		  async: false,
 		  success: function(resource) {
@@ -25,4 +27,4 @@ var UserCreateView = Backbone.View.extend({
 	},
 });
 
-export default UserCreateView;
+export default UserEditView;

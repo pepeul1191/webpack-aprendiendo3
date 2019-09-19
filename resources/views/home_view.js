@@ -1,4 +1,4 @@
-var UserCreateView = Backbone.View.extend({
+var HomeView = Backbone.View.extend({
   el: '#workspace',
   system_id: null,
 	initialize: function(){
@@ -6,10 +6,16 @@ var UserCreateView = Backbone.View.extend({
 	events: {
   },
   render: function(){
-		var data = { };
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+		var data = { 
+      message: dateTime,
+    };
 		var templateCompiled = null;
 		$.ajax({
-		  url: STATIC_URL + 'templates/user/create.html',
+		  url: STATIC_URL + 'templates/home/index.html',
 		  type: 'GET',
 		  async: false,
 		  success: function(resource) {
@@ -25,4 +31,4 @@ var UserCreateView = Backbone.View.extend({
 	},
 });
 
-export default UserCreateView;
+export default HomeView;
