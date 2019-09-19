@@ -11,7 +11,7 @@ var HomeRouter = Backbone.Router.extend({
   routes:{
     '': 'index',
     'user/create': 'userCreate',
-    'user/edit/:id' : 'userEdit',
+    'user/edit/:id?foo=:foo' : 'userEdit',
     // others
     '*path' : 'default',
   },
@@ -27,11 +27,12 @@ var HomeRouter = Backbone.Router.extend({
     }
     this.userCreateView.render();  
   },
-  userEdit: function(id){
+  userEdit: function(id, foo){
+      console.log(foo);
     if(this.userEditView == null){
       this.userEditView = new UserEditView();
     }
-    this.userEditView.render(id);  
+    this.userEditView.render(id, foo);  
   },
   default: function(path){
     // console.log(path);

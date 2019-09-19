@@ -6,11 +6,6 @@ import District from '../models/district';
 
 var x = new District();
 
-// console.log(x);
-/**/
-
-alert("ZS");
-
 var router = new HomeRouter();
 
 $(document).ready(function(){

@@ -5,9 +5,10 @@ var UserEditView = Backbone.View.extend({
 	},
 	events: {
   },
-  render: function(id){
+  render: function(id, foo){
 		var data = { 
       id: id,
+      foo: foo,
     };
 		var templateCompiled = null;
 		$.ajax({

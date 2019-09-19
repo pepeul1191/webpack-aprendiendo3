@@ -38,3 +38,4 @@ Fuentes:
 + https://www.youtube.com/watch?v=cIq6Z_Vv4nY
 + https://ejs.co/
 + https://github.com/webpack-contrib/copy-webpack-plugin
++ https://stackoverflow.com/questions/11671400/navigate-route-with-querystring
