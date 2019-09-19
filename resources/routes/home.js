@@ -1,3 +1,4 @@
+import parseQueryString from '../helpers/parse_query_string';
 import HomeView from '../views/home_view';
 import UserCreateView from '../views/user_create_view';
 import UserEditView from '../views/user_edit_view';
@@ -11,7 +12,7 @@ var HomeRouter = Backbone.Router.extend({
   routes:{
     '': 'index',
     'user/create': 'userCreate',
-    'user/edit/:id?foo=:foo' : 'userEdit',
+    'user/edit/:id?*queryString' : 'userEdit',
     // others
     '*path' : 'default',
   },
@@ -27,8 +28,12 @@ var HomeRouter = Backbone.Router.extend({
     }
     this.userCreateView.render();  
   },
-  userEdit: function(id, foo){
-      console.log(foo);
+  userEdit: function(id, queryString){
+    var params = parseQueryString(queryString);
+    var foo = '';
+    if(params.foo){
+        foo = params.foo;
+    }
     if(this.userEditView == null){
       this.userEditView = new UserEditView();
     }

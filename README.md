@@ -39,3 +39,5 @@ Fuentes:
 + https://ejs.co/
 + https://github.com/webpack-contrib/copy-webpack-plugin
 + https://stackoverflow.com/questions/11671400/navigate-route-with-querystring
++ https://stackoverflow.com/questions/42202824/how-to-get-url-parameters-in-backbone
+
