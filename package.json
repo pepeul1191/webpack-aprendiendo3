@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "start:dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www --ignore './public/'  --ignore './public/' --ignore './resources/'",
     "webpack:build": "./node_modules/.bin/webpack --mode production --config webpack.config.js",
-    "webpack:dev": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js --watch"
+    "webpack:dev": "./node_modules/.bin/webpack --mode development --config webpack.config.js --watch",
+    "webpack:server": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.js --watch"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

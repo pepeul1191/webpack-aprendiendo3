@@ -2,17 +2,21 @@ import parseQueryString from '../helpers/parse_query_string';
 import HomeView from '../views/home_view';
 import UserCreateView from '../views/user_create_view';
 import UserEditView from '../views/user_edit_view';
+import AutocompleteView from '../views/autocomplete_view';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
   userEditView: null,
   userCreateView: null,
+  autocompleteView: null,
   initialize: function() {
   },
   routes:{
     '': 'index',
     'user/create': 'userCreate',
     'user/edit/:id?*queryString' : 'userEdit',
+    // plugins
+    'autocomplete': 'autocomplete',
     // others
     '*path' : 'default',
   },
@@ -38,6 +42,13 @@ var HomeRouter = Backbone.Router.extend({
       this.userEditView = new UserEditView();
     }
     this.userEditView.render(id, foo);  
+  },
+  autocomplete: function(){
+    if(this.autocompleteView == null){
+      this.autocompleteView = new AutocompleteView();
+    }
+    this.autocompleteView.render();
+    this.autocompleteView.loadComponents();
   },
   default: function(path){
     // console.log(path);

@@ -2,10 +2,16 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/dist/vendors.css' />
+    <!-- <link rel='stylesheet' href='/dist/vendors.css' /> -->
+    <!-- Librerías de Terceros-->
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link rel='stylesheet' href='/dist/main.css' />
     <script>
       const STATIC_URL = '/';
+      const BASE_URL = 'http://localhost:3000/';
+      const CSRF_KEY = 'key'; 
+      const CSRF = 'alsdjflkadsjflkasdjflk';
     </script>
   </head>
   <body>
@@ -14,6 +20,7 @@
     <a href="/">Index</a>
     <a href="/user/create">Crear</a>
     <a href="/user/edit/2?foo=demo">Editar</a>
+    <a href="/autocomplete">Autocompletar</a>
     <a href="/login">Login</a>
     <br>
     <br>

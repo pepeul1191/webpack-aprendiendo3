@@ -1,17 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
+var homeView = function(req, res, next) {
+  res.render('index', { title: 'Express' });
+};
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/user/create', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/user/edit/:id', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', homeView);
+router.get('/user/create', homeView);
+router.get('/user/edit/:id', homeView);
+router.get('/autocomplete', homeView);
 
 module.exports = router;
