@@ -28,8 +28,6 @@ var Autocomplete = Backbone.View.extend({
   search: function(event) {
     var text = $(event.target).val();
     var _this = this;
-    console.log('1 ++++++++++++++++++++++++++++++');
-    console.log(_this.service);
     $.ajax({
 		  url: _this.service.url,
       type: 'GET',

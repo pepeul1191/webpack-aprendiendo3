@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const sequelize = new Sequelize('database', 'username', 'password', {
 	// host: 'localhost',
@@ -11,7 +12,10 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'db/demo.db',
 	define: {
 		timestamps: false // true by default
-	}
+	},
+	$like: Op.like,
+  $not: Op.not,
 });
 
 exports.db = sequelize;
+exports.Op = Op;

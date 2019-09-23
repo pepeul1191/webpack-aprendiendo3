@@ -55,3 +55,5 @@ Fuentes:
 + https://www.w3docs.com/learn-html/html-menu-tag.html
 + https://evilnapsis.com/2018/06/22/crear-un-carousel-o-slider-de-imagenes-con-materialize-css/
 + https://stackoverflow.com/questions/10422105/add-text-above-html5-video
++ https://stackoverflow.com/questions/53971268/node-sequelize-find-where-like-wildcard
++ https://stackoverflow.com/questions/43729254/sequelize-limit-and-offset-incorrect-placement-in-query

@@ -7,6 +7,7 @@ const middlewares = require('./configs/middlewares');
 // routes
 var indexRouter = require('./routes/index');
 var carrerRouter = require('./routes/carrer');
+var districtRouter = require('./routes/district');
 var errorRouter = require('./routes/error');
 // app
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // register routes
 app.use('/', indexRouter);
 app.use('/carrer', carrerRouter);
+app.use('/district', districtRouter);
 app.use('/error', errorRouter);
 // catch 404 and forward to error handler
 app.use(middlewares.error404());
