@@ -18,6 +18,8 @@ var Autocomplete = Backbone.View.extend({
     id: null, // ID
     name: null, // String
   },
+  id: null,
+  name: null,
   // constructor
 	initialize: function(params){
     this.el = params.el;
@@ -32,11 +34,12 @@ var Autocomplete = Backbone.View.extend({
     // dynamic allocation of events
     this.events = this.events || {};
     this.events['keyup ' + this.inputText] = 'search';
-		this.events['focusout ' + this.inputText] = 'clean';
+    this.events['focusout ' + this.inputText] = 'focusOut';
     this.delegateEvents();
   },
   // events
   events: {
+    'click .hint': 'hintClick',
   },
   // methods
   search: function(event) {
@@ -79,13 +82,22 @@ var Autocomplete = Backbone.View.extend({
   showHints: function(){
     var _this = this;
     this.collection.each(function(model){
-      var li = document.createElement("li");
-      li.classList.add("hint");
+      var li = document.createElement('li');
+      li.classList.add('hint');
       li.setAttribute(_this.formatModelData.id, model.get(_this.formatModelData.id));
       li.appendChild(document.createTextNode(model.get(_this.formatModelData.name)));
       $(_this.hintList).append(li);
       $(_this.hintList).removeClass('d-none');
     });
+  },
+  focusOut: function(event){
+    console.log('out');
+  },
+  hintClick: function(event){
+    this.id = $(event.target).attr('id');
+    this.name = $(event.target).html();
+    $(this.inputText).val(this.name);
+    this.clean();
   },
 });
 
