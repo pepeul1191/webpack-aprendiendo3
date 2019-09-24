@@ -10,5 +10,6 @@ router.get('/', homeView);
 router.get('/user/create', homeView);
 router.get('/user/edit/:id', homeView);
 router.get('/autocomplete', homeView);
+router.get('/upload', homeView);
 
 module.exports = router;

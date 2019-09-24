@@ -3,12 +3,14 @@ import HomeView from '../views/home_view';
 import UserCreateView from '../views/user_create_view';
 import UserEditView from '../views/user_edit_view';
 import AutocompleteView from '../views/autocomplete_view';
+import UploadView from '../views/upload_view';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
   userEditView: null,
   userCreateView: null,
   autocompleteView: null,
+  uploadView: null,
   initialize: function() {
   },
   routes:{
@@ -17,6 +19,7 @@ var HomeRouter = Backbone.Router.extend({
     'user/edit/:id?*queryString' : 'userEdit',
     // plugins
     'autocomplete': 'autocomplete',
+    'upload': 'upload',
     // others
     '*path' : 'default',
   },
@@ -49,6 +52,13 @@ var HomeRouter = Backbone.Router.extend({
     }
     this.autocompleteView.render();
     this.autocompleteView.loadComponents();
+  },
+  upload: function(){
+    if(this.uploadView == null){
+      this.uploadView = new UploadView();
+    }
+    this.uploadView.render();
+    this.uploadView.loadComponents();
   },
   default: function(path){
     // console.log(path);
