@@ -44,35 +44,39 @@ var Autocomplete = Backbone.View.extend({
   // methods
   search: function(event) {
     var text = $(event.target).val();
-    var _this = this;
-    $.ajax({
-		  url: _this.service.url,
-      type: 'GET',
-      data: {
-        [_this.service.param]: text,
-      },
-      headers: {
-        [CSRF_KEY]: CSRF,
-      },
-		  async: false,
-		  success: function(data) {
-        var hints = JSON.parse(data);
-        _this.collection.reset();
-        $(_this.hintList).empty();
-        for(var i = 0; i < hints.length; i++){
-          var model = new _this.model({
-            [_this.formatModelData.id]: hints[i][_this.formatResponseData.id], 
-            [_this.formatModelData.name]: hints[i][_this.formatResponseData.name]
-          });
-          _this.collection.add(model);
+    if(event.keyCode != 27){ // 27 == Escape
+      var _this = this;
+      $.ajax({
+        url: _this.service.url,
+        type: 'GET',
+        data: {
+          [_this.service.param]: text,
+        },
+        headers: {
+          [CSRF_KEY]: CSRF,
+        },
+        async: false,
+        success: function(data) {
+          var hints = JSON.parse(data);
+          _this.collection.reset();
+          $(_this.hintList).empty();
+          for(var i = 0; i < hints.length; i++){
+            var model = new _this.model({
+              [_this.formatModelData.id]: hints[i][_this.formatResponseData.id], 
+              [_this.formatModelData.name]: hints[i][_this.formatResponseData.name]
+            });
+            _this.collection.add(model);
+          }
+          _this.showHints();
+        },
+        error: function(xhr, status, error){
+          console.error(error);
+          console.log(JSON.parse(xhr.responseText));
         }
-        _this.showHints();
-      },
-      error: function(xhr, status, error){
-        console.error(error);
-				console.log(JSON.parse(xhr.responseText));
-      }
-		});
+      });
+    }else{
+      this.clean(event);
+    }
   },
   clean: function(event) {
     this.collection.reset();
@@ -88,10 +92,12 @@ var Autocomplete = Backbone.View.extend({
       li.appendChild(document.createTextNode(model.get(_this.formatModelData.name)));
       $(_this.hintList).append(li);
       $(_this.hintList).removeClass('d-none');
+      var inputTextWidth = $(_this.inputText).outerWidth();
+      $(_this.hintList).outerWidth(inputTextWidth);
     });
   },
   focusOut: function(event){
-    console.log('out');
+    
   },
   hintClick: function(event){
     this.id = $(event.target).attr('id');
