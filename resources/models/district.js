@@ -1,6 +1,7 @@
 var District = Backbone.Model.extend({
   initialize : function() {
-    this.name = 'Lima';
+    this.id = null;
+    this.name = null;
   }
 });
 

@@ -1,4 +1,6 @@
 import Autocomplete from '../libs/autocomplete';
+import DistrictCollection from '../collections/district_collection';
+import District from '../models/district';
 
 var AutocompleteView = Backbone.View.extend({
   // attributes
@@ -40,6 +42,16 @@ var AutocompleteView = Backbone.View.extend({
       service: {
         url: BASE_URL + 'district/search',
         param: 'name',
+      },
+      model: District,
+      collection: new DistrictCollection(),
+      formatResponseData: {
+        id: 'id',
+        name: 'name',
+      },
+      formatModelData: {
+        id: 'id',
+        name: 'name',
       },
     });
   },
