@@ -15,6 +15,6 @@ bower_components
 dist
 .DS_Store
 *.ods#
-
+public/uploads
 public/templates
 *.db

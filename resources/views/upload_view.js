@@ -34,14 +34,16 @@ var UploadView = Backbone.View.extend({
   loadComponents: function(){
     this.upload = new Upload({
       el: '#uploadForm',
-      inputFile: '#filePicture',
-      inputHelp: '#txtPictureHelp',
-      buttonChoose: '#btnSelectPicture',
-      buttonUpload: '#btnUploadPicture',
-      img: '#imgPicture',
+      inputFile: 'filePicture',
+      helpText: 'txtPictureHelp',
+      buttonChoose: 'btnSelectPicture',
+      buttonUpload: 'btnUploadPicture',
+      img: 'imgPicture',
       service: {
         url: BASE_URL + 'district/search',
-        param: 'name',
+        formDataKey: 'file',
+        uploadMessage: 'Subiendo archivo...',
+        errorMessage: 'Ocurrió un error en subir el archivo',
       },
       formatResponseData: {
         id: 'id',
@@ -50,6 +52,14 @@ var UploadView = Backbone.View.extend({
       formatModelData: {
         id: 'id',
         name: 'name',
+      },
+      extensions:{
+        allow: ['image/jpeg', 'image/png', 'image/jpg'],
+        message: 'Formato no válido',
+      },
+      size:{
+        allow: 60000,
+        message: 'Archivo supera el máximo permitido',
       },
     });
   },
