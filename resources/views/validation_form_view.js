@@ -1,5 +1,9 @@
 import ValidationForm from '../libs/validation_form';
 
+var checkCarrerName = (carrerName) => {
+  console.log(carrerName);
+}; 
+
 var ValidationFormView = Backbone.View.extend({
   // attributes
   el: '#workspace',
@@ -62,6 +66,22 @@ var ValidationFormView = Backbone.View.extend({
             }, 
           ],
         },
+        // 3
+        {
+          id: 'txtCarrer',
+          help: 'txtCarrerHelp',
+          validations: [
+            {
+              type: 'notEmpty',
+              message: 'Debe de ingresar una carrera',
+            }, 
+            {
+              type: 'customFunction',
+              message: 'Carrera repetida',
+              customFunction: checkCarrerName('txtCarrer'),
+            },
+          ],
+        },
       ],
       classes: {
         textDanger: 'text-danger',
@@ -73,6 +93,9 @@ var ValidationFormView = Backbone.View.extend({
   },
   save: function(event){
     this.form.check();
+    if(this.form.isOk == true){
+      alert('=)');
+    }
   },
   // delegator methods
 });

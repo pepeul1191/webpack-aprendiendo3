@@ -7,7 +7,7 @@ var ValidationForm = Backbone.View.extend({
       help: null,
       validations: [
         {
-          type: null, // notEmpty, isEmail
+          type: null, // notEmpty, isEmail, customFunction
           message: null,
         }, 
       ],
@@ -103,6 +103,9 @@ var ValidationForm = Backbone.View.extend({
       isOk = true;
     }
     return isOk;
+  },
+  customFunction: function(entry, validation){
+    entry.customFunction;
   },
 });
 
