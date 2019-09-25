@@ -62,7 +62,7 @@ var ValidationFormView = Backbone.View.extend({
     this.form = new ValidationForm({
       el: '#form',
       entries: [
-        // 1
+        // user
         {
           id: 'txtUser',
           help: 'txtUserHelp',
@@ -73,7 +73,7 @@ var ValidationFormView = Backbone.View.extend({
             }, 
           ],
         },
-        // 2
+        // email
         {
           id: 'txtEmail',
           help: 'txtEmailHelp',
@@ -88,7 +88,7 @@ var ValidationFormView = Backbone.View.extend({
             }, 
           ],
         },
-        // 3
+        // carrer
         {
           id: 'txtCarrer',
           help: 'txtCarrerHelp',
@@ -102,6 +102,17 @@ var ValidationFormView = Backbone.View.extend({
               message: 'Carrera repetida',
               customFunction: checkCarrerName,
             },
+          ],
+        },
+        // carrer select
+        {
+          id: 'slcCarrer',
+          help: 'slcCarrerHelp',
+          validations: [
+            {
+              type: 'isSelected',
+              message: 'Debe de seleccionar una carrera',
+            }, 
           ],
         },
       ],

@@ -7,7 +7,7 @@ var ValidationForm = Backbone.View.extend({
       help: null,
       validations: [
         {
-          type: null, // notEmpty, isEmail, customFunction
+          type: null, // notEmpty, isEmail, customFunction, isSelected
           message: null,
         }, 
       ],
@@ -107,6 +107,22 @@ var ValidationForm = Backbone.View.extend({
   customFunction: function(entry, validation){
     var isOk = false;
     if(validation.customFunction() == false){
+      $('#' + entry.help).html(validation.message);
+      $('#' + entry.help).removeClass(this.classes.textSuccess);
+      $('#' + entry.help).removeClass(this.classes.textWarning);
+      $('#' + entry.help).addClass(this.classes.textDanger);
+      $('#' + entry.id).addClass(this.classes.inputInvalid);
+    }else{
+      $('#' + entry.help).html('');
+      $('#' + entry.help).removeClass(this.classes.textDanger);
+      $('#' + entry.id).removeClass(this.classes.inputInvalid);
+      isOk = true;
+    }
+    return isOk;
+  },
+  isSelected: function(entry, validation){
+    var isOk = false;
+    if($('#' + entry.id).val() == 'E'){
       $('#' + entry.help).html(validation.message);
       $('#' + entry.help).removeClass(this.classes.textSuccess);
       $('#' + entry.help).removeClass(this.classes.textWarning);
