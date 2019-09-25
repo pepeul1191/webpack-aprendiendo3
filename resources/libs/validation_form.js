@@ -1,18 +1,18 @@
 var ValidationForm = Backbone.View.extend({
   // attributes
   el: '#byDefine',
-  entries: [/*
+  entries: [
     {
-      id: 'txtUser',
-      help: 'txtUserHelp',
+      id: null,
+      help: null,
       validations: [
         {
-          type: 'notNull',
-          message: 'Debe de ingresar un nombre de usuario',
+          type: null, // notEmpty, isEmail
+          message: null,
         }, 
       ],
     },
-  */],
+  ],
   classes: {
     textError: null,
     textSuccess: null,
@@ -37,16 +37,28 @@ var ValidationForm = Backbone.View.extend({
     var _this = this;
     // define isOk
     this.entries.forEach(function(entry) {
+      var lastEntryIsOk = null;
       entry.validations.forEach(function(validation){
         try {
-          var isOk = _this[validation.type](entry, validation);
-          if(entry.isOk != false || isOk == true){
-            entry.isOk = isOk;
+          if(lastEntryIsOk == null || lastEntryIsOk == true){
+            var isOk = _this[validation.type](entry, validation);
+            console.log(entry)
+            console.log(isOk);
+            if(entry.isOk != false || isOk == true){
+              entry.isOk = isOk;
+            }
+            lastEntryIsOk = isOk;
+          }else{
+            var isOk = _this[validation.type](entry, validation);
+            if(entry.isOk != false || isOk == true){
+              entry.isOk = isOk;
+            }
+            lastEntryIsOk = isOk;
           }
         } catch (e) {
           if (e instanceof TypeError){
             _this.isOk = false;
-            $('#' +_this.messageForm).addClass(_this.classes.textError);
+            $('#' +_this.messageForm).addClass(_this.classes.textDanger);
             $('#' +_this.messageForm).removeClass(_this.classes.textWarning);
             $('#' +_this.messageForm).removeClass(_this.classes.textSuccess);
             $('#' +_this.messageForm).html('Validación no existente');
@@ -55,18 +67,37 @@ var ValidationForm = Backbone.View.extend({
       });
     });
     // check if isOk == true
-    var _this = this;
-    _this.isOk = true;
-    this.entries.forEach(function(entry){
-      if(entry.isOk == false){
-        _this.isOk = false;
-      }
-    });
+    if (this.isOk == true){ // not entered to try catch
+      var _this = this;
+      _this.isOk = true;
+      this.entries.forEach(function(entry){
+        if(entry.isOk == false){
+          _this.isOk = false;
+        }
+      });
+    }
   },
   // validation methods
   notEmpty: function(entry, validation){
     var isOk = false;
     if($('#' + entry.id).val() == ''){
+      $('#' + entry.help).html(validation.message);
+      $('#' + entry.help).removeClass(this.classes.textSuccess);
+      $('#' + entry.help).removeClass(this.classes.textWarning);
+      $('#' + entry.help).addClass(this.classes.textDanger);
+      $('#' + entry.id).addClass(this.classes.inputInvalid);
+    }else{
+      $('#' + entry.help).html('');
+      $('#' + entry.help).removeClass(this.classes.textDanger);
+      $('#' + entry.id).removeClass(this.classes.inputInvalid);
+      isOk = true;
+    }
+    return isOk;
+  },
+  isEmail: function(entry, validation){
+    var isOk = false;
+    var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(regex.test($('#' + entry.id).val()) == false){
       $('#' + entry.help).html(validation.message);
       $('#' + entry.help).removeClass(this.classes.textSuccess);
       $('#' + entry.help).removeClass(this.classes.textWarning);

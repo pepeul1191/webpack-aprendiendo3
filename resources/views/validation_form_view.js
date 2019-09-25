@@ -48,6 +48,20 @@ var ValidationFormView = Backbone.View.extend({
           ],
         },
         // 2
+        {
+          id: 'txtEmail',
+          help: 'txtEmailHelp',
+          validations: [
+            {
+              type: 'notEmpty',
+              message: 'Debe de ingresar su correo',
+            }, 
+            {
+              type: 'isEmail',
+              message: 'Debe de ingresar un correo válido',
+            }, 
+          ],
+        },
       ],
       classes: {
         textDanger: 'text-danger',
