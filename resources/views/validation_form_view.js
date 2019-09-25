@@ -50,8 +50,9 @@ var ValidationFormView = Backbone.View.extend({
         // 2
       ],
       classes: {
-        textError: 'text-danger',
-        borderError: 'has-danger',
+        textDanger: 'text-danger',
+        inputInvalid: 'is-invalid',
+        textSuccess: 'text-success',
       },
       messageForm: 'messageForm',
     });
