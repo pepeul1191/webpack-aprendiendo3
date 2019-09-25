@@ -105,7 +105,20 @@ var ValidationForm = Backbone.View.extend({
     return isOk;
   },
   customFunction: function(entry, validation){
-    entry.customFunction;
+    var isOk = false;
+    if(validation.customFunction() == false){
+      $('#' + entry.help).html(validation.message);
+      $('#' + entry.help).removeClass(this.classes.textSuccess);
+      $('#' + entry.help).removeClass(this.classes.textWarning);
+      $('#' + entry.help).addClass(this.classes.textDanger);
+      $('#' + entry.id).addClass(this.classes.inputInvalid);
+    }else{
+      $('#' + entry.help).html('');
+      $('#' + entry.help).removeClass(this.classes.textDanger);
+      $('#' + entry.id).removeClass(this.classes.inputInvalid);
+      isOk = true;
+    }
+    return isOk;
   },
 });
 

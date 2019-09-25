@@ -1,7 +1,29 @@
 import ValidationForm from '../libs/validation_form';
 
-var checkCarrerName = (carrerName) => {
-  console.log(carrerName);
+var checkCarrerName = function() {
+  var resp = true;
+  var carrerName = $('#txtCarrer').val();
+  $.ajax({
+    type: 'GET',
+    url: BASE_URL + 'carrer/name/count',
+    data: { 
+      name: carrerName,
+    },
+    headers: {
+      [CSRF_KEY]: CSRF,
+    },
+    async: false,
+    success: function(data){
+      if(parseInt(data) > 0){
+        resp = false;
+      }
+    },
+    error: function(xhr, status, error){
+      console.error(error);
+      console.log(JSON.parse(xhr.responseText));
+    }
+  });
+  return resp;
 }; 
 
 var ValidationFormView = Backbone.View.extend({
@@ -78,7 +100,7 @@ var ValidationFormView = Backbone.View.extend({
             {
               type: 'customFunction',
               message: 'Carrera repetida',
-              customFunction: checkCarrerName('txtCarrer'),
+              customFunction: checkCarrerName,
             },
           ],
         },
