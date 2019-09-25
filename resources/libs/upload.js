@@ -99,6 +99,7 @@ var Upload = Backbone.View.extend({
             var resp = JSON.parse(data);
             _this.url = resp.url;
             _this.path = resp.path;
+            _this.showImg();
           },
           error: function(xhr, status, error){
             console.error(error);
@@ -111,6 +112,12 @@ var Upload = Backbone.View.extend({
           }
         });
       }
+    }
+  },
+  showImg: function(){
+    if(this.img != null){
+      var url = this.url + this.path;
+      $('#' + this.img).attr('src', url);
     }
   },
 });
