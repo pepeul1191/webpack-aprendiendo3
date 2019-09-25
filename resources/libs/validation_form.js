@@ -34,6 +34,7 @@ var ValidationForm = Backbone.View.extend({
   },
   // methods
   check: function(event) {
+    this.isOk = true;
     var _this = this;
     // define isOk
     this.entries.forEach(function(entry) {
@@ -41,14 +42,6 @@ var ValidationForm = Backbone.View.extend({
       entry.validations.forEach(function(validation){
         try {
           if(lastEntryIsOk == null || lastEntryIsOk == true){
-            var isOk = _this[validation.type](entry, validation);
-            console.log(entry)
-            console.log(isOk);
-            if(entry.isOk != false || isOk == true){
-              entry.isOk = isOk;
-            }
-            lastEntryIsOk = isOk;
-          }else{
             var isOk = _this[validation.type](entry, validation);
             if(entry.isOk != false || isOk == true){
               entry.isOk = isOk;
