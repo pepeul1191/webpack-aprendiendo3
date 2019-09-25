@@ -1,6 +1,8 @@
 var Upload = Backbone.View.extend({
   // attributes
   el: '#byDefine',
+  url: null,
+  path: null,
   inputFile: null, // String
   helpText: null,
   buttonChoose: null, // String
@@ -11,14 +13,7 @@ var Upload = Backbone.View.extend({
     formDataKey: null, // String
     uploadMessage: null,// String
     erroMessage: null,// String
-  },
-  formatResponseData: {
-    id: null, // ID
-    name: null, // String
-  },
-  formatModelData: {
-    id: null, // ID
-    name: null, // String
+    successMessage: null,
   },
   id: null,
   name: null,
@@ -45,8 +40,6 @@ var Upload = Backbone.View.extend({
     this.buttonUpload = params.buttonUpload;
     this.img = params.img;
     this.service = params.service;
-    this.formatResponseData = params.formatResponseData;
-    this.formatModelData = params.formatModelData;
     this.extensions = params.extensions;
     this.size = params.size;
     // dynamic allocation of events
@@ -98,7 +91,14 @@ var Upload = Backbone.View.extend({
 						$('#' + _this.helpText).html(_this.service.uploadMessage);
 					},
           success: function(data) {
-            console.log(data);
+            $('#' + _this.buttonUpload).removeAttr('disabled');
+            $('#' + _this.helpText).removeClass(_this.statusClasses.danger);
+            $('#' + _this.helpText).removeClass(_this.statusClasses.warning);
+            $('#' + _this.helpText).addClass(_this.statusClasses.success);
+            $('#' + _this.helpText).html(_this.service.successMessage);
+            var resp = JSON.parse(data);
+            _this.url = resp.url;
+            _this.path = resp.path;
           },
           error: function(xhr, status, error){
             console.error(error);

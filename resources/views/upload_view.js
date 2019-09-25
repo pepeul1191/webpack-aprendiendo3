@@ -44,14 +44,7 @@ var UploadView = Backbone.View.extend({
         formDataKey: 'file',
         uploadMessage: 'Subiendo archivo...',
         errorMessage: 'Ocurrió un error en subir el archivo',
-      },
-      formatResponseData: {
-        id: 'id',
-        name: 'name',
-      },
-      formatModelData: {
-        id: 'id',
-        name: 'name',
+        successMessage: 'Carga completada'
       },
       extensions:{
         allow: ['image/jpeg', 'image/png', 'image/jpg'],

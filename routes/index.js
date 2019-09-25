@@ -24,8 +24,11 @@ router.post('/upload/file', bodyParser.text({ type: 'json' }), function (req, re
       res.statusCode = 500;
       res.send(err);
     }
-    var rpta = constants.base_url + 'uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1];
-    res.send(rpta);
+    var rpta = {
+      url: constants.base_url,
+      path: 'uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1],
+    };
+    res.send(JSON.stringify(rpta));
   });
 });
 
