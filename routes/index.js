@@ -1,4 +1,7 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+var helpers = require('../configs/helpers');
+var constants = require('../configs/constants');
 var router = express.Router();
 
 var homeView = function(req, res, next) {
@@ -11,5 +14,19 @@ router.get('/user/create', homeView);
 router.get('/user/edit/:id', homeView);
 router.get('/autocomplete', homeView);
 router.get('/upload', homeView);
+// upload file
+router.post('/upload/file', bodyParser.text({ type: 'json' }), function (req, res) {
+  var file = req.files.file;
+  var tempFileNameArray = file.name.split('.');
+  var randomVal = helpers.makeId();
+  file.mv('public/uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1], function(err) {
+    if (err){
+      res.statusCode = 500;
+      res.send(err);
+    }
+    var rpta = constants.base_url + 'uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1];
+    res.send(rpta);
+  });
+});
 
 module.exports = router;

@@ -40,7 +40,7 @@ var UploadView = Backbone.View.extend({
       buttonUpload: 'btnUploadPicture',
       img: 'imgPicture',
       service: {
-        url: BASE_URL + 'district/search',
+        url: BASE_URL + 'upload/file',
         formDataKey: 'file',
         uploadMessage: 'Subiendo archivo...',
         errorMessage: 'Ocurrió un error en subir el archivo',
