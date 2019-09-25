@@ -36,9 +36,9 @@ var AutocompleteView = Backbone.View.extend({
   loadComponents: function(){
     this.autocomplete = new Autocomplete({
       el: '#locationForm',
-      inputText: '#txtLocation',
-      inputHelp: '#locationHelp',
-      hintList: '#locationsList',
+      inputText: 'txtLocation',
+      inputHelp: 'locationHelp',
+      hintList: 'locationsList',
       service: {
         url: BASE_URL + 'district/search',
         param: 'name',

@@ -1,9 +1,9 @@
 var Autocomplete = Backbone.View.extend({
   // attributes
   el: '#byDefine',
-  inputText: null, // # String
-  inputHelp: null, // # String
-  hintList: null, // # String
+  inputText: null, // String
+  inputHelp: null, // String
+  hintList: null, // String
   service: {
     url: null, // String
     param: null, // String
@@ -33,8 +33,8 @@ var Autocomplete = Backbone.View.extend({
     this.formatModelData = params.formatModelData;
     // dynamic allocation of events
     this.events = this.events || {};
-    this.events['keyup ' + this.inputText] = 'search';
-    this.events['focusout ' + this.inputText] = 'focusOut';
+    this.events['keyup #' + this.inputText] = 'search';
+    this.events['focusout #' + this.inputText] = 'focusOut';
     this.delegateEvents();
   },
   // events
@@ -59,7 +59,7 @@ var Autocomplete = Backbone.View.extend({
         success: function(data) {
           var hints = JSON.parse(data);
           _this.collection.reset();
-          $(_this.hintList).empty();
+          $('#' + _this.hintList).empty();
           for(var i = 0; i < hints.length; i++){
             var model = new _this.model({
               [_this.formatModelData.id]: hints[i][_this.formatResponseData.id], 
@@ -80,8 +80,8 @@ var Autocomplete = Backbone.View.extend({
   },
   clean: function(event) {
     this.collection.reset();
-    $(this.hintList).empty();
-    $(this.hintList).addClass('d-none');
+    $('#' + this.hintList).empty();
+    $('#' + this.hintList).addClass('d-none');
   },
   showHints: function(){
     var _this = this;
@@ -90,10 +90,10 @@ var Autocomplete = Backbone.View.extend({
       li.classList.add('hint');
       li.setAttribute(_this.formatModelData.id, model.get(_this.formatModelData.id));
       li.appendChild(document.createTextNode(model.get(_this.formatModelData.name)));
-      $(_this.hintList).append(li);
-      $(_this.hintList).removeClass('d-none');
+      $('#' + _this.hintList).append(li);
+      $('#' + _this.hintList).removeClass('d-none');
       var inputTextWidth = $(_this.inputText).outerWidth();
-      $(_this.hintList).outerWidth(inputTextWidth);
+      $('#' + _this.hintList).outerWidth(inputTextWidth);
     });
   },
   focusOut: function(event){
@@ -102,7 +102,7 @@ var Autocomplete = Backbone.View.extend({
   hintClick: function(event){
     this.id = $(event.target).attr('id');
     this.name = $(event.target).html();
-    $(this.inputText).val(this.name);
+    $('#' + this.inputText).val(this.name);
     this.clean();
   },
 });
