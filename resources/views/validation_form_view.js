@@ -1,0 +1,65 @@
+import ValidationForm from '../libs/validation_form';
+
+var ValidationFormView = Backbone.View.extend({
+  // attributes
+  el: '#workspace',
+  form: null,
+  btnId: 'btnSave',
+  // constructor
+	initialize: function(){
+
+  },
+  // events
+	events: {
+    'click #btnSave': 'save',
+  },
+  // methods
+  render: function(){
+		var data = {};
+		var templateCompiled = null;
+		$.ajax({
+		  url: STATIC_URL + 'templates/plugins/validation_form.html',
+		  type: 'GET',
+		  async: false,
+		  success: function(resource) {
+        var template = _.template(resource);
+        templateCompiled = template(data);
+      },
+      error: function(xhr, status, error){
+        console.error(error);
+				console.log(JSON.parse(xhr.responseText));
+      },
+		});
+		this.$el.html(templateCompiled);
+  },
+  loadComponents: function(){
+    this.form = new ValidationForm({
+      el: '#form',
+      entries: [
+        // 1
+        {
+          id: 'txtUser',
+          help: 'txtUserHelp',
+          validations: [
+            {
+              type: 'notEmpty',
+              message: 'Debe de ingresar un nombre de usuario',
+            }, 
+          ],
+        },
+        // 2
+      ],
+      classes: {
+        textError: 'text-danger',
+        borderError: 'has-danger',
+      },
+      messageForm: 'messageForm',
+    });
+  },
+  save: function(event){
+    this.form.check();
+  },
+  // delegator methods
+});
+
+export default ValidationFormView;

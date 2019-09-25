@@ -4,6 +4,7 @@ import UserCreateView from '../views/user_create_view';
 import UserEditView from '../views/user_edit_view';
 import AutocompleteView from '../views/autocomplete_view';
 import UploadView from '../views/upload_view';
+import ValidationFormView from '../views/validation_form_view';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
@@ -11,6 +12,7 @@ var HomeRouter = Backbone.Router.extend({
   userCreateView: null,
   autocompleteView: null,
   uploadView: null,
+  validationFormView: null,
   initialize: function() {
   },
   routes:{
@@ -20,6 +22,7 @@ var HomeRouter = Backbone.Router.extend({
     // plugins
     'autocomplete': 'autocomplete',
     'upload': 'upload',
+    'validation_form': 'validation_form',
     // others
     '*path' : 'default',
   },
@@ -59,6 +62,13 @@ var HomeRouter = Backbone.Router.extend({
     }
     this.uploadView.render();
     this.uploadView.loadComponents();
+  },
+  validation_form: function(){
+    if(this.validationFormView == null){
+      this.validationFormView = new ValidationFormView();
+    }
+    this.validationFormView.render();
+    this.validationFormView.loadComponents();
   },
   default: function(path){
     // console.log(path);

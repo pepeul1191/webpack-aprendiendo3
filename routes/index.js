@@ -14,6 +14,7 @@ router.get('/user/create', homeView);
 router.get('/user/edit/:id', homeView);
 router.get('/autocomplete', homeView);
 router.get('/upload', homeView);
+router.get('/validation_form', homeView);
 // upload file
 router.post('/upload/file', bodyParser.text({ type: 'json' }), function (req, res) {
   var file = req.files.file;
