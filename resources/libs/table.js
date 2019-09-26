@@ -63,16 +63,24 @@ var Table = Backbone.View.extend({
       success: function(data) {
         var list = JSON.parse(data);
         for(var i = 0; i < list.length; i++){
+          // create model 
           var model = new _this.model();
+          // create row
+          var tr = document.createElement('tr');
+          // itarete list
           for(var k = 0; k < _this.rowKeys.server.length; k++){
             var serverKey = _this.rowKeys.server[k];
             var tableKey = _this.rowKeys.table[k];
-            // create model
+            // set model
             model.set({
               [tableKey]: list[i][serverKey]
             });
             // draw html
+            var td = document.createElement('td');
+            td.innerHTML = list[i][serverKey];
+            tr.appendChild(td);
           }
+          console.log(tr);
           // add model to collection
           _this.collection.add(model);
         }
