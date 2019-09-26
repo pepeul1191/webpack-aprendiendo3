@@ -57,3 +57,5 @@ Fuentes:
 + https://stackoverflow.com/questions/10422105/add-text-above-html5-video
 + https://stackoverflow.com/questions/53971268/node-sequelize-find-where-like-wildcard
 + https://stackoverflow.com/questions/43729254/sequelize-limit-and-offset-incorrect-placement-in-query
++ https://getbootstrap.com/docs/4.0/getting-started/webpack/
++ https://getbootstrap.com/docs/3.3/javascript/#dropdowns

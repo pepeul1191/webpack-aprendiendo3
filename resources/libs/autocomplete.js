@@ -92,7 +92,7 @@ var Autocomplete = Backbone.View.extend({
       li.appendChild(document.createTextNode(model.get(_this.formatModelData.name)));
       $('#' + _this.hintList).append(li);
       $('#' + _this.hintList).removeClass('d-none');
-      var inputTextWidth = $(_this.inputText).outerWidth();
+      var inputTextWidth = $('#' + _this.inputText).outerWidth();
       $('#' + _this.hintList).outerWidth(inputTextWidth);
     });
   },
