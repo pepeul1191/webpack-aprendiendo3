@@ -1,6 +1,6 @@
-import Autocomplete from '../libs/autocomplete';
-import DistrictCollection from '../collections/district_collection';
-import District from '../models/district';
+import Table from '../libs/table';
+import DepartmentCollection from '../collections/department_collection';
+import Department from '../models/department';
 
 var TableLocationView = Backbone.View.extend({
   // attributes
@@ -34,7 +34,36 @@ var TableLocationView = Backbone.View.extend({
 		this.$el.html(templateCompiled);
   },
   loadComponents: function(){
-    
+    this.departmentTable = new Table({
+      el: null, // String
+      messageLabelId: null, // String
+      model: Department, // String
+      collection: new DepartmentCollection(), // Backbone collection
+      services: {
+        list: BASE_URL + 'department/list', // String
+        save: null, // String
+      },
+      extraData: null,
+      observer: { // not initialize
+      new: [],
+      edit: [],
+      delete: [],
+      },
+      messages: {
+        listError: '',
+        saveError: '',
+        otherError: '',
+        saveOk: '',
+      },
+      rowKeys: {
+        server: ['id', 'name'],
+        table: ['id', 'name'],
+        html: [
+          
+        ],
+      },
+    });
+    this.departmentTable.list();
   },
   // delegator methods
 });

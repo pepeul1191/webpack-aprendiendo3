@@ -63,8 +63,21 @@ const LocationVW = db.define('vw_locations', {
   },
 });
 
+const Deparment = db.define('departments', {
+	id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true ,
+  },
+	name: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+});
+
 exports.Carrer = Carrer;
 exports.Teacher = Teacher;
 exports.TeacherCarrer = TeacherCarrer;
 exports.LocationVW = LocationVW;
+exports.Deparment = Deparment;
 exports.db = db;
