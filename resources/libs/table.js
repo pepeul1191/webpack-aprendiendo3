@@ -36,7 +36,6 @@ var Table = Backbone.View.extend({
   // constructor
 	initialize: function(params){
     this.el = params.el;
-    this.idTable = params.idTable;
     this.messageLabelId = params.messageLabelId;
     this.model = params.model;
     this.collection = params.collection;
@@ -49,7 +48,7 @@ var Table = Backbone.View.extend({
     this.events = this.events || {};
     this.delegateEvents();
     // init the observer for changes
-    // this.listenTo(this.collection, "change", this.onChange, this);
+    this.listenTo(this.collection, 'change', this.changeObserver, this);
   },
   // events
   events: {
@@ -211,14 +210,14 @@ var Table = Backbone.View.extend({
     var children = document.querySelectorAll('#' + this.el + ' > *');
 		var tbody = null;
 		for(var i = 0; i < children.length; i++){
-		  if(children[i].nodeName == "TBODY"){
+		  if(children[i].nodeName == 'TBODY'){
 		  	tbody = children[i];
 		  }
 		}
 		if(tbody == null){
-		  tbody = document.createElement("tbody");
+		  tbody = document.createElement('TBODY');
 		  tbody.appendChild(tr);
-		  document.getElementById(this.idTable).appendChild(tbody);
+		  document.getElementById(this.el).appendChild(tbody);
 		}else{
 		  tbody.appendChild(tr);
 		}
@@ -228,7 +227,16 @@ var Table = Backbone.View.extend({
     var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
     var model = this.collection.get(rowId);    
     // if the model to be edited already exists as new or edited, remove from observer and add as deleted in observer
-    // TODOOOO
+    if(_.contains(this.observer.new, (rowId + ''))){
+			this.observer.new = _.without(this.observer.new, (rowId + ''));
+		}
+		if(_.contains(this.observer.edit, (rowId + ''))){
+			this.observer.edit = _.without(this.observer.edit, (rowId + ''));
+		}
+		if(!_.contains(this.observer.delete, (rowId + ''))){
+			this.observer.delete.push(rowId + '');
+    }
+    // console.log(this.observer);
     // remove from collection
     this.collection.remove(model);
     // delete from DOM
@@ -243,6 +251,21 @@ var Table = Backbone.View.extend({
 		var model = this.collection.get(rowId);
 		//console.log("inputTextEscribir");
 		model.set(key, inputValue);
+  },
+  changeObserver: function(modelChanged) {
+		if(modelChanged != null){
+			var rowId = modelChanged.get('id') + '';
+			if(rowId.indexOf(this.el) >= 0){
+				if(!_.contains(this.observer.new, rowId)){
+					this.observer.new.push(rowId);
+				}
+			}else{
+				if(!_.contains(this.observer.edit, rowId)){
+					this.observer.edit.push(rowId);
+				}
+			}
+			// console.log(this.observer);
+		}
   },
 });
 
