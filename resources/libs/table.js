@@ -20,11 +20,12 @@ var Table = Backbone.View.extend({
     otherError: '',
     saveOk: '',
   },
-  rowKeys: {
+  row: {
     server: [],
     table: [],
     html: [],
   },
+  buttons: [],
   // constructor
 	initialize: function(params){
     this.el = params.el;
@@ -36,7 +37,7 @@ var Table = Backbone.View.extend({
     this.extraData = params.extraData;
     this.messages = params.messages;
     this.serverKeys = params.serverKeys;
-    this.rowKeys = params.rowKeys;
+    this.row = params.row;
     // dynamic allocation of events
     this.events = this.events || {};
     this.delegateEvents();
@@ -72,19 +73,30 @@ var Table = Backbone.View.extend({
           // itarete list
           for(var k = 0; k < _this.serverKeys.length; k++){
             var serverKey = _this.serverKeys[k];
-            var tableKey = _this.rowKeys.table[k];
+            var tableKey = _this.row.table[k];
             // set model
             model.set({
               [tableKey]: list[i][serverKey]
             });
             // draw html
-            var td = _this.helper()[_this.rowKeys.tds[k].type](
-              _this.rowKeys.tds[k], // params for td (styles, edit, etc)
+            var td = _this.helper()[_this.row.tds[k].type](
+              _this.row.tds[k], // params for td (styles, edit, etc)
               list[i][serverKey], // value for td
               _this, // view instance ????
             ); 
+            // appendo to row
             tr.appendChild(td);
           }
+          // buttons
+          var tdButtons = document.createElement('TD');
+          for(var j = 0; j < _this.row.buttons.length; j++){
+            var button = _this.helper()[_this.row.buttons[j].type](
+              _this.row.buttons[j], // params for td (styles, edit, etc)
+              _this, // view instance ????
+            );
+            tdButtons.appendChild(button);
+          }
+          tr.appendChild(tdButtons);
           tbody.appendChild(tr);
           // add model to collection
           _this.collection.add(model);
@@ -119,6 +131,16 @@ var Table = Backbone.View.extend({
         inputText.value = value;
         td.appendChild(inputText);
 				return td;
+      },
+      'i': function(params){
+        // font-awesome 4
+        // <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        var i = document.createElement('I');
+        i.classList.add('fa');
+        i.classList.add(params.class);
+        i.setAttribute('style', params.styles);
+        i.setAttribute('operation', params.operation);
+				return i;
       },
     };
   },

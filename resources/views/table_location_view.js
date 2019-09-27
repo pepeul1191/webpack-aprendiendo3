@@ -56,7 +56,7 @@ var TableLocationView = Backbone.View.extend({
         saveOk: '',
       },
       serverKeys: ['id', 'name'],
-      rowKeys: {
+      row: {
         table: ['id', 'name'],
         tds: [
           { // id
@@ -68,6 +68,20 @@ var TableLocationView = Backbone.View.extend({
             type: 'input[text]',
             styles: '', 
             edit: true,
+          },
+        ],
+        buttons: [
+          {
+            type: 'i',
+            operation: 'load-provinces',
+            class: 'fa-chevron-right',
+            styles: 'padding-left: 25px;',
+          },
+          {
+            type: 'i',
+            operation: 'delete-row',
+            class: 'fa-times',
+            styles: 'padding-left: 15px;',
           },
         ],
       },
