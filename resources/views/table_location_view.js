@@ -13,6 +13,8 @@ var TableLocationView = Backbone.View.extend({
   },
   // events
 	events: {
+    // table tablaDepartment events
+    'click #tablaDepartment > tbody > tr > td > i.delete': 'deleteRowDepartment',
   },
   // methods
   render: function(){
@@ -79,7 +81,7 @@ var TableLocationView = Backbone.View.extend({
           },
           {
             type: 'i',
-            operation: 'delete-row',
+            operation: 'delete',
             class: 'fa-times',
             styles: 'padding-left: 15px;',
           },
@@ -89,6 +91,9 @@ var TableLocationView = Backbone.View.extend({
     this.departmentTable.list();
   },
   // delegator methods
+  deleteRowDepartment: function(event){
+    this.departmentTable.deleteRow(event);
+  },
 });
 
 export default TableLocationView;

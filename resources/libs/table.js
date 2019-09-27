@@ -46,7 +46,7 @@ var Table = Backbone.View.extend({
   },
   // events
   events: {
-    'click .hint': 'hintClick',
+    'click i.delete': 'deleteRow',
   },
   // methods
   list: function(event) {
@@ -133,17 +133,32 @@ var Table = Backbone.View.extend({
 				return td;
       },
       'i': function(params){
-        // font-awesome 4
+        // de font-awesome 4
         // <i class="fa fa-chevron-left" aria-hidden="true"></i>
         var i = document.createElement('I');
         i.classList.add('fa');
         i.classList.add(params.class);
         i.setAttribute('style', params.styles);
-        i.setAttribute('operation', params.operation);
+        // add operation as class for view events
+        i.classList.add(params.operation);
 				return i;
       },
     };
   },
+  deleteRow: function(event){
+    // get model
+    var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    var model = this.collection.get(rowId);    
+    // if the model to be edited already exists as new or edited, remove from observer and add as deleted in observer
+    // TODOOOO
+    // remove from collection
+    this.collection.remove(model);
+    // delete from DOM
+    var tbody = event.target.parentElement.parentElement.parentElement;
+    var td = event.target.parentElement.parentElement;
+    tbody.removeChild(td);
+  }, 
+
 });
 
 export default Table;
