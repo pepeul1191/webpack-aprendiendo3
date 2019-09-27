@@ -35,6 +35,7 @@ var Table = Backbone.View.extend({
     this.services = params.services;
     this.extraData = params.extraData;
     this.messages = params.messages;
+    this.serverKeys = params.serverKeys;
     this.rowKeys = params.rowKeys;
     // dynamic allocation of events
     this.events = this.events || {};
@@ -62,36 +63,64 @@ var Table = Backbone.View.extend({
       async: false,
       success: function(data) {
         var list = JSON.parse(data);
+        var tbody = document.createElement('TBODY');
         for(var i = 0; i < list.length; i++){
           // create model 
           var model = new _this.model();
           // create row
-          var tr = document.createElement('tr');
+          var tr = document.createElement('TR');
           // itarete list
-          for(var k = 0; k < _this.rowKeys.server.length; k++){
-            var serverKey = _this.rowKeys.server[k];
+          for(var k = 0; k < _this.serverKeys.length; k++){
+            var serverKey = _this.serverKeys[k];
             var tableKey = _this.rowKeys.table[k];
             // set model
             model.set({
               [tableKey]: list[i][serverKey]
             });
             // draw html
-            var td = document.createElement('td');
-            td.innerHTML = list[i][serverKey];
+            var td = _this.helper()[_this.rowKeys.tds[k].type](
+              _this.rowKeys.tds[k], // params for td (styles, edit, etc)
+              list[i][serverKey], // value for td
+              _this, // view instance ????
+            ); 
             tr.appendChild(td);
           }
-          console.log(tr);
+          tbody.appendChild(tr);
           // add model to collection
           _this.collection.add(model);
         }
-        console.log(_this.collection.toJSON());
+        // console.log(_this.collection.toJSON());
+        // append tbody to table
+        document.getElementById(_this.el).appendChild(tbody);
       },
       error: function(xhr, status, error){
         console.error(error);
         console.log(JSON.parse(xhr.responseText));
       }
     });
-    console.log('1 ++++++++++++++++++++++++');
+  },
+  helper: function(){
+    return {
+      'td': function(params, value){
+				//console.log('td');
+        var td = document.createElement('TD');
+        td.setAttribute('style', params.styles);
+        td.innerHTML = value;
+        //console.log(td);
+				return td;
+      },
+      'input[text]': function(params, value){
+				//console.log('input[text]');
+        var td = document.createElement('TD');
+        var inputText = document.createElement('INPUT');
+        inputText.type = "text";
+        inputText.setAttribute('style', params.styles);
+        inputText.classList.add('text');
+        inputText.value = value;
+        td.appendChild(inputText);
+				return td;
+      },
+    };
   },
 });
 

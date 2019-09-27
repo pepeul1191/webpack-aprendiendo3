@@ -35,7 +35,7 @@ var TableLocationView = Backbone.View.extend({
   },
   loadComponents: function(){
     this.departmentTable = new Table({
-      el: null, // String
+      el: 'tablaDepartment', // String
       messageLabelId: null, // String
       model: Department, // String
       collection: new DepartmentCollection(), // Backbone collection
@@ -55,11 +55,20 @@ var TableLocationView = Backbone.View.extend({
         otherError: '',
         saveOk: '',
       },
+      serverKeys: ['id', 'name'],
       rowKeys: {
-        server: ['id', 'name'],
         table: ['id', 'name'],
-        html: [
-          
+        tds: [
+          { // id
+            type: 'td',
+            styles: 'display: none; ', 
+            edit: false,
+          },
+          { // namne
+            type: 'input[text]',
+            styles: '', 
+            edit: true,
+          },
         ],
       },
     });
