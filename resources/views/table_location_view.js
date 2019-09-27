@@ -16,6 +16,7 @@ var TableLocationView = Backbone.View.extend({
     // table departmentTable events
     'click #departmentTable > tbody > tr > td > i.delete': 'deleteRowDepartment',
     'keyup #departmentTable > tbody > tr > td > input.text': 'inputTextEscribirDeparment',
+    'click #departmentTable > tfoot > tr > td > button.add-row': 'addRow',
   },
   // methods
   render: function(){
@@ -63,7 +64,7 @@ var TableLocationView = Backbone.View.extend({
         table: ['id', 'name'],
         tds: [
           { // id
-            type: 'td',
+            type: 'tdId',
             styles: 'display: none; ', 
             edit: false,
             key: 'id',
@@ -99,6 +100,9 @@ var TableLocationView = Backbone.View.extend({
   },
   inputTextEscribirDeparment: function(event){
     this.departmentTable.keyUpInputText(event);
+  },
+  addRow: function(event){
+    this.departmentTable.addRow(event);
   },
 });
 

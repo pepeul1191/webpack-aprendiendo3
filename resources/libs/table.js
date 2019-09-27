@@ -25,7 +25,14 @@ var Table = Backbone.View.extend({
     table: [],
     html: [],
   },
-  buttons: [],
+  buttons: [
+    {
+      type: null, // i, href
+      operation: null,
+      class: null,
+      styles: null,
+    },
+  ],
   // constructor
 	initialize: function(params){
     this.el = params.el;
@@ -46,7 +53,11 @@ var Table = Backbone.View.extend({
   },
   // events
   events: {
+    // table buttons
+    'click button.add-row': 'addRow',
+    // row buttons
     'click i.delete': 'deleteRow',
+    // table inputs
     'keyup input.text': 'keyUpInputText',
   },
   // methods
@@ -114,7 +125,7 @@ var Table = Backbone.View.extend({
   },
   helper: function(){
     return {
-      'td': function(params, value){
+      'tdId': function(params, value){
 				//console.log('td');
         var td = document.createElement('TD');
         td.setAttribute('style', params.styles);
@@ -146,6 +157,71 @@ var Table = Backbone.View.extend({
 				return i;
       },
     };
+  },
+  addRow: function(event){
+    // init new model
+    var model = new this.model();
+    // create row
+    var tr = document.createElement('TR');
+    // itarete list
+    for(var k = 0; k < this.serverKeys.length; k++){
+      var tableKey = this.row.table[k];
+      // set model
+      var randomId = this.el + _.random(0, 1000);
+      if(tableKey == 'id'){
+        model.set({
+          id: randomId,
+        });
+      }else{
+        model.set({
+          [tableKey]: null
+        });
+      }
+      // draw html
+      var td = null;
+      if(this.row.tds[k].type == 'tdId'){
+        td = this.helper()[this.row.tds[k].type](
+          this.row.tds[k], // params for td (styles, edit, etc)
+          randomId, // value for td
+          this, // view instance ????
+        ); 
+      }else{
+        td = this.helper()[this.row.tds[k].type](
+          this.row.tds[k], // params for td (styles, edit, etc)
+          null, // value for td
+          this, // view instance ????
+        ); 
+      }
+      // appendo to row
+      tr.appendChild(td);
+    }
+    // buttons
+    var tdButtons = document.createElement('TD');
+    for(var j = 0; j < this.row.buttons.length; j++){
+      var button = this.helper()[this.row.buttons[j].type](
+        this.row.buttons[j], // params for td (styles, edit, etc)
+        this, // view instance ????
+      );
+      tdButtons.appendChild(button);
+    }
+    tr.appendChild(tdButtons);
+    // add model to collection
+    this.collection.add(model);
+    // append to tbody or create tbody and append if tbody does not exist
+    var children = document.querySelectorAll('#' + this.el + ' > *');
+		var tbody = null;
+		for(var i = 0; i < children.length; i++){
+		  if(children[i].nodeName == "TBODY"){
+		  	tbody = children[i];
+		  }
+		}
+		if(tbody == null){
+		  tbody = document.createElement("tbody");
+		  tbody.appendChild(tr);
+		  document.getElementById(this.idTable).appendChild(tbody);
+		}else{
+		  tbody.appendChild(tr);
+		}
   },
   deleteRow: function(event){
     // get model
