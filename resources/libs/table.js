@@ -47,6 +47,7 @@ var Table = Backbone.View.extend({
   // events
   events: {
     'click i.delete': 'deleteRow',
+    'keyup input.text': 'keyUpInputText',
   },
   // methods
   list: function(event) {
@@ -125,8 +126,9 @@ var Table = Backbone.View.extend({
 				//console.log('input[text]');
         var td = document.createElement('TD');
         var inputText = document.createElement('INPUT');
-        inputText.type = "text";
+        inputText.type = 'text';
         inputText.setAttribute('style', params.styles);
+        inputText.setAttribute('key', params.key);
         inputText.classList.add('text');
         inputText.value = value;
         td.appendChild(inputText);
@@ -158,7 +160,14 @@ var Table = Backbone.View.extend({
     var td = event.target.parentElement.parentElement;
     tbody.removeChild(td);
   }, 
-
+  keyUpInputText: function(event){
+    var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
+		var inputValue = event.target.value;
+    var key = event.target.getAttribute('key');
+		var model = this.collection.get(rowId);
+		//console.log("inputTextEscribir");
+		model.set(key, inputValue);
+  },
 });
 
 export default Table;

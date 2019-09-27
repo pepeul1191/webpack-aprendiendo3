@@ -13,8 +13,9 @@ var TableLocationView = Backbone.View.extend({
   },
   // events
 	events: {
-    // table tablaDepartment events
-    'click #tablaDepartment > tbody > tr > td > i.delete': 'deleteRowDepartment',
+    // table departmentTable events
+    'click #departmentTable > tbody > tr > td > i.delete': 'deleteRowDepartment',
+    'keyup #departmentTable > tbody > tr > td > input.text': 'inputTextEscribirDeparment',
   },
   // methods
   render: function(){
@@ -37,7 +38,7 @@ var TableLocationView = Backbone.View.extend({
   },
   loadComponents: function(){
     this.departmentTable = new Table({
-      el: 'tablaDepartment', // String
+      el: 'departmentTable', // String
       messageLabelId: null, // String
       model: Department, // String
       collection: new DepartmentCollection(), // Backbone collection
@@ -65,11 +66,13 @@ var TableLocationView = Backbone.View.extend({
             type: 'td',
             styles: 'display: none; ', 
             edit: false,
+            key: 'id',
           },
           { // namne
             type: 'input[text]',
             styles: '', 
             edit: true,
+            key: 'name',
           },
         ],
         buttons: [
@@ -93,6 +96,9 @@ var TableLocationView = Backbone.View.extend({
   // delegator methods
   deleteRowDepartment: function(event){
     this.departmentTable.deleteRow(event);
+  },
+  inputTextEscribirDeparment: function(event){
+    this.departmentTable.keyUpInputText(event);
   },
 });
 
