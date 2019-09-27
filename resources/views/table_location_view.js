@@ -16,7 +16,8 @@ var TableLocationView = Backbone.View.extend({
     // table departmentTable events
     'click #departmentTable > tbody > tr > td > i.delete': 'deleteRowDepartment',
     'keyup #departmentTable > tbody > tr > td > input.text': 'inputTextEscribirDeparment',
-    'click #departmentTable > tfoot > tr > td > button.add-row': 'addRow',
+    'click #departmentTable > tfoot > tr > td > button.add-row': 'addRowDepartment',
+    'click #departmentTable > tfoot > tr > td > button.save-table': 'saveTableDepartment',
   },
   // methods
   render: function(){
@@ -40,12 +41,12 @@ var TableLocationView = Backbone.View.extend({
   loadComponents: function(){
     this.departmentTable = new Table({
       el: 'departmentTable', // String
-      messageLabelId: null, // String
+      messageLabelId: 'mensajeRptaDepartment', // String
       model: Department, // String
       collection: new DepartmentCollection(), // Backbone collection
       services: {
         list: BASE_URL + 'department/list', // String
-        save: null, // String
+        save: BASE_URL + 'department/save', // String
       },
       extraData: null,
       observer: { // not initialize
@@ -101,8 +102,11 @@ var TableLocationView = Backbone.View.extend({
   inputTextEscribirDeparment: function(event){
     this.departmentTable.keyUpInputText(event);
   },
-  addRow: function(event){
+  addRowDepartment: function(event){
     this.departmentTable.addRow(event);
+  },
+  saveTableDepartment: function(event){
+    this.departmentTable.saveTable(event);
   },
 });
 

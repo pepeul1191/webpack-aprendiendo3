@@ -244,6 +244,67 @@ var Table = Backbone.View.extend({
     var td = event.target.parentElement.parentElement;
     tbody.removeChild(td);
   }, 
+  saveTable: function(event){
+    var dataToSend = {
+      new: [],
+      edit: [],
+      delete: [],
+      extra: {},
+    };
+    // check if observer hava changes
+    var procced = true;
+    if(
+      this.observer.new.length == 0 && 
+      this.observer.edit.length == 0 && 
+      this.observer.delete.length == 0
+    ){
+			$('#' + this.messageLabelId).removeClass('alert-danger');
+      $('#' + this.messageLabelId).removeClass('alert-success');
+      $('#' + this.messageLabelId).addClass('alert-warning');
+      $('#' + this.messageLabelId).html('No se ha ejecutado cambios en la tabla');
+      $('html, body').animate({ scrollTop: $("#" + this.messageLabelId).offset().top }, 1000);
+      procced = false;
+    }
+    if(procced){
+      // push models to dataToSend from observer's keys
+      for (var key in this.observer) {
+				for (var i = 0; i < this.observer[key].length; i++) {
+					var observerId = this.observer[key][i];
+					if(key == 'new' || key == 'edit'){
+						var model = this.collection.get(observerId);
+						dataToSend[key].push(model.toJSON());
+					}else{
+						dataToSend['delete'].push(observerId);
+					}
+				}
+      }
+      // console.log(dataToSend);
+      // add extra data to dataToSend
+      if(this.extraData != null){
+				dataToSend.extra = this.extraData;
+      }
+      // send data to server
+      var _this = this;
+      $.ajax({
+        url: _this.services.save,
+        type: 'POST',
+        data: {
+          data: JSON.stringify(dataToSend)
+        },
+        headers: {
+          [CSRF_KEY]: CSRF,
+        },
+        async: false,
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(xhr, status, error){
+          console.error(error);
+          console.log(JSON.parse(xhr.responseText));
+        }
+      });
+    }
+  },
   keyUpInputText: function(event){
     var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
 		var inputValue = event.target.value;
