@@ -317,7 +317,32 @@ var Table = Backbone.View.extend({
         },
         async: false,
         success: function(data) {
-          console.log(data);
+          // replace new ids in models and DOM
+          var idNews = JSON.parse(data);
+          if(idNews != []){
+            for(var p = 0; p < idNews.length; p++){
+              var temp = idNews[p];
+              var tempId = temp.tempId;
+              var newId = temp.newId;
+              //actualizar id en collection
+              var model = _this.collection.get(tempId);
+              model.set({'id': newId});
+              //actualizar id en DOM de la tabla
+              var trs = document.getElementById(_this.el).lastChild.querySelectorAll('tr');
+              for (var i = 0; i < trs.length; i++) {
+                if(trs[i].firstChild.innerHTML == tempId){
+                  trs[i].firstChild.innerHTML = newId;
+                }
+              }
+            }
+          }
+          //reset observer
+          _this.observer = {
+            new: [],
+            edit: [],
+            delete: [],
+          };
+          // show message
           $('#' + _this.messageLabelId).removeClass('alert-danger');
           $('#' + _this.messageLabelId).removeClass('alert-warning');
           $('#' + _this.messageLabelId).addClass('alert-success');
