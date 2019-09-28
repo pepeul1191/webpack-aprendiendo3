@@ -1,12 +1,21 @@
 /*
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:100,300,400");
 */
+:root {
+  --bg-primary: #343434;
+  --bg-secondary: #454545;
+}
+
+.bg-primary { 
+  background: var(--bg-primary) !important;
+}
+
+.bg-secondary { 
+  background: var(--bg-secondary) !important;
+}
+
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /*
-  background: #343434;
-  color: #FDFDFD;
-  */
+  background: #F1EFE2;
 }
 
 html {
@@ -18,5 +27,40 @@ a {
 }
 
 #workspace{
-  padding: 20px;
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background: #FFF;
+  box-shadow: 1px 1px 5px #999;
+}
+
+.btn, .form-control {
+  border-radius: 0px !important;
+}
+
+footer{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  color: #999;
+  text-align: right;
+}
+
+footer > a {
+  color: #999;
+  font-weight: 800;
+}
+
+.alert {
+  border-radius: 0rem;
+}
+
+#nav1{
+  height: 20px;
+  font-size: 0.90rem;
+}
+
+#nav2{
+  padding-left: 23px;
+  padding-right: 23px;
 }
