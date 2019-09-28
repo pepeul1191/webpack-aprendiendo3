@@ -55,10 +55,13 @@ var TableLocationView = Backbone.View.extend({
       delete: [],
       },
       messages: {
-        listError: '',
-        saveError: '',
-        otherError: '',
-        saveOk: '',
+        list500: 'Ocurrió un error no esperado en listar los departamentos',
+        list501: 'Ocurrió un error en listar los departamentos',
+        list404: 'Recurso no encontrado - listar departamentos',
+        save500: 'Ocurrió un error no esperado en grabar los cambios',
+        save501: 'Ocurrió un error en grabar los cambios',
+        save404: 'Recurso no encontrado - guardar departamentos',
+        save200: 'Departamentos actualizados',
       },
       serverKeys: ['id', 'name'],
       row: {

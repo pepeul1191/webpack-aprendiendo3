@@ -15,10 +15,12 @@ var Table = Backbone.View.extend({
     delete: [],
   },
   messages: {
-    listError: '',
-    saveError: '',
-    otherError: '',
-    saveOk: '',
+    list500: null,
+    list404: null,
+    save500: null,
+    save501: null,
+    save404: null,
+    save200: null,
   },
   row: {
     server: [],
@@ -117,6 +119,25 @@ var Table = Backbone.View.extend({
         document.getElementById(_this.el).appendChild(tbody);
       },
       error: function(xhr, status, error){
+        if(xhr.status == 404){
+          $('#' + _this.messageLabelId).removeClass('alert-success');
+          $('#' + _this.messageLabelId).removeClass('alert-warning');
+          $('#' + _this.messageLabelId).addClass('alert-danger');
+          $('#' + _this.messageLabelId).html(_this.messages.list404);
+          $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
+        }else if(xhr.status == 501){
+          $('#' + _this.messageLabelId).removeClass('alert-success');
+          $('#' + _this.messageLabelId).removeClass('alert-warning');
+          $('#' + _this.messageLabelId).addClass('alert-danger');
+          $('#' + _this.messageLabelId).html(_this.messages.list501);
+          $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
+        }else{
+          $('#' + _this.messageLabelId).removeClass('alert-success');
+          $('#' + _this.messageLabelId).removeClass('alert-warning');
+          $('#' + _this.messageLabelId).addClass('alert-danger');
+          $('#' + _this.messageLabelId).html(_this.messages.list500);
+          $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
+        }
         console.error(error);
         console.log(JSON.parse(xhr.responseText));
       }
@@ -297,8 +318,32 @@ var Table = Backbone.View.extend({
         async: false,
         success: function(data) {
           console.log(data);
+          $('#' + _this.messageLabelId).removeClass('alert-danger');
+          $('#' + _this.messageLabelId).removeClass('alert-warning');
+          $('#' + _this.messageLabelId).addClass('alert-success');
+          $('#' + _this.messageLabelId).html(_this.messages.save200);
+          $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
         },
         error: function(xhr, status, error){
+          if(xhr.status == 404){
+            $('#' + _this.messageLabelId).removeClass('alert-success');
+            $('#' + _this.messageLabelId).removeClass('alert-warning');
+            $('#' + _this.messageLabelId).addClass('alert-danger');
+            $('#' + _this.messageLabelId).html(_this.messages.save404);
+            $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
+          }else if(xhr.status == 501){
+            $('#' + _this.messageLabelId).removeClass('alert-success');
+            $('#' + _this.messageLabelId).removeClass('alert-warning');
+            $('#' + _this.messageLabelId).addClass('alert-danger');
+            $('#' + _this.messageLabelId).html(_this.messages.save501);
+            $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
+          }else{
+            $('#' + _this.messageLabelId).removeClass('alert-success');
+            $('#' + _this.messageLabelId).removeClass('alert-warning');
+            $('#' + _this.messageLabelId).addClass('alert-danger');
+            $('#' + _this.messageLabelId).html(_this.messages.save500);
+            $('html, body').animate({ scrollTop: $("#" + _this.messageLabelId).offset().top }, 1000);
+          }
           console.error(error);
           console.log(JSON.parse(xhr.responseText));
         }

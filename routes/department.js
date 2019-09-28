@@ -59,7 +59,7 @@ router.post('/save', async function(req, res, next){
     respData = JSON.stringify(createdIds);
   } catch (err) {
     console.log(err);
-    respStatus = 500;
+    respStatus = 501;
     respData = err.message;
     // rollback transcation
     await tx.rollback();
