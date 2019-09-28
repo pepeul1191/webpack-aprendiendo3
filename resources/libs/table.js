@@ -63,7 +63,6 @@ var Table = Backbone.View.extend({
   },
   // methods
   list: function(event) {
-    //this.collection.reset();
     var _this = this;
     $.ajax({
       url: _this.services.list,
@@ -76,6 +75,16 @@ var Table = Backbone.View.extend({
       },
       async: false,
       success: function(data) {
+        // clean collection and DOM
+        var table = document.getElementById(_this.el);
+        var childs = table.childNodes;
+        for (var i = 0; i < childs.length; i++) {
+          if(childs[i].nodeName == "TBODY"){
+            table.removeChild(childs[i]);
+          }
+        }
+        _this.collection.reset();
+        // get list from server
         var list = JSON.parse(data);
         var tbody = document.createElement('TBODY');
         for(var i = 0; i < list.length; i++){
