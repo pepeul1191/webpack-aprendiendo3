@@ -1,12 +1,16 @@
 import Table from '../libs/table';
 import DepartmentCollection from '../collections/department_collection';
 import Department from '../models/department';
+import ProvinceCollection from '../collections/province_collection';
+import Province from '../models/province';
 
 var TableLocationView = Backbone.View.extend({
   // attributes
   el: '#workspace',
-  system_id: null,
-  autocomplete: null,
+  // tables
+  departmentTable: null,
+  provinceTable: null,
+  districtTable: null,
   // constructor
 	initialize: function(){
 
@@ -15,6 +19,7 @@ var TableLocationView = Backbone.View.extend({
 	events: {
     // table departmentTable events
     'click #departmentTable > tbody > tr > td > i.delete': 'deleteRowDepartment',
+    'click #departmentTable > tbody > tr > td > i.load-provinces': 'loadProvinces',
     'keyup #departmentTable > tbody > tr > td > input.text': 'inputTextEscribirDeparment',
     'click #departmentTable > tfoot > tr > td > button.add-row': 'addRowDepartment',
     'click #departmentTable > tfoot > tr > td > button.save-table': 'saveTableDepartment',
@@ -41,7 +46,7 @@ var TableLocationView = Backbone.View.extend({
   loadComponents: function(){
     this.departmentTable = new Table({
       el: 'departmentTable', // String
-      messageLabelId: 'mensajeRptaDepartment', // String
+      messageLabelId: 'messageTables', // String
       model: Department, // String
       collection: new DepartmentCollection(), // Backbone collection
       services: {
@@ -98,7 +103,7 @@ var TableLocationView = Backbone.View.extend({
     });
     this.departmentTable.list();
   },
-  // delegator methods
+  // departmentTable methods
   deleteRowDepartment: function(event){
     this.departmentTable.deleteRow(event);
   },
@@ -110,6 +115,67 @@ var TableLocationView = Backbone.View.extend({
   },
   saveTableDepartment: function(event){
     this.departmentTable.saveTable(event);
+  },
+  loadProvinces: function(event){
+    var departmentId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    this.provinceTable = new Table({
+      el: 'provinceTable', // String
+      messageLabelId: 'messageTables', // String
+      model: Province, // String
+      collection: new ProvinceCollection(), // Backbone collection
+      services: {
+        list: BASE_URL + 'province/list?department_id=' + departmentId, // String
+        save: BASE_URL + 'province/save', // String
+      },
+      extraData: null,
+      observer: { // not initialize
+        new: [],
+        edit: [],
+        delete: [],
+      },
+      messages: {
+        list500: 'Ocurrió un error no esperado en listar las provincias',
+        list501: 'Ocurrió un error en listar las provincias',
+        list404: 'Recurso no encontrado - listar provincias',
+        save500: 'Ocurrió un error no esperado en grabar los cambios',
+        save501: 'Ocurrió un error en grabar los cambios',
+        save404: 'Recurso no encontrado - guardar provincias',
+        save200: 'provincias actualizados',
+      },
+      serverKeys: ['id', 'name'],
+      row: {
+        table: ['id', 'name'],
+        tds: [
+          { // id
+            type: 'tdId',
+            styles: 'display: none; ', 
+            edit: false,
+            key: 'id',
+          },
+          { // namne
+            type: 'input[text]',
+            styles: '', 
+            edit: true,
+            key: 'name',
+          },
+        ],
+        buttons: [
+          {
+            type: 'i',
+            operation: 'load-districts',
+            class: 'fa-chevron-right',
+            styles: 'padding-left: 25px;',
+          },
+          {
+            type: 'i',
+            operation: 'delete',
+            class: 'fa-times',
+            styles: 'padding-left: 15px;',
+          },
+        ],
+      },
+    });
+    this.provinceTable.list();
   },
 });
 

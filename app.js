@@ -11,6 +11,7 @@ var carrerRouter = require('./routes/carrer');
 var districtRouter = require('./routes/district');
 var errorRouter = require('./routes/error');
 var departmentRouter = require('./routes/department');
+var provinceRouter = require('./routes/province');
 // app
 const app = express();
 // view engine setup
@@ -28,6 +29,7 @@ app.use('/carrer', carrerRouter);
 app.use('/district', districtRouter);
 app.use('/error', errorRouter);
 app.use('/department', departmentRouter);
+app.use('/province', provinceRouter);
 // catch 404 and forward to error handler
 app.use(middlewares.error404());
 // error handler
