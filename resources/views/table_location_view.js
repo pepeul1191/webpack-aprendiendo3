@@ -23,12 +23,17 @@ var TableLocationView = Backbone.View.extend({
     'keyup #departmentTable > tbody > tr > td > input.text': 'inputTextEscribirDeparment',
     'click #departmentTable > tfoot > tr > td > button.add-row': 'addRowDepartment',
     'click #departmentTable > tfoot > tr > td > button.save-table': 'saveTableDepartment',
-     // table provinceTable events
-     'click #provinceTable > tbody > tr > td > i.delete': 'deleteRowProvince',
-     'click #provinceTable > tbody > tr > td > i.load-districts': 'loadDistricts',
-     'keyup #provinceTable > tbody > tr > td > input.text': 'inputTextEscribirProvince',
-     'click #provinceTable > tfoot > tr > td > button.add-row': 'addRowProvince',
-     'click #provinceTable > tfoot > tr > td > button.save-table': 'saveTableProvince',
+    // table provinceTable events
+    'click #provinceTable > tbody > tr > td > i.delete': 'deleteRowProvince',
+    'click #provinceTable > tbody > tr > td > i.load-districts': 'loadDistricts',
+    'keyup #provinceTable > tbody > tr > td > input.text': 'inputTextEscribirProvince',
+    'click #provinceTable > tfoot > tr > td > button.add-row': 'addRowProvince',
+    'click #provinceTable > tfoot > tr > td > button.save-table': 'saveTableProvince',
+    // table districtTable events
+    'click #districtTable > tbody > tr > td > i.delete': 'deleteRowDistrict',
+    'keyup #districtTable > tbody > tr > td > input.text': 'inputTextEscribirDistrict',
+    'click #districtTable > tfoot > tr > td > button.add-row': 'addRowDistrict',
+    'click #districtTable > tfoot > tr > td > button.save-table': 'saveTableDistrict',
   },
   // methods
   render: function(){
@@ -199,30 +204,32 @@ var TableLocationView = Backbone.View.extend({
     this.provinceTable.saveTable(event);
   },
   loadDistricts: function(event){
-    var departmentId = event.target.parentElement.parentElement.firstChild.innerHTML;
-    this.provinceTable = new Table({
-      el: 'provinceTable', // String
+    var provinceId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    this.districtTable = new Table({
+      el: 'districtTable', // String
       messageLabelId: 'messageTables', // String
       model: Province, // String
       collection: new ProvinceCollection(), // Backbone collection
       services: {
-        list: BASE_URL + 'province/list?department_id=' + departmentId, // String
-        save: BASE_URL + 'province/save', // String
+        list: BASE_URL + 'district/list?province_id=' + provinceId, // String
+        save: BASE_URL + 'district/save', // String
       },
-      extraData: null,
+      extraData: {
+        provinceId: provinceId,
+      },
       observer: { // not initialize
         new: [],
         edit: [],
         delete: [],
       },
       messages: {
-        list500: 'Ocurrió un error no esperado en listar las provincias',
-        list501: 'Ocurrió un error en listar las provincias',
-        list404: 'Recurso no encontrado - listar provincias',
+        list500: 'Ocurrió un error no esperado en listar los distritos',
+        list501: 'Ocurrió un error en listar los distritos',
+        list404: 'Recurso no encontrado - listar distritos',
         save500: 'Ocurrió un error no esperado en grabar los cambios',
         save501: 'Ocurrió un error en grabar los cambios',
-        save404: 'Recurso no encontrado - guardar provincias',
-        save200: 'provincias actualizados',
+        save404: 'Recurso no encontrado - guardar distritos',
+        save200: 'Distritos actualizados',
       },
       serverKeys: ['id', 'name'],
       row: {
@@ -257,7 +264,20 @@ var TableLocationView = Backbone.View.extend({
         ],
       },
     });
-    this.provinceTable.list();
+    this.districtTable.list();
+  },
+  // districtTable methods
+  deleteRowDistrict: function(event){
+    this.districtTable.deleteRow(event);
+  },
+  inputTextEscribirDistrict: function(event){
+    this.districtTable.keyUpInputText(event);
+  },
+  addRowDistrict: function(event){
+    this.districtTable.addRow(event);
+  },
+  saveTableDistrict: function(event){
+    this.districtTable.saveTable(event);
   },
 });
 

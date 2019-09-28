@@ -96,10 +96,31 @@ const Province = db.define('provinces', {
   },
 });
 
+const District = db.define('districts', {
+	id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true ,
+  },
+	name: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+  province_id: { 
+    type: Sequelize.INTEGER, 
+    references: {
+      model: Province, 
+      key: 'id', 
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    }
+  },
+});
+
 exports.Carrer = Carrer;
 exports.Teacher = Teacher;
 exports.TeacherCarrer = TeacherCarrer;
 exports.LocationVW = LocationVW;
 exports.Deparment = Deparment;
 exports.Province = Province;
+exports.District = District;
 exports.db = db;
