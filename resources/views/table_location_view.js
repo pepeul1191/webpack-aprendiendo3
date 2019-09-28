@@ -23,6 +23,12 @@ var TableLocationView = Backbone.View.extend({
     'keyup #departmentTable > tbody > tr > td > input.text': 'inputTextEscribirDeparment',
     'click #departmentTable > tfoot > tr > td > button.add-row': 'addRowDepartment',
     'click #departmentTable > tfoot > tr > td > button.save-table': 'saveTableDepartment',
+     // table provinceTable events
+     'click #provinceTable > tbody > tr > td > i.delete': 'deleteRowProvince',
+     'click #provinceTable > tbody > tr > td > i.load-districts': 'loadDistricts',
+     'keyup #provinceTable > tbody > tr > td > input.text': 'inputTextEscribirProvince',
+     'click #provinceTable > tfoot > tr > td > button.add-row': 'addRowProvince',
+     'click #provinceTable > tfoot > tr > td > button.save-table': 'saveTableProvince',
   },
   // methods
   render: function(){
@@ -117,6 +123,82 @@ var TableLocationView = Backbone.View.extend({
     this.departmentTable.saveTable(event);
   },
   loadProvinces: function(event){
+    var departmentId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    this.provinceTable = new Table({
+      el: 'provinceTable', // String
+      messageLabelId: 'messageTables', // String
+      model: Province, // String
+      collection: new ProvinceCollection(), // Backbone collection
+      services: {
+        list: BASE_URL + 'province/list?department_id=' + departmentId, // String
+        save: BASE_URL + 'province/save', // String
+      },
+      extraData: {
+        departmentId: departmentId,
+      },
+      observer: { // not initialize
+        new: [],
+        edit: [],
+        delete: [],
+      },
+      messages: {
+        list500: 'Ocurrió un error no esperado en listar las provincias',
+        list501: 'Ocurrió un error en listar las provincias',
+        list404: 'Recurso no encontrado - listar provincias',
+        save500: 'Ocurrió un error no esperado en grabar los cambios',
+        save501: 'Ocurrió un error en grabar los cambios',
+        save404: 'Recurso no encontrado - guardar provincias',
+        save200: 'Provincias actualizadas',
+      },
+      serverKeys: ['id', 'name'],
+      row: {
+        table: ['id', 'name'],
+        tds: [
+          { // id
+            type: 'tdId',
+            styles: 'display: none; ', 
+            edit: false,
+            key: 'id',
+          },
+          { // namne
+            type: 'input[text]',
+            styles: '', 
+            edit: true,
+            key: 'name',
+          },
+        ],
+        buttons: [
+          {
+            type: 'i',
+            operation: 'load-districts',
+            class: 'fa-chevron-right',
+            styles: 'padding-left: 25px;',
+          },
+          {
+            type: 'i',
+            operation: 'delete',
+            class: 'fa-times',
+            styles: 'padding-left: 15px;',
+          },
+        ],
+      },
+    });
+    this.provinceTable.list();
+  },
+  // proivnceTable methods
+  deleteRowProvince: function(event){
+    this.provinceTable.deleteRow(event);
+  },
+  inputTextEscribirProvince: function(event){
+    this.provinceTable.keyUpInputText(event);
+  },
+  addRowProvince: function(event){
+    this.provinceTable.addRow(event);
+  },
+  saveTableProvince: function(event){
+    this.provinceTable.saveTable(event);
+  },
+  loadDistricts: function(event){
     var departmentId = event.target.parentElement.parentElement.firstChild.innerHTML;
     this.provinceTable = new Table({
       el: 'provinceTable', // String

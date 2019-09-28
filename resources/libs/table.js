@@ -75,7 +75,7 @@ var Table = Backbone.View.extend({
       },
       async: false,
       success: function(data) {
-        // clean collection and DOM
+        // clean collection, observer and DOM
         var table = document.getElementById(_this.el);
         var childs = table.childNodes;
         for (var i = 0; i < childs.length; i++) {
@@ -84,6 +84,11 @@ var Table = Backbone.View.extend({
           }
         }
         _this.collection.reset();
+        _this.observer = { // not initialize
+          new: [],
+          edit: [],
+          delete: [],
+        };
         // get list from server
         var list = JSON.parse(data);
         var tbody = document.createElement('TBODY');
