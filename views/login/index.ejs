@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- <link rel='stylesheet' href='/dist/vendors.css' /> -->
+    <!-- Librerías de Terceros-->
+    <link rel='stylesheet' href='/dist/vendors.css' />
+    <link rel='stylesheet' href='/css/styles.css' />
+    <link rel='stylesheet' href='/css/login.css' />
+    <script>
+      const STATIC_URL = '/';
+      const BASE_URL = 'http://localhost:3000/';
+      const CSRF_KEY = 'key'; 
+      const CSRF = 'alsdjflkadsjflkasdjflk';
+    </script>
+  </head>
+  <body>
+  <form class="form-signin" action="/login" method="post">
+    <!--
+    <a href="/">
+     
+    </a>
+    -->
+    <h1 class="h3 mb-3 font-weight-normal">Bienvenido</h1>
+    <input type="hidden" name="key" value="value">
+    <span class="extraData"></span>
+    <!--USER -->
+    <label for="user" class="sr-only">Email address</label>
+    <input type="text" id="user" class="form-control" placeholder="Usuario" required="" autofocus="" name="user">
+    <!--PASS -->
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="" name="pass">
+    <!--MESSAGE-->
+    <p class="<%= message_color %> message" style="margin-top:10px;" id="login-message"><%= message %></p>
+    <!--BUTTON -->
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      Ingresar
+    </button>
+    <!--FooTER LOGIN NAV -->
+    <div class="link-login">
+      <a class="" href="/login/sign_in">
+        Registrarse
+      </a>
+      <a id="forgotpassword" class="pull-right" href="/login/reset_password">
+        Olvidó su Contraseña
+      </a>
+    </div>
+    <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
+  </form>
+</body>
+</html>
