@@ -15,7 +15,7 @@ var TableSpecialtiesView = Backbone.View.extend({
 		var data = {};
 		var templateCompiled = null;
 		$.ajax({
-		  url: STATIC_URL + 'templates/plugins/table_specialties.html',
+		  url: STATIC_URL + 'templates/plugins/table_carrers.html',
 		  type: 'GET',
 		  async: false,
 		  success: function(resource) {

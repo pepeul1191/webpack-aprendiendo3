@@ -7,7 +7,7 @@ import UploadView from '../views/upload_view';
 import ValidationFormView from '../views/validation_form_view';
 import TableLocationView from '../views/table_location_view';
 import TableTeacherView from '../views/table_teacher_view';
-import TableSpecialtiesView from '../views/table_specialties_view';
+import TableCarrersView from '../views/table_carrers_view';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
@@ -18,7 +18,7 @@ var HomeRouter = Backbone.Router.extend({
   validationFormView: null,
   tableLocationView: null,
   tableTeacherView: null,
-  tableSpecialtiesView: null,
+  tableCarrersView: null,
   initialize: function() {
   },
   routes:{
@@ -30,7 +30,7 @@ var HomeRouter = Backbone.Router.extend({
     'upload': 'upload',
     'validation_form': 'validation_form',
     'table/location': 'table_location',
-    'table/specialties': 'table_specialties',
+    'table/carrers': 'table_carrers',
     'table/teachers': 'table_teachers',
     // others
     '*path' : 'default',
@@ -93,12 +93,12 @@ var HomeRouter = Backbone.Router.extend({
     this.tableTeacherView.render();
     this.tableTeacherView.loadComponents();
   },
-  table_specialties: function(){
-    if(this.tableSpecialtiesView == null){
-      this.tableSpecialtiesView = new TableSpecialtiesView();
+  table_carrers: function(){
+    if(this.tableCarrersView == null){
+      this.tableCarrersView = new TableCarrersView();
     }
-    this.tableSpecialtiesView.render();
-    this.tableSpecialtiesView.loadComponents();
+    this.tableCarrersView.render();
+    this.tableCarrersView.loadComponents();
   },
   default: function(path){
     // console.log(path);
