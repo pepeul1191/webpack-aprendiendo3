@@ -18,6 +18,7 @@ var TableImageView = Backbone.View.extend({
     'click #imageTable > tbody > tr > td > i.file-view': 'imageFileView',
     'click #imageTable > tfoot > tr > td > button.save-table': 'saveTableImage',
     'keyup #imageTable > tbody > tr > td > input.text': 'inputTextImage',
+    'click #imageTable > tfoot > tr > td > button.add-row': 'addRowImage',
   },
   // methods
   render: function(){
@@ -138,6 +139,9 @@ var TableImageView = Backbone.View.extend({
   },
   imageFileView: function(event){
     this.imageTable.imageFileView(event);
+  },
+  addRowImage: function(event){
+    this.imageTable.addRow(event);
   },
 });
 
