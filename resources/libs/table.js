@@ -127,13 +127,16 @@ var Table = Backbone.View.extend({
               [tableKey]: list[i][serverKey]
             });
             // draw html
-            var td = _this.helper()[_this.row.tds[k].type](
-              _this.row.tds[k], // params for td (styles, edit, etc)
-              list[i][serverKey], // value for td
-              _this, // view instance ????
-            ); 
-            // appendo to row
-            tr.appendChild(td);
+            if(typeof _this.row.tds[k] !== 'undefined'){
+              var td = _this.helper()[_this.row.tds[k].type](
+                _this.row.tds[k], // params for td (styles, edit, etc)
+                list[i][serverKey], // value for td
+                _this, // view instance ????
+              ); 
+              // console.log(td);
+              // appendo to row
+              tr.appendChild(td);
+            }
           }
           // buttons
           var tdButtons = document.createElement('TD');

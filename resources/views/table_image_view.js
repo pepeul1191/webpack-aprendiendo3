@@ -64,9 +64,9 @@ var TableImageView = Backbone.View.extend({
         save404: 'Recurso no encontrado - guardar imágenes',
         save200: 'Imágenes actualizados',
       },
-      serverKeys: ['id', 'name',],
+      serverKeys: ['id', 'name', 'url'],
       row: {
-        table: ['id', 'name',],
+        table: ['id', 'name', 'url'],
         tds: [
           { // id
             type: 'tdId',
