@@ -5,6 +5,7 @@ const errorRouter = require('../routes/error');
 const departmentRouter = require('../routes/department');
 const provinceRouter = require('../routes/province');
 const loginRouter = require('../routes/login');
+const imageRouter = require('../routes/image');
 
 module.exports = function(app){
   app.use('/', indexRouter);
@@ -14,4 +15,5 @@ module.exports = function(app){
   app.use('/department', departmentRouter);
   app.use('/province', provinceRouter);
   app.use('/login', loginRouter);
+  app.use('/image', imageRouter);
 };

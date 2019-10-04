@@ -35,6 +35,26 @@ var Table = Backbone.View.extend({
       styles: null,
     },
   ],
+  upload: {
+    path: null,
+    inputFile: null, // String
+    service: {
+      url: null, // String
+      formDataKey: null, // String
+      uploadMessage: null,// String
+      erroMessage: null,// String
+      successMessage: null,
+    },
+    keyModel: null,
+    extensions: {
+      allow: [],
+      message: null,
+    },
+    size: {
+      allow: 0, // bytes
+      message: null,
+    },
+  },
   // constructor
 	initialize: function(params){
     this.el = params.el;
@@ -46,6 +66,7 @@ var Table = Backbone.View.extend({
     this.messages = params.messages;
     this.serverKeys = params.serverKeys;
     this.row = params.row;
+    this.upload = params.upload;
     // dynamic allocation of events
     this.events = this.events || {};
     this.delegateEvents();
@@ -411,6 +432,71 @@ var Table = Backbone.View.extend({
 			}
 			// console.log(this.observer);
 		}
+  },
+  // uploads
+  fileSelect: function(event){
+    $('#' + this.upload.inputFile).click();
+  },
+  fileUpload: function(event){
+    var file = $('#' + this.upload.inputFile)[0].files[0];
+    if(!_.contains(this.upload.extensions.allow, file.type)){
+      $('#' + this.messageLabelId).removeClass('alert-success');
+      $('#' + this.messageLabelId).removeClass('alert-warning');
+      $('#' + this.messageLabelId).addClass('alert-danger');
+      $('#' + this.messageLabelId).html(this.upload.extensions.message);
+    }else{
+      if(file.size > this.upload.size.allow){
+        $('#' + this.messageLabelId).removeClass('alert-success');
+        $('#' + this.messageLabelId).removeClass('alert-warning');
+        $('#' + this.messageLabelId).addClass('alert-danger');
+        $('#' + this.messageLabelId).html(this.upload.size.message);
+      }else{
+        var formData = new FormData();
+        formData.append(this.upload.service.formDataKey, file);
+        var _this = this;
+        $.ajax({
+          url: _this.upload.service.url,
+          type: 'POST',
+          data: formData,
+		      contentType: false,
+		      processData: false,
+          headers: {
+            [CSRF_KEY]: CSRF,
+          },
+          async: false,
+          beforeSend: function() {
+            $('#' + _this.messageLabelId).removeClass('alert-success');
+            $('#' + _this.messageLabelId).removeClass('alert-danger');
+            $('#' + _this.messageLabelId).addClass('alert-warning');
+						$('#' + _this.messageLabelId).html(_this.upload.service.uploadMessage);
+					},
+          success: function(data) {
+            $('#' + _this.messageLabelId).removeClass('alert-danger');
+            $('#' + _this.messageLabelId).removeClass('alert-warning');
+            $('#' + _this.messageLabelId).addClass('alert-success');
+            $('#' + _this.messageLabelId).html(_this.upload.service.successMessage);
+            var resp = JSON.parse(data);
+            var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
+            var model = _this.collection.get(rowId);
+            model.set(_this.upload.keyModel, resp.url + resp.path);
+          },
+          error: function(xhr, status, error){
+            console.error(error);
+            console.log(xhr.responseText);
+            $('#' + _this.messageLabelId).removeClass('alert-success');
+            $('#' + _this.messageLabelId).removeClass('alert-warning');
+            $('#' + _this.messageLabelId).addClass('alert-danger');
+						$('#' + _this.messageLabelId).html(_this.upload.service.errorMessage);
+          }
+        });
+      }
+    }
+  },
+  imageFileView: function(event){
+    var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    var model = this.collection.get(rowId);
+    var win = window.open(model.get(this.upload.keyModel), '_blank');
+    win.focus();
   },
 });
 

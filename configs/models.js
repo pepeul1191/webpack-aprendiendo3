@@ -116,6 +116,22 @@ const District = db.define('districts', {
   },
 });
 
+const Image = db.define('images', {
+	id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true ,
+  },
+	name: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+	url: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+});
+
 exports.Carrer = Carrer;
 exports.Teacher = Teacher;
 exports.TeacherCarrer = TeacherCarrer;
@@ -123,4 +139,5 @@ exports.LocationVW = LocationVW;
 exports.Deparment = Deparment;
 exports.Province = Province;
 exports.District = District;
+exports.Image = Image;
 exports.db = db;

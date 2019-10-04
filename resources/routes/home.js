@@ -8,6 +8,7 @@ import ValidationFormView from '../views/validation_form_view';
 import TableLocationView from '../views/table_location_view';
 import TableTeacherView from '../views/table_teacher_view';
 import TableCarrersView from '../views/table_carrers_view';
+import TableImageView from '../views/table_image_view';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
@@ -19,6 +20,7 @@ var HomeRouter = Backbone.Router.extend({
   tableLocationView: null,
   tableTeacherView: null,
   tableCarrersView: null,
+  tableImageView: null,
   initialize: function() {
   },
   routes:{
@@ -28,10 +30,11 @@ var HomeRouter = Backbone.Router.extend({
     // plugins
     'autocomplete': 'autocomplete',
     'upload': 'upload',
-    'validation_form': 'validation_form',
-    'table/location': 'table_location',
-    'table/carrers': 'table_carrers',
-    'table/teachers': 'table_teachers',
+    'validation_form': 'validationForm',
+    'table/location': 'tableLocation',
+    'table/carrers': 'tableCarrers',
+    'table/teachers': 'tableTeachers',
+    'table/images': 'tableImages',
     // others
     '*path' : 'default',
   },
@@ -72,33 +75,40 @@ var HomeRouter = Backbone.Router.extend({
     this.uploadView.render();
     this.uploadView.loadComponents();
   },
-  validation_form: function(){
+  validationForm: function(){
     if(this.validationFormView == null){
       this.validationFormView = new ValidationFormView();
     }
     this.validationFormView.render();
     this.validationFormView.loadComponents();
   },
-  table_location: function(){
+  tableLocation: function(){
     if(this.tableLocationView == null){
       this.tableLocationView = new TableLocationView();
     }
     this.tableLocationView.render();
     this.tableLocationView.loadComponents();
   },
-  table_teachers: function(){
+  table_teacheT: function(){
     if(this.tableTeacherView == null){
       this.tableTeacherView = new TableTeacherView();
     }
     this.tableTeacherView.render();
     this.tableTeacherView.loadComponents();
   },
-  table_carrers: function(){
+  tableCarrers: function(){
     if(this.tableCarrersView == null){
       this.tableCarrersView = new TableCarrersView();
     }
     this.tableCarrersView.render();
     this.tableCarrersView.loadComponents();
+  },
+  tableImages: function(){
+    if(this.tableImageView == null){
+      this.tableImageView = new TableImageView();
+    }
+    this.tableImageView.render();
+    this.tableImageView.loadComponents();
   },
   default: function(path){
     // console.log(path);
