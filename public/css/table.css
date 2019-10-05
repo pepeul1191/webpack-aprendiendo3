@@ -98,10 +98,13 @@ table > tfoot > tr > td {
   padding-right: 2.5px; 
   text-align: left;
   font-size: 20px;
+  font-weight: 400;
 }
 
 .pagination-number{
   margin-left: 2.5px;
   margin-right: 2.5px;
-  margin-bottom: 2px;
+  top: -2px;
+  position: relative;
+  font-weight: 600;
 }

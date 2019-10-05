@@ -13,6 +13,10 @@ var TableTeacherView = Backbone.View.extend({
   },
   // events
 	events: {
+    'click #teacherTable > tfoot > tr > td > #btnGoBegin': 'goBegin',
+    'click #teacherTable > tfoot > tr > td > #btnGoPrevious': 'goPrevious',
+    'click #teacherTable > tfoot > tr > td > #btnGoNext': 'goNext',
+    'click #teacherTable > tfoot > tr > td > #btnGoLast': 'goLast',
   },
   // methods
   render: function(){
@@ -93,10 +97,27 @@ var TableTeacherView = Backbone.View.extend({
           respPages: 'pages',
         },
         number: 'pagination',
-        step: 10,
-        page: 1,
+        step: 20,
+        pageActual: 1,
+        pageNumber: null,
       },
     });
+    this.teacherTable.list();
+  },
+  goBegin: function(event){
+    this.teacherTable.pagination.pageActual = 1;
+    this.teacherTable.list();
+  },
+  goPrevious: function(event){
+    this.teacherTable.pagination.pageActual--;
+    this.teacherTable.list();
+  },
+  goNext: function(event){
+    this.teacherTable.pagination.pageActual++;
+    this.teacherTable.list();
+  },
+  goLast: function(event){
+    this.teacherTable.pagination.pageActual = this.teacherTable.pagination.pageNumber;
     this.teacherTable.list();
   },
 });

@@ -70,7 +70,8 @@ var Table = Backbone.View.extend({
     },
     number: null,
     step: null,
-    page: null,
+    pageActual: null,
+    pageNumber: null,
   },
   // constructor
 	initialize: function(params){
@@ -106,7 +107,7 @@ var Table = Backbone.View.extend({
     // if pagination exist, send params
     var params = {};
     if(typeof this.pagination !== 'undefined'){
-      params[this.pagination.service.paramPage] = this.pagination.page;
+      params[this.pagination.service.paramPage] = this.pagination.pageActual;
       params[this.pagination.service.paramStep] = this.pagination.step;
     }
     // do ajax
@@ -139,7 +140,7 @@ var Table = Backbone.View.extend({
         var tbody = document.createElement('TBODY');
         // extract list to table if pagination
         if(typeof _this.pagination !== 'undefined'){
-          pagesNumber = list[_this.pagination.service.respPages];
+          _this.pagination.pageNumber = list[_this.pagination.service.respPages];
           list = list[_this.pagination.service.respList];
         }
         // iterate list
@@ -187,8 +188,24 @@ var Table = Backbone.View.extend({
         document.getElementById(_this.el).appendChild(tbody);
         // if pagination exist, set pagination nav buttons in DOM
         if(typeof _this.pagination !== 'undefined'){
-          var temp = _this.pagination.page + ' / ' + pagesNumber;
+          var temp = _this.pagination.pageActual + ' / ' + _this.pagination.pageNumber;
           document.getElementById(_this.pagination.number).innerHTML = temp;
+          // if pagination is at begin, no first two buttons
+          if(_this.pagination.pageActual == 1){
+            $('#' + _this.pagination.buttons.prev).addClass('d-none');
+            $('#' + _this.pagination.buttons.begin).addClass('d-none');
+          }else{
+            $('#' + _this.pagination.buttons.prev).removeClass('d-none');
+            $('#' + _this.pagination.buttons.begin).removeClass('d-none');
+          }
+          // if pagination is at end, no last two buttons
+          if(_this.pagination.pageActual == _this.pagination.pageNumber){
+            $('#' + _this.pagination.buttons.next).addClass('d-none');
+            $('#' + _this.pagination.buttons.last).addClass('d-none');
+          }else{
+            $('#' + _this.pagination.buttons.next).removeClass('d-none');
+            $('#' + _this.pagination.buttons.last).removeClass('d-none');
+          }
         }
       },
       error: function(xhr, status, error){
@@ -535,6 +552,19 @@ var Table = Backbone.View.extend({
     var model = this.collection.get(rowId);
     var win = window.open(model.get(this.upload.keyModel), '_blank');
     win.focus();
+  },
+  // pagination buttons
+  goNext: function(event){
+
+  },
+  goLast: function(event){
+
+  },
+  goBegin: function(event){
+
+  },
+  goPrev: function(event){
+
   },
 });
 
