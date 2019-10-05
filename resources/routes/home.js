@@ -110,6 +110,13 @@ var HomeRouter = Backbone.Router.extend({
     this.tableImageView.render();
     this.tableImageView.loadComponents();
   },
+  tableTeachers: function(){
+    if(this.tableTeacherView == null){
+      this.tableTeacherView = new TableTeacherView();
+    }
+    this.tableTeacherView.render();
+    this.tableTeacherView.loadComponents();
+  },
   default: function(path){
     // console.log(path);
     var newURL = '/' + path;

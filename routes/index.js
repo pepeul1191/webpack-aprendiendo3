@@ -18,6 +18,7 @@ router.get('/validation_form', homeView);
 router.get('/table/location', homeView);
 router.get('/table/carrers', homeView);
 router.get('/table/images', homeView);
+router.get('/table/teachers', homeView);
 // upload file
 router.post('/upload/file', bodyParser.text({ type: 'json' }), function (req, res) {
   var file = req.files.file;
