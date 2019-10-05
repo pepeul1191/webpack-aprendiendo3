@@ -141,6 +141,38 @@ const Image = db.define('images', {
   },
 });
 
+const VWTeacherLocation = db.define('vw_teachers_locations', {
+	id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true ,
+  },
+	names: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+  last_names: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+  img: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+  district_id: { 
+    type: Sequelize.INTEGER, 
+    references: {
+      model: District, 
+      key: 'id', 
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    }
+  },
+  district_name: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+});
+
 exports.Carrer = Carrer;
 exports.Teacher = Teacher;
 exports.TeacherCarrer = TeacherCarrer;
@@ -149,4 +181,5 @@ exports.Deparment = Deparment;
 exports.Province = Province;
 exports.District = District;
 exports.Image = Image;
+exports.VWTeacherLocation = VWTeacherLocation;
 exports.db = db;

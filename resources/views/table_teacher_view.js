@@ -24,6 +24,11 @@ var TableTeacherView = Backbone.View.extend({
     'click #teacherTable > tfoot > tr > td > #btnGoLast': 'goLast',
     'keyup #teacherTable > tbody > tr > td > input.text-autocomplete': 'autocompleteDistrict',
     'click #teacherTable > tbody > tr > td > .hint-container': 'clickHint',
+    // save
+    'click #teacherTable > tfoot > tr > td > button.add-row': 'addRow',
+    'click #teacherTable > tfoot > tr > td > button.save-table': 'saveTable',
+    'keyup #teacherTable > tbody > tr > td > input.text': 'inputText',
+    'click #teacherTable > tbody > tr > td > i.delete': 'deleteRow',
   },
   // methods
   render: function(){
@@ -69,9 +74,9 @@ var TableTeacherView = Backbone.View.extend({
         save404: 'Recurso no encontrado - guardar imágenes',
         save200: 'Imágenes actualizados',
       },
-      serverKeys: ['id', 'names', 'last_names', 'url'],
+      serverKeys: ['id', 'names', 'last_names', 'district_id'],
       row: {
-        table: ['id', 'names', 'last_names', 'url'],
+        table: ['id', 'names', 'last_names', 'district_id'],
         tds: [
           { // id
             type: 'tdId',
@@ -105,10 +110,16 @@ var TableTeacherView = Backbone.View.extend({
               name: 'name',
             },
             keyModel: 'district_id',
+            keyName: 'district_name',
           },
         ],
         buttons: [
-
+          {
+            type: 'i',
+            operation: 'delete',
+            class: 'fa-times',
+            styles: 'padding-left: 30px;',
+          },
         ],
       },
       pagination: {
@@ -151,6 +162,22 @@ var TableTeacherView = Backbone.View.extend({
   },
   clickHint: function(event){
     this.teacherTable.clickHint(event);
+  },
+  // table
+  saveTable: function(event){
+    this.teacherTable.saveTable(event);
+  },
+  addRow: function(event){
+    this.teacherTable.addRow(event);
+  },
+  deleteRow: function(event){
+    this.teacherTable.deleteRow(event);
+  },
+  inputText: function(event){
+    this.teacherTable.keyUpInputText(event);
+  },
+  deleteRow: function(event){
+    this.teacherTable.deleteRow(event);
   },
 });
 

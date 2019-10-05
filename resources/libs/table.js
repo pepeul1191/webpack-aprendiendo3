@@ -162,7 +162,7 @@ var Table = Backbone.View.extend({
               var td = _this.helper()[_this.row.tds[k].type](
                 _this.row.tds[k], // params for td (styles, edit, etc)
                 list[i][serverKey], // value for td
-                _this, // view instance ????
+                list[i], // view instance ????
               ); 
               // console.log(td);
               // appendo to row
@@ -266,7 +266,7 @@ var Table = Backbone.View.extend({
         i.classList.add(params.operation);
 				return i;
       },
-      'autocomplete': function(params){
+      'autocomplete': function(params, value, data){
         //console.log('autocomplete');
         var td = document.createElement('TD');
         var inputText = document.createElement('INPUT');
@@ -275,12 +275,12 @@ var Table = Backbone.View.extend({
         inputText.type = 'text';
         inputText.setAttribute('style', params.styles);
         inputText.setAttribute('key', params.key);
+        inputText.value = data[params.keyName];
         inputText.classList.add('text-autocomplete');
         inputText.setAttribute('for', params.key + '_' + randomId);
         hintList.setAttribute('id', params.key + '_' + randomId);
         hintList.classList.add('d-none');
         hintList.classList.add('hint-container');
-        // <ul id="locationsList" class="d-none hint-container"></ul>
         td.appendChild(inputText);
         td.appendChild(hintList);
         return td;
