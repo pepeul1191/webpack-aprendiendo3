@@ -266,6 +266,25 @@ var Table = Backbone.View.extend({
         i.classList.add(params.operation);
 				return i;
       },
+      'autocomplete': function(params){
+        //console.log('autocomplete');
+        var td = document.createElement('TD');
+        var inputText = document.createElement('INPUT');
+        var hintList = document.createElement('UL');
+        var randomId = _.random(0, 1000);
+        inputText.type = 'text';
+        inputText.setAttribute('style', params.styles);
+        inputText.setAttribute('key', params.key);
+        inputText.classList.add('text-autocomplete');
+        inputText.setAttribute('for', params.key + '_' + randomId);
+        hintList.setAttribute('id', params.key + '_' + randomId);
+        hintList.classList.add('d-none');
+        hintList.classList.add('hint-container');
+        // <ul id="locationsList" class="d-none hint-container"></ul>
+        td.appendChild(inputText);
+        td.appendChild(hintList);
+        return td;
+      },
     };
   },
   addRow: function(event){
@@ -555,16 +574,91 @@ var Table = Backbone.View.extend({
   },
   // pagination buttons
   goNext: function(event){
-
+    this.pagination.pageActual++;
+    this.list();
   },
   goLast: function(event){
-
+    this.pagination.pageActual = this.pagination.pageNumber;
+    this.list();
   },
   goBegin: function(event){
-
+    this.pagination.pageActual = 1;
+    this.list();
   },
-  goPrev: function(event){
-
+  goPrevious: function(event){
+    this.pagination.pageActual--;
+    this.list();
+  },
+  // autcomplete
+  keyUpAutocomplete: function(event){
+    var key = event.target.getAttribute('key');
+    var tdParams = {};
+    // get td params
+    for(var i = 0; i < this.row.tds.length; i++){
+      if(this.row.tds[i].key == key){
+        tdParams = this.row.tds[i];
+      }
+    }
+    var idHints = event.target.getAttribute('for');
+    var text = event.target.value;
+    if(event.keyCode != 27){ // 27 == Escape
+      var _this = this;
+      $.ajax({
+        url: tdParams.service.url,
+        type: 'GET',
+        data: {
+          [tdParams.service.param]: text,
+        },
+        headers: {
+          [CSRF_KEY]: CSRF,
+        },
+        async: false,
+        success: function(data) {
+          var hints = JSON.parse(data);
+          $('#' + idHints).empty();
+          for(var i = 0; i < hints.length; i++){
+            var li = document.createElement('li');
+            li.classList.add('hint');
+            li.setAttribute('hint_id', hints[i][tdParams.formatResponseData.id]);
+            li.setAttribute('for', idHints);
+            li.setAttribute('key', key);
+            li.appendChild(document.createTextNode(hints[i][tdParams.formatResponseData.name]));
+            document.getElementById(idHints).appendChild(li);
+          }
+          $('#' + idHints).removeClass('d-none');
+          var inputTextWidth = $(event.target).outerWidth();
+          $('#' + idHints).outerWidth(inputTextWidth);
+          // _this.showHints();
+        },
+        error: function(xhr, status, error){
+          console.error(error);
+          console.log(JSON.parse(xhr.responseText));
+        }
+      });
+    }else{
+      this.clean(event);
+    }
+  },
+  clickHint: function(event){
+    var key = event.target.getAttribute('key');
+    var tdParams = {};
+    // get td params
+    for(var i = 0; i < this.row.tds.length; i++){
+      if(this.row.tds[i].key == key){
+        tdParams = this.row.tds[i];
+      }
+    }
+    // display in input the value selected
+    event.target.parentElement.parentElement.firstChild.value = event.target.innerHTML;
+    // set model with the id of selecction
+    var forTargetId = event.target.getAttribute('for');
+    var hintId = event.target.getAttribute('hint_id');
+    var rowId = event.target.parentElement.parentElement.parentElement.firstChild.innerHTML;
+    var model = this.collection.get(rowId);
+    model.set(tdParams.keyModel, hintId);
+    // clean the DOM
+    $('#' + forTargetId).empty();
+    $('#' + forTargetId).addClass('d-none');
   },
 });
 

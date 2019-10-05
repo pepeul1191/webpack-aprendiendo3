@@ -1,6 +1,8 @@
 import Table from '../libs/table';
 import TeacherCollection from '../collections/teacher_collection';
 import Teacher from '../models/teacher';
+import DistrictCollection from '../collections/district_collection';
+import District from '../models/district';
 
 var TableTeacherView = Backbone.View.extend({
   // attributes
@@ -13,10 +15,15 @@ var TableTeacherView = Backbone.View.extend({
   },
   // events
 	events: {
+    // pagination
     'click #teacherTable > tfoot > tr > td > #btnGoBegin': 'goBegin',
     'click #teacherTable > tfoot > tr > td > #btnGoPrevious': 'goPrevious',
     'click #teacherTable > tfoot > tr > td > #btnGoNext': 'goNext',
     'click #teacherTable > tfoot > tr > td > #btnGoLast': 'goLast',
+    // autcomplete
+    'click #teacherTable > tfoot > tr > td > #btnGoLast': 'goLast',
+    'keyup #teacherTable > tbody > tr > td > input.text-autocomplete': 'autocompleteDistrict',
+    'click #teacherTable > tbody > tr > td > .hint-container': 'clickHint',
   },
   // methods
   render: function(){
@@ -62,9 +69,9 @@ var TableTeacherView = Backbone.View.extend({
         save404: 'Recurso no encontrado - guardar imágenes',
         save200: 'Imágenes actualizados',
       },
-      serverKeys: ['id', 'names', 'url'],
+      serverKeys: ['id', 'names', 'last_names', 'url'],
       row: {
-        table: ['id', 'names', 'url'],
+        table: ['id', 'names', 'last_names', 'url'],
         tds: [
           { // id
             type: 'tdId',
@@ -72,11 +79,32 @@ var TableTeacherView = Backbone.View.extend({
             edit: false,
             key: 'id',
           },
-          { // namne
+          { // names
             type: 'input[text]',
             styles: '', 
             edit: true,
             key: 'names',
+          },
+          { // last_names
+            type: 'input[text]',
+            styles: '', 
+            edit: true,
+            key: 'last_names',
+          },
+          { // districts
+            type: 'autocomplete',
+            styles: '', 
+            edit: true,
+            key: 'district',
+            service: {
+              url: BASE_URL + 'district/search',
+              param: 'name',
+            },
+            formatResponseData: {
+              id: 'id',
+              name: 'name',
+            },
+            keyModel: 'district_id',
           },
         ],
         buttons: [
@@ -104,21 +132,25 @@ var TableTeacherView = Backbone.View.extend({
     });
     this.teacherTable.list();
   },
+  // pagination
   goBegin: function(event){
-    this.teacherTable.pagination.pageActual = 1;
-    this.teacherTable.list();
+    this.teacherTable.goBegin();
   },
   goPrevious: function(event){
-    this.teacherTable.pagination.pageActual--;
-    this.teacherTable.list();
+    this.teacherTable.goPrevious();
   },
   goNext: function(event){
-    this.teacherTable.pagination.pageActual++;
-    this.teacherTable.list();
+    this.teacherTable.goNext();
   },
   goLast: function(event){
-    this.teacherTable.pagination.pageActual = this.teacherTable.pagination.pageNumber;
-    this.teacherTable.list();
+    this.teacherTable.goLast();
+  },
+  // autcomplete
+  autocompleteDistrict: function(event){
+    this.teacherTable.keyUpAutocomplete(event);
+  },
+  clickHint: function(event){
+    this.teacherTable.clickHint(event);
   },
 });
 
