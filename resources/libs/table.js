@@ -55,6 +55,23 @@ var Table = Backbone.View.extend({
       message: null,
     },
   },
+  pagination: {
+    buttons: {
+      next: null,
+      prev: null,
+      begin: null,
+      last: null,
+    },
+    service: {
+      paramPage: null,
+      paramKey: null,
+      respList: null,
+      respPages: null,
+    },
+    number: null,
+    step: null,
+    page: null,
+  },
   // constructor
 	initialize: function(params){
     this.el = params.el;
@@ -67,6 +84,7 @@ var Table = Backbone.View.extend({
     this.serverKeys = params.serverKeys;
     this.row = params.row;
     this.upload = params.upload;
+    this.pagination = params.pagination;
     // dynamic allocation of events
     this.events = this.events || {};
     this.delegateEvents();
@@ -85,12 +103,17 @@ var Table = Backbone.View.extend({
   // methods
   list: function(event) {
     var _this = this;
+    // if pagination exist, send params
+    var params = {};
+    if(typeof this.pagination !== 'undefined'){
+      params[this.pagination.service.paramPage] = this.pagination.page;
+      params[this.pagination.service.paramStep] = this.pagination.step;
+    }
+    // do ajax
     $.ajax({
       url: _this.services.list,
       type: 'GET',
-      data: {
-        // [_this.service.param]: text,
-      },
+      data: params,
       headers: {
         [CSRF_KEY]: CSRF,
       },
@@ -112,7 +135,14 @@ var Table = Backbone.View.extend({
         };
         // get list from server
         var list = JSON.parse(data);
+        var pagesNumber = null;
         var tbody = document.createElement('TBODY');
+        // extract list to table if pagination
+        if(typeof _this.pagination !== 'undefined'){
+          pagesNumber = list[_this.pagination.service.respPages];
+          list = list[_this.pagination.service.respList];
+        }
+        // iterate list
         for(var i = 0; i < list.length; i++){
           // create model 
           var model = new _this.model();
@@ -155,6 +185,11 @@ var Table = Backbone.View.extend({
         // console.log(_this.collection.toJSON());
         // append tbody to table
         document.getElementById(_this.el).appendChild(tbody);
+        // if pagination exist, set pagination nav buttons in DOM
+        if(typeof _this.pagination !== 'undefined'){
+          var temp = _this.pagination.page + ' / ' + pagesNumber;
+          document.getElementById(_this.pagination.number).innerHTML = temp;
+        }
       },
       error: function(xhr, status, error){
         if(xhr.status == 404){
