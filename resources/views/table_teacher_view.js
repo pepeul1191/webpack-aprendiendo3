@@ -1,8 +1,8 @@
 import Table from '../libs/table';
 import TeacherCollection from '../collections/teacher_collection';
 import Teacher from '../models/teacher';
-import DistrictCollection from '../collections/district_collection';
-import District from '../models/district';
+import SexCollection from '../collections/sex_collection';
+import Sex from '../models/sex';
 
 var TableTeacherView = Backbone.View.extend({
   // attributes
@@ -29,6 +29,7 @@ var TableTeacherView = Backbone.View.extend({
     'click #teacherTable > tfoot > tr > td > button.save-table': 'saveTable',
     'keyup #teacherTable > tbody > tr > td > input.text': 'inputText',
     'click #teacherTable > tbody > tr > td > i.delete': 'deleteRow',
+    "change #teacherTable > tbody > tr > td > select": 'changeSex',
   },
   // methods
   render: function(){
@@ -50,6 +51,10 @@ var TableTeacherView = Backbone.View.extend({
 		this.$el.html(templateCompiled);
   },
   loadComponents: function(){
+    // fill collection for select
+    var sexCollection = new SexCollection();
+    sexCollection.fill();
+    // call table
     this.teacherTable = new Table({
       el: 'teacherTable', // String
       messageLabelId: 'message', // String
@@ -74,9 +79,9 @@ var TableTeacherView = Backbone.View.extend({
         save404: 'Recurso no encontrado - guardar imágenes',
         save200: 'Imágenes actualizados',
       },
-      serverKeys: ['id', 'names', 'last_names', 'district_id'],
+      serverKeys: ['id', 'names', 'last_names', 'district_id', 'sex_id', ],
       row: {
-        table: ['id', 'names', 'last_names', 'district_id'],
+        table: ['id', 'names', 'last_names', 'district_id', 'sex_id', ],
         tds: [
           { // id
             type: 'tdId',
@@ -111,6 +116,24 @@ var TableTeacherView = Backbone.View.extend({
             },
             keyModel: 'district_id',
             keyName: 'district_name',
+          },
+          { // sex
+            type: 'select',
+            styles: 'width: 100px;', 
+            edit: true,
+            key: 'sex_id',
+            service: {
+              url: BASE_URL + 'sex/list',
+              param: '',
+            },
+            formatResponseData: {
+              id: 'id',
+              name: 'name',
+            },
+            keyModel: 'id',
+            keyName: 'name',
+            collection: sexCollection,
+            model: Sex,
           },
         ],
         buttons: [
@@ -178,6 +201,9 @@ var TableTeacherView = Backbone.View.extend({
   },
   deleteRow: function(event){
     this.teacherTable.deleteRow(event);
+  },
+  changeSex: function(event){
+    this.teacherTable.changeSelect(event);
   },
 });
 

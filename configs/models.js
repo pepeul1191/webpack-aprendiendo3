@@ -81,6 +81,18 @@ const Carrer = db.define('carrers', {
   },
 });
 
+const Sex = db.define('sexs', {
+	id: { 
+    type: Sequelize.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true ,
+  },
+	name: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
+});
+
 const Teacher = db.define('teachers', {
 	id: { 
     type: Sequelize.INTEGER, 
@@ -103,6 +115,14 @@ const Teacher = db.define('teachers', {
     type: Sequelize.INTEGER, 
     references: {
       model: District, 
+      key: 'id', 
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    }
+  },
+  sex_id: { 
+    type: Sequelize.INTEGER, 
+    references: {
+      model: Sex, 
       key: 'id', 
       deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
     }
@@ -171,6 +191,18 @@ const VWTeacherLocation = db.define('vw_teachers_locations', {
     type: Sequelize.STRING, 
     allowNull: false,  
   },
+  sex_id: { 
+    type: Sequelize.INTEGER, 
+    references: {
+      model: Sex, 
+      key: 'id', 
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    }
+  },
+  sex_name: { 
+    type: Sequelize.STRING, 
+    allowNull: false,  
+  },
 });
 
 exports.Carrer = Carrer;
@@ -181,5 +213,6 @@ exports.Deparment = Deparment;
 exports.Province = Province;
 exports.District = District;
 exports.Image = Image;
+exports.Sex = Sex;
 exports.VWTeacherLocation = VWTeacherLocation;
 exports.db = db;

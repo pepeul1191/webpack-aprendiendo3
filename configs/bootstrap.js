@@ -7,6 +7,7 @@ const provinceRouter = require('../routes/province');
 const loginRouter = require('../routes/login');
 const imageRouter = require('../routes/image');
 const teacherRouter = require('../routes/teacher');
+const sexRouter = require('../routes/sex');
 
 module.exports = function(app){
   app.use('/', indexRouter);
@@ -18,4 +19,5 @@ module.exports = function(app){
   app.use('/login', loginRouter);
   app.use('/image', imageRouter);
   app.use('/teacher', teacherRouter);
+  app.use('/sex', sexRouter);
 };

@@ -285,6 +285,21 @@ var Table = Backbone.View.extend({
         td.appendChild(hintList);
         return td;
       },
+      'select': function(params, value){
+        var td = document.createElement('TD');
+        var select = document.createElement("select");
+        select.setAttribute('style', params.styles);
+        for (var i = 0; i < params.collection.length; i++) {
+          var option = document.createElement('OPTION');
+          option.value = params.collection.models[i].get(params.keyModel);
+          option.text = params.collection.models[i].get(params.keyName);
+          select.appendChild(option);
+        }
+        select.value = value;
+        select.setAttribute('key', params.key);
+        td.appendChild(select);
+        return td;
+      },
     };
   },
   addRow: function(event){
@@ -484,6 +499,7 @@ var Table = Backbone.View.extend({
       });
     }
   },
+  // inputs table
   keyUpInputText: function(event){
     var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
 		var inputValue = event.target.value;
@@ -491,6 +507,14 @@ var Table = Backbone.View.extend({
 		var model = this.collection.get(rowId);
 		//console.log("inputTextEscribir");
 		model.set(key, inputValue);
+  },
+  changeSelect: function(event){
+    var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    var key = event.target.getAttribute('key');
+		var model = this.collection.get(rowId);
+    //console.log("selectChange");
+    var selectedValue = event.target.value;
+		model.set(key, selectedValue);
   },
   changeObserver: function(modelChanged) {
 		if(modelChanged != null){

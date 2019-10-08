@@ -30,6 +30,7 @@ router.post('/save', async function(req, res, next){
   var news = data['new'];
   var edits = data['edit'];
   var deletes = data['delete'];
+  console.log(edits);
   var createdIds = [];
   var respData = null;
   var respStatus = 200;
@@ -43,6 +44,7 @@ router.post('/save', async function(req, res, next){
         last_names: news[i].last_names,
         district_id: news[i].district_id,
         img:'http://oliva.ulima.edu.pe/imagenes/fotos/162505.jpg',
+        sex_id: news[i].sex_id,
       },{
         transaction: tx
       });
@@ -57,6 +59,7 @@ router.post('/save', async function(req, res, next){
         names: edits[i].names,
         last_names: edits[i].last_names,
         district_id: edits[i].district_id,
+        sex_id: edits[i].sex_id,
       }, {
         where: {
           id: edits[i].id  
