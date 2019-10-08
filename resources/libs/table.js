@@ -278,13 +278,16 @@ var Table = Backbone.View.extend({
         // string format
         var formatted = params.url;
         var args = [];
-        for(var i = 0; i <  params.keysFormat.length; i++) {
-          args.push(model.get(params.keysFormat[i]));
+        // exclude link when addRow
+        if(model.cid.includes('view') == false){
+          for(var i = 0; i <  params.keysFormat.length; i++) {
+            args.push(model.get(params.keysFormat[i]));
+          }
+          for(var arg in args) {
+            formatted = formatted.replace("{" + arg + "}", args[arg]);
+          }
+          a.href = formatted;
         }
-        for(var arg in args) {
-          formatted = formatted.replace("{" + arg + "}", args[arg]);
-        }
-        a.href = formatted;
         return a;
       },
       'autocomplete': function(params, value, data){
@@ -343,22 +346,24 @@ var Table = Backbone.View.extend({
         });
       }
       // draw html
-      var td = null;
-      if(this.row.tds[k].type == 'tdId'){
-        td = this.helper()[this.row.tds[k].type](
-          this.row.tds[k], // params for td (styles, edit, etc)
-          randomId, // value for td
-          this, // view instance ????
-        ); 
-      }else{
-        td = this.helper()[this.row.tds[k].type](
-          this.row.tds[k], // params for td (styles, edit, etc)
-          null, // value for td
-          this, // view instance ????
-        ); 
+      if(k < this.row.tds.length){ // upload and autocomplete are excluded
+        var td = null;
+        if(this.row.tds[k].type == 'tdId'){
+          td = this.helper()[this.row.tds[k].type](
+            this.row.tds[k], // params for td (styles, edit, etc)
+            randomId, // value for td
+            this, // view instance ????
+          ); 
+        }else{
+          td = this.helper()[this.row.tds[k].type](
+            this.row.tds[k], // params for td (styles, edit, etc)
+            null, // value for td
+            this, // view instance ????
+          ); 
+        }
+        // appendo to row
+        tr.appendChild(td);
       }
-      // appendo to row
-      tr.appendChild(td);
     }
     // buttons
     var tdButtons = document.createElement('TD');
@@ -469,16 +474,17 @@ var Table = Backbone.View.extend({
               var temp = idNews[p];
               var tempId = temp.tempId;
               var newId = temp.newId;
-              //actualizar id en collection
+              //update id in collection
               var model = _this.collection.get(tempId);
               model.set({'id': newId});
-              //actualizar id en DOM de la tabla
+              //update id in DOMs table
               var trs = document.getElementById(_this.el).lastChild.querySelectorAll('tr');
               for (var i = 0; i < trs.length; i++) {
                 if(trs[i].firstChild.innerHTML == tempId){
                   trs[i].firstChild.innerHTML = newId;
                 }
               }
+              console.log(trs)
             }
           }
           //reset observer
