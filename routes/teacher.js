@@ -15,8 +15,8 @@ router.get('/list', async function(req, res, next) {
     teachers = await models.VWTeacherLocation.findAll();
   }else{
     teachers = await models.VWTeacherLocation.findAll({
-      offset: (req.query.page - 1) * req.query.step, 
-      limit: req.query.step, 
+      offset: (parseInt(req.query.page) - 1) * req.query.step, 
+      limit: parseInt(req.query.step), 
     });
   }
   res.send(JSON.stringify({
