@@ -174,9 +174,9 @@ var Table = Backbone.View.extend({
           for(var j = 0; j < _this.row.buttons.length; j++){
             var button = _this.helper()[_this.row.buttons[j].type](
               _this.row.buttons[j], // params for td (styles, edit, etc)
-              _this, // view instance ????
+              model, // view instance ????
             );
-            tdButtons.appendChild(button);
+            tdButtons.appendChild(button, );
           }
           tr.appendChild(tdButtons);
           tbody.appendChild(tr);
@@ -265,6 +265,27 @@ var Table = Backbone.View.extend({
         // add operation as class for view events
         i.classList.add(params.operation);
 				return i;
+      },
+      'a': function(params, model){
+        // de font-awesome 4
+        var i = document.createElement('I');
+        i.classList.add('fa');
+        i.classList.add(params.class);
+        var a = document.createElement('A');
+        a.appendChild(i);
+        a.setAttribute('style', params.styles);
+        a.href = params.url;
+        // string format
+        var formatted = params.url;
+        var args = [];
+        for(var i = 0; i <  params.keysFormat.length; i++) {
+          args.push(model.get(params.keysFormat[i]));
+        }
+        for(var arg in args) {
+          formatted = formatted.replace("{" + arg + "}", args[arg]);
+        }
+        a.href = formatted;
+        return a;
       },
       'autocomplete': function(params, value, data){
         //console.log('autocomplete');

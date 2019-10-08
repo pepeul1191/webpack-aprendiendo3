@@ -138,10 +138,18 @@ var TableTeacherView = Backbone.View.extend({
         ],
         buttons: [
           {
+            type: 'a',
+            operation: 'delete',
+            class: 'fa-list',
+            styles: 'padding-left: 15px;',
+            url: BASE_URL + 'table/teachers/{0}/carrers/{1}',
+            keysFormat: ['id', 'names', ],
+          },
+          {
             type: 'i',
             operation: 'delete',
             class: 'fa-times',
-            styles: 'padding-left: 30px;',
+            styles: 'padding-left: 15px;',
           },
         ],
       },

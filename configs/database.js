@@ -14,7 +14,8 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 		timestamps: false // true by default
 	},
 	$like: Op.like,
-  $not: Op.not,
+	$not: Op.not, 
+	logging: true,
 });
 
 exports.db = sequelize;

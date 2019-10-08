@@ -35,6 +35,7 @@ var HomeRouter = Backbone.Router.extend({
     'table/carrers': 'tableCarrers',
     'table/teachers': 'tableTeachers',
     'table/images': 'tableImages',
+    'table/teachers/:teacher_id/carrers': 'teacherCarrers',
     // others
     '*path' : 'default',
   },
@@ -116,6 +117,9 @@ var HomeRouter = Backbone.Router.extend({
     }
     this.tableTeacherView.render();
     this.tableTeacherView.loadComponents();
+  },
+  teacherCarrers: function(teacherId){
+    alert(teacherId);
   },
   default: function(path){
     // console.log(path);
