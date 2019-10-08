@@ -35,7 +35,7 @@ var HomeRouter = Backbone.Router.extend({
     'table/carrers': 'tableCarrers',
     'table/teachers': 'tableTeachers',
     'table/images': 'tableImages',
-    'table/teachers/:teacher_id/carrers': 'teacherCarrers',
+    'table/teachers/:teacherId/carrers': 'teacherCarrers',
     // others
     '*path' : 'default',
   },
