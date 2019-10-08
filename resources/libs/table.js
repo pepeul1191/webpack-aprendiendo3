@@ -482,9 +482,17 @@ var Table = Backbone.View.extend({
               for (var i = 0; i < trs.length; i++) {
                 if(trs[i].firstChild.innerHTML == tempId){
                   trs[i].firstChild.innerHTML = newId;
+                  // replace rows a links
+                  trs[i].lastChild.innerHTML = '';
+                  for(var j = 0; j < _this.row.buttons.length; j++){
+                    var button = _this.helper()[_this.row.buttons[j].type](
+                      _this.row.buttons[j], // params for td (styles, edit, etc)
+                      model, // view instance ????
+                    );
+                    trs[i].lastChild.appendChild(button, );
+                  }
                 }
               }
-              console.log(trs)
             }
           }
           //reset observer
