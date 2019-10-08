@@ -92,4 +92,37 @@ router.post('/save', async function(req, res, next){
   res.status(respStatus).send(respData);
 });
 
+router.get('/:teacher_id/carrers', async function(req, res, next) {
+  var respData = null;
+  var respStatus = 200;
+  try {
+    var sql = `
+      SELECT T.id AS id, T.name AS name, (CASE WHEN (P.exist = 1) THEN 1 ELSE 0 END) AS exist FROM
+      (
+        SELECT id, name, 0 AS exist FROM carrers
+      ) T 
+      LEFT JOIN 
+      (
+        SELECT C.id, C.name, 1 AS exist FROM 
+        carrers C INNER JOIN teachers_carrers TC ON
+        C.id = TC.carrer_id
+        WHERE TC.teacher_id = ?
+      ) P 
+      ON P.id = T.id
+    `;
+    var carrers = await models.db.query(sql, { 
+      replacements:[
+        req.params.teacher_id, 
+      ],
+      type: models.db.QueryTypes.SELECT,
+    });
+    respData = JSON.stringify(carrers);
+  } catch (err) {
+    console.log(err);
+    respStatus = 501;
+    respData = err.message;
+  }
+  res.status(respStatus).send(respData);
+});
+
 module.exports = router;
