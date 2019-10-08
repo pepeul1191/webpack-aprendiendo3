@@ -10,6 +10,10 @@ Migraciones con DBMATE - accesos:
     $ dbmate -d "db/migrations" -e "DB" up
     $ dbmate -d "db/migrations" -e "DB" rollback
 
+### Dump y Restore Mysql
+
+    $ mysqldump -u root -p demo > db/demo.sql
+    $ mysql -u root -p demo < db/demo.sql
 
 Instlación de dependencias:
 

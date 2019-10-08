@@ -32,7 +32,7 @@ CREATE TABLE `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,6 +107,37 @@ CREATE TABLE `sexs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `teachers`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `names` text NOT NULL,
+  `last_names` int(11) NOT NULL,
+  `img` text NOT NULL,
+  `district_id` int(11) DEFAULT NULL,
+  `sex_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `teachers_carrers`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teachers_carrers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `teacher_id` int(11) NOT NULL,
+  `carrer_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Temporary table structure for view `vw_locations`
 --
 
@@ -166,5 +197,7 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20191008035708'),
   ('20191008035748'),
   ('20191008035755'),
-  ('20191008035957');
+  ('20191008035957'),
+  ('20191008040721'),
+  ('20191008040819');
 UNLOCK TABLES;
