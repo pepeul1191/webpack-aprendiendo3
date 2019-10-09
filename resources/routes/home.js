@@ -9,6 +9,7 @@ import TableLocationView from '../views/table_location_view';
 import TableTeacherView from '../views/table_teacher_view';
 import TableCarrersView from '../views/table_carrers_view';
 import TableImageView from '../views/table_image_view';
+import TableTeacherCarrerView from '../views/table_teacher_carrer_view';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
@@ -21,6 +22,7 @@ var HomeRouter = Backbone.Router.extend({
   tableTeacherView: null,
   tableCarrersView: null,
   tableImageView: null,
+  tableTeacherCarrerView: null,
   initialize: function() {
   },
   routes:{
@@ -119,7 +121,12 @@ var HomeRouter = Backbone.Router.extend({
     this.tableTeacherView.loadComponents();
   },
   teacherCarrers: function(teacherId){
-    alert(teacherId);
+    if(this.tableTeacherCarrerView == null){
+      this.tableTeacherCarrerView = new TableTeacherCarrerView();
+    }
+    this.tableTeacherCarrerView.teacherId = teacherId;
+    this.tableTeacherCarrerView.render(); 
+    this.tableTeacherCarrerView.loadComponents();
   },
   default: function(path){
     // console.log(path);

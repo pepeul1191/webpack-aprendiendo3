@@ -4,6 +4,7 @@ import '../../public/css/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/modal';
 import HomeRouter from '../routes/home';
 import District from '../models/district';
 

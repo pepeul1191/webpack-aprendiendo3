@@ -324,6 +324,12 @@ var Table = Backbone.View.extend({
         td.appendChild(select);
         return td;
       },
+      'td': function(params, value){
+        var td = document.createElement('TD');
+        td.setAttribute('style', params.styles);
+        td.innerHTML = value;
+        return td;
+      },
     };
   },
   addRow: function(event){
