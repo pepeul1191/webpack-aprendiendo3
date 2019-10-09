@@ -63,13 +63,13 @@ var TableTeacherCarrerView = Backbone.View.extend({
       delete: [],
       },
       messages: {
-        list500: 'Ocurrió un error no esperado en listar los departamentos',
-        list501: 'Ocurrió un error en listar los departamentos',
-        list404: 'Recurso no encontrado - listar departamentos',
-        save500: 'Ocurrió un error no esperado en grabar los cambios',
-        save501: 'Ocurrió un error en grabar los cambios',
-        save404: 'Recurso no encontrado - guardar departamentos',
-        save200: 'Departamentos actualizados',
+        list500: 'Ocurrió un error no esperado en listar las carreras',
+        list501: 'Ocurrió un error en listar las carreras',
+        list404: 'Recurso no encontrado - listar carreras',
+        save500: 'Ocurrió un error no esperado en asociar las cambios',
+        save501: 'Ocurrió un error en asociar las cambios',
+        save404: 'Recurso no encontrado - guardar carreras',
+        save200: 'Carreras del profesor actualizadas',
       },
       serverKeys: ['id', 'name', 'exist'],
       row: {
@@ -104,6 +104,9 @@ var TableTeacherCarrerView = Backbone.View.extend({
     this.teacherCarrerTable.list();
   },
   saveTable: function(event){
+    this.teacherCarrerTable.extraData = {
+      teacher_id: parseInt(this.teacherId),
+    };
     this.teacherCarrerTable.saveTable(event);
   },
   clickCheckBox: function(event){

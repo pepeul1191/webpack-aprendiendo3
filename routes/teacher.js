@@ -30,7 +30,6 @@ router.post('/save', async function(req, res, next){
   var news = data['new'];
   var edits = data['edit'];
   var deletes = data['delete'];
-  console.log(edits);
   var createdIds = [];
   var respData = null;
   var respStatus = 200;
@@ -121,6 +120,57 @@ router.get('/:teacher_id/carrers', async function(req, res, next) {
     console.log(err);
     respStatus = 501;
     respData = err.message;
+  }
+  res.status(respStatus).send(respData);
+});
+
+router.post('/carrer/save', async function(req, res, next) {
+  var data = JSON.parse(req.body.data);
+  var news = data['new'];
+  var edits = data['edit'];
+  var deletes = data['delete'];
+  var teacherId = data['extra']['teacher_id'];
+  var createdIds = [];
+  var respData = null;
+  var respStatus = 200;
+  // do transaction
+  try {
+    tx = await models.db.transaction();
+    // edits
+    for(var i = 0; i < edits.length; i++){
+      var carrerId = edits[i]['id'];
+      var exist = edits[i]['exist'];
+      var e = await models.TeacherCarrer.findOne({
+        where: {
+          carrer_id: carrerId,
+          teacher_id: teacherId,
+        },
+      });
+      if(exist == 0){
+        if (e != null){
+          e.destroy();
+        }
+      }else if(exist == 1){
+        if (e == null){
+          await models.TeacherCarrer.create({
+            carrer_id: carrerId,
+            teacher_id: teacherId,
+          },{
+            transaction: tx
+          });
+        }
+      }
+    } 
+    // commmit changes
+    await tx.commit();
+    // make respData
+    respData = JSON.stringify(createdIds);
+  } catch (err) {
+    console.log(err);
+    respStatus = 501;
+    respData = err.message;
+    // rollback transcation
+    await tx.rollback();
   }
   res.status(respStatus).send(respData);
 });
