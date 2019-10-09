@@ -7,25 +7,28 @@
       </button>
     </div>
     <div class="modal-body">
-      <table class="table table-striped" styles="" id="teacherCarrerTable">
-        <thead>
-          <tr>
-            <th style="width: 10px; display:none;">id</th>
-            <th style="width: 70%;">Nombre</th>
-            <th style="width: 30%;">Existe</th>
-          </tr>
-        </thead>
-        <!--
-        <tfoot>
-          <tr>
-            <td colspan="1000" style="text-align:right">
-              <button class="btn btn-primary add-row"> <i class="fa fa-plus" style="margin-right:5px"></i>Agregar Registro</button>
-              <button class="btn btn-success save-table"> <i class="fa fa-check" style="margin-right:5px"></i>Guardar Cambios</button>
-            </td>
-          </tr>
-        </tfoot>
-        -->
-      </table>
+      <div class="col-md-12">
+        <div class="alert" id="messageModal" role="alert"></div>
+        <table class="table table-striped" styles="" id="teacherCarrerTable">
+          <thead>
+            <tr>
+              <th style="width: 10px; display:none;">id</th>
+              <th style="width: 70%;">Nombre</th>
+              <th style="width: 30%;">Existe</th>
+            </tr>
+          </thead>
+          <!--
+          <tfoot>
+            <tr>
+              <td colspan="1000" style="text-align:right">
+                <button class="btn btn-primary add-row"> <i class="fa fa-plus" style="margin-right:5px"></i>Agregar Registro</button>
+                <button class="btn btn-success save-table"> <i class="fa fa-check" style="margin-right:5px"></i>Guardar Cambios</button>
+              </td>
+            </tr>
+          </tfoot>
+          -->
+        </table>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">

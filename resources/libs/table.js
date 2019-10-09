@@ -588,6 +588,26 @@ var Table = Backbone.View.extend({
 			// console.log(this.observer);
 		}
   },
+  clickCheckBox: function(event){
+    var rowId = event.target.parentElement.parentElement.firstChild.innerHTML;
+    var checked = event.target.checked;
+    var key = event.target.getAttribute('key');
+    // get values for exist or not from params
+    var yes = null;
+    var no = null;
+    for(var i = 0; i < this.row.tds.length; i++){
+      if(key == this.row.tds[i].key){
+        yes = this.row.tds[i].values.yes;
+        no = this.row.tds[i].values.no;
+      }
+    }
+    var value = no;
+    if(checked == true){
+			value = yes;
+		}
+    var model = this.collection.get(rowId);
+    model.set(key, value);
+  },
   // uploads
   fileSelect: function(event){
     $('#' + this.upload.inputFile).click();

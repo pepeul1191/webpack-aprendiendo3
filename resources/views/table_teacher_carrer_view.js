@@ -14,6 +14,9 @@ var TableTeacherCarrerView = Backbone.View.extend({
   },
   // events
 	events: {
+    // save
+    'click #saveTeacherCarrerTable': 'saveTable',
+    "change input.input-check": "clickCheckBox",
   },
   // methods
   render: function(){
@@ -46,7 +49,7 @@ var TableTeacherCarrerView = Backbone.View.extend({
     var _this = this;
     this.teacherCarrerTable = new Table({
       el: 'teacherCarrerTable', // String
-      messageLabelId: 'messageTables', // String
+      messageLabelId: 'messageModal', // String
       model: Carrer, // String
       collection: new CarrerCollection(), // Backbone collection
       services: {
@@ -99,6 +102,12 @@ var TableTeacherCarrerView = Backbone.View.extend({
       },
     });
     this.teacherCarrerTable.list();
+  },
+  saveTable: function(event){
+    this.teacherCarrerTable.saveTable(event);
+  },
+  clickCheckBox: function(event){
+    this.teacherCarrerTable.clickCheckBox(event);
   },
 });
 
