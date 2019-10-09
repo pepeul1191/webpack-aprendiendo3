@@ -68,9 +68,9 @@ var TableTeacherCarrerView = Backbone.View.extend({
         save404: 'Recurso no encontrado - guardar departamentos',
         save200: 'Departamentos actualizados',
       },
-      serverKeys: ['id', 'name'],
+      serverKeys: ['id', 'name', 'exist'],
       row: {
-        table: ['id', 'name'],
+        table: ['id', 'name', 'exist'],
         tds: [
           { // id
             type: 'tdId',
@@ -84,10 +84,18 @@ var TableTeacherCarrerView = Backbone.View.extend({
             edit: true,
             key: 'name',
           },
-          
+          { // exist
+            type: 'check',
+            styles: '', 
+            edit: true,
+            key: 'exist',
+            values: {
+              yes: 1,
+              no: 0,
+            },
+          },
         ],
-        buttons: [
-        ],
+        buttons: [],
       },
     });
     this.teacherCarrerTable.list();

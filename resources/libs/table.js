@@ -136,7 +136,6 @@ var Table = Backbone.View.extend({
         };
         // get list from server
         var list = JSON.parse(data);
-        var pagesNumber = null;
         var tbody = document.createElement('TBODY');
         // extract list to table if pagination
         if(typeof _this.pagination !== 'undefined'){
@@ -169,16 +168,18 @@ var Table = Backbone.View.extend({
               tr.appendChild(td);
             }
           }
-          // buttons
-          var tdButtons = document.createElement('TD');
-          for(var j = 0; j < _this.row.buttons.length; j++){
-            var button = _this.helper()[_this.row.buttons[j].type](
-              _this.row.buttons[j], // params for td (styles, edit, etc)
-              model, // view instance ????
-            );
-            tdButtons.appendChild(button, );
+          // create buttons if they exist
+          if (_this.row.buttons.length > 0){
+            var tdButtons = document.createElement('TD');
+            for(var j = 0; j < _this.row.buttons.length; j++){
+              var button = _this.helper()[_this.row.buttons[j].type](
+                _this.row.buttons[j], // params for td (styles, edit, etc)
+                model, // view instance ????
+              );
+              tdButtons.appendChild(button, );
+            }
+            tr.appendChild(tdButtons);
           }
-          tr.appendChild(tdButtons);
           tbody.appendChild(tr);
           // add model to collection
           _this.collection.add(model);
@@ -330,6 +331,21 @@ var Table = Backbone.View.extend({
         td.innerHTML = value;
         return td;
       },
+      'check': function(params, value){
+				var td = document.createElement('td');
+				//td.setAttribute('style', params.estilos);
+				var inputCheck = document.createElement('INPUT');
+				inputCheck.type = 'checkbox';
+				inputCheck.setAttribute('style', params.styles);
+				inputCheck.setAttribute('key', params.key);
+        inputCheck.classList.add('input-check');
+        if(params.values.yes == value){
+					inputCheck.checked = true;
+        }
+        td.appendChild(inputCheck);
+        //console.log(inputCheck);
+				return td;
+			},
     };
   },
   addRow: function(event){
