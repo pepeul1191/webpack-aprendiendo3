@@ -41,6 +41,7 @@ var Upload = Backbone.View.extend({
     this.img = params.img;
     this.service = params.service;
     this.extensions = params.extensions;
+    this.statusClasses = params.statusClasses;
     this.size = params.size;
     // dynamic allocation of events
     this.events = this.events || {};
