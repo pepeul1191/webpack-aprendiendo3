@@ -9,7 +9,7 @@ var ValidationForm = Backbone.View.extend({
         {
           type: null, // notEmpty, isEmail, customFunction, isSelected
           message: null,
-        }, 
+        },
       ],
     },
   ],
@@ -132,6 +132,22 @@ var ValidationForm = Backbone.View.extend({
       $('#' + entry.help).html('');
       $('#' + entry.help).removeClass(this.classes.textDanger);
       $('#' + entry.id).removeClass(this.classes.inputInvalid);
+      isOk = true;
+    }
+    return isOk;
+  },
+  notEmptyCKEditor: function(entry, validation){
+    var isOk = false;
+    if(CKEDITOR.instances[entry.id].getData() == ''){
+      $('#' + entry.help).html(validation.message);
+      $('#' + entry.help).removeClass(this.classes.textSuccess);
+      $('#' + entry.help).removeClass(this.classes.textWarning);
+      $('#' + entry.help).addClass(this.classes.textDanger);
+      $('#cke_' + entry.id).css('border-color', '#dc3545');
+    }else{
+      $('#' + entry.help).html('');
+      $('#' + entry.help).removeClass(this.classes.textDanger);
+      $('#cke_' + entry.id).css('border-color', '#d1d1d1');
       isOk = true;
     }
     return isOk;
