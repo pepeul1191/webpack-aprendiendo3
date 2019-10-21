@@ -11,6 +11,8 @@ var App = Backbone.View.extend({
   // tables
   teacherCarrerTable: null,
   teacherId: null,
+  map: null,
+  elModal: 'modal',
   // constructor
 	initialize: function(){
     // TODO ???
@@ -51,21 +53,20 @@ var App = Backbone.View.extend({
     var templateCompiled = template({
       title: 'Mapita',
     });
-    $('#modal').html(templateCompiled);
-    $('#modal').modal();
+    $('#' + this.elModal).html(templateCompiled);
+    $('#' + this.elModal).modal();
     // load modal
     var _this = this;
-    $('#modal').on('shown.bs.modal', function(){
+    $('#' + this.elModal).on('shown.bs.modal', function(){
       _this.showOLMap(latitude, longitude);
     });
-    $('#modal').on('hidden.bs.modal', function () {
-      // TODO ???
-      alert('cerrando');
+    $('#' + this.elModal).on('hidden.bs.modal', function () {
+      _this.cloaseOLMap();
     });
     // load map
   },
   showOLMap: function(latitude, longitude){
-    var map = new Map({
+    this.map = new Map({
       target: 'map',
       layers: [
         new TileLayer({
@@ -78,6 +79,12 @@ var App = Backbone.View.extend({
       })
     });
   },
+  cloaseOLMap: function(){
+    this.map = null;
+    $('#' + this.elModal).off();
+  },
 });
 
-new App();
+$(document).ready(function(){
+  new App();
+});
