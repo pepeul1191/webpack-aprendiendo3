@@ -7,6 +7,10 @@ var entries = {
   main: ['./resources/entries/index.js'],
   vendors: ['backbone', 'jquery', 'underscore', ],
   vendors_login: ['jquery', ],
+  // map
+  'map': ['./resources/entries/map.js'],
+  'map.vendor.js': ['backbone', 'jquery', 'underscore', 'ol'],
+  'map.vendor.css': ['bootstrap/dist/css/bootstrap.min.css', 'ol/ol.css'],
 };
 
 var plugins = [
@@ -15,6 +19,7 @@ var plugins = [
     '$': 'jquery',
     'Backbone': 'backbone',
     '_': 'underscore',
+    'ol': 'ol',
   }),
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
@@ -61,12 +66,26 @@ var rules = [
 var optimization = {
   splitChunks: {
     cacheGroups: {       
+      /*
       vendor: {
         test: /node_modules/,
         name: 'vendors',
         chunks: 'all', 
         enforce: true
-      }
+      },
+      */
+      mapVendor: {
+        test: 'map.vendor.js',
+        name: 'map.vendor',
+        chunks: 'all', 
+        enforce: true,
+      },
+      mapVendorCSS: {
+        test: 'map.vendor.css',
+        name: 'map.vendor',
+        chunks: 'all', 
+        enforce: true,
+      },
     }
   }
 };
