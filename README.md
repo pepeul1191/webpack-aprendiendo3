@@ -97,3 +97,4 @@ Fuentes:
 + https://stackoverflow.com/questions/13953080/how-to-access-router-globally-in-backbone-js
 + https://openlayers.org/en/latest/apidoc
 + https://openstreetmap.be/en/projects/howto/openlayers.html
++ https://gis.stackexchange.com/questions/274803/adding-markers-using-openlayers-4

@@ -7,6 +7,8 @@ import Feature from 'ol/Feature';
 import Vector from 'ol/source/Vector';
 import {fromLonLat} from 'ol/proj';
 import Point from 'ol/geom/Point';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
 import 'bootstrap/js/dist/modal';
 
 var App = Backbone.View.extend({
@@ -71,6 +73,7 @@ var App = Backbone.View.extend({
   },
   showOLMap: function(latitude, longitude){
     // map
+    var features = [];
     this.map = new Map({
       target: 'map',
       layers: [
@@ -83,14 +86,22 @@ var App = Backbone.View.extend({
         zoom: 15
       })
     });
+    // icon
+    var iconStyle = new Style({
+      image: new Icon(({
+          anchor: [0.5, 1],
+          src: BASE_URL + 'img/marker.png',
+      }))
+    });
+    var iconFeature = new Feature({
+      geometry: new Point(fromLonLat([longitude, latitude]))
+    });
+    iconFeature.setStyle(iconStyle);
+    features.push(iconFeature);
     // marker
     var layer = new VectorLayer({
       source: new Vector({
-        features: [
-          new Feature({
-            geometry: new Point(fromLonLat([longitude, latitude]))
-          })
-        ]
+        features: features,
       })
     });
     this.map.addLayer(layer);
