@@ -2,7 +2,11 @@ import 'ol/ol.css';
 import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
+import VectorLayer from 'ol/layer/Vector';
+import Feature from 'ol/Feature';
+import Vector from 'ol/source/Vector';
 import {fromLonLat} from 'ol/proj';
+import Point from 'ol/geom/Point';
 import 'bootstrap/js/dist/modal';
 
 var App = Backbone.View.extend({
@@ -66,6 +70,7 @@ var App = Backbone.View.extend({
     // load map
   },
   showOLMap: function(latitude, longitude){
+    // map
     this.map = new Map({
       target: 'map',
       layers: [
@@ -78,6 +83,17 @@ var App = Backbone.View.extend({
         zoom: 15
       })
     });
+    // marker
+    var layer = new VectorLayer({
+      source: new Vector({
+        features: [
+          new Feature({
+            geometry: new Point(fromLonLat([longitude, latitude]))
+          })
+        ]
+      })
+    });
+    this.map.addLayer(layer);
   },
   cloaseOLMap: function(){
     this.map = null;

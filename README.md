@@ -96,3 +96,4 @@ Fuentes:
 + https://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
 + https://stackoverflow.com/questions/13953080/how-to-access-router-globally-in-backbone-js
 + https://openlayers.org/en/latest/apidoc
++ https://openstreetmap.be/en/projects/howto/openlayers.html
