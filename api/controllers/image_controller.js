@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
+const models = require('../../configs/models');
+const database = require('../../configs/database');
 
 router.get('/list', async function(req, res, next) {
   var respData = null;
   var respStatus = 200;
   try {
-    var provinces = await models.Province.findAll({
-      where: {
-        department_id: req.query.department_id
-      }
-    });
-    respData = JSON.stringify(provinces);
+    var images = await models.Image.findAll({});
+    respData = JSON.stringify(images);
   } catch (err) {
     console.log(err);
     respStatus = 501;
@@ -25,7 +22,6 @@ router.post('/save', async function(req, res, next){
   var news = data['new'];
   var edits = data['edit'];
   var deletes = data['delete'];
-  var extra = data['extra'];
   var createdIds = [];
   var respData = null;
   var respStatus = 200;
@@ -34,9 +30,9 @@ router.post('/save', async function(req, res, next){
     tx = await models.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Province.create({
+      var n = await models.Image.create({
         name: news[i].name,
-        department_id: extra.departmentId,
+        url: news[i].url,
       },{
         transaction: tx
       });
@@ -47,8 +43,9 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Province.update({
+      await models.Image.update({
         name: edits[i].name,
+        url: edits[i].url,
       }, {
         where: {
           id: edits[i].id  
@@ -59,7 +56,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Province.destroy({
+      await models.Image.destroy({
         where: {
           id: deletes[i]
         }

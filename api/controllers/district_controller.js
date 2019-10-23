@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
-const database = require('../configs/database');
+const models = require('../../configs/models');
+const database = require('../../configs/database');
 
 router.get('/search', async function(req, res, next) {
   var districts = await models.LocationVW.findAll({

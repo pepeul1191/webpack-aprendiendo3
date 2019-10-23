@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var helpers = require('../configs/helpers');
-var constants = require('../configs/constants');
+var helpers = require('../../configs/helpers');
+var constants = require('../../configs/constants');
 var router = express.Router();
 
 var homeView = function(req, res, next) {

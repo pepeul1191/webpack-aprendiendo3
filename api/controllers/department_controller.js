@@ -1,20 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
-const database = require('../configs/database');
+const models = require('../../configs/models');
 
 router.get('/list', async function(req, res, next) {
-  var respData = null;
-  var respStatus = 200;
-  try {
-    var images = await models.Image.findAll({});
-    respData = JSON.stringify(images);
-  } catch (err) {
-    console.log(err);
-    respStatus = 501;
-    respData = err.message;
-  }
-  res.status(respStatus).send(respData);
+  var deparments = await models.Deparment.findAll();
+  res.send(JSON.stringify(deparments));
 });
 
 router.post('/save', async function(req, res, next){
@@ -30,9 +20,8 @@ router.post('/save', async function(req, res, next){
     tx = await models.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Image.create({
+      var n = await models.Deparment.create({
         name: news[i].name,
-        url: news[i].url,
       },{
         transaction: tx
       });
@@ -43,9 +32,8 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Image.update({
+      await models.Deparment.update({
         name: edits[i].name,
-        url: edits[i].url,
       }, {
         where: {
           id: edits[i].id  
@@ -56,7 +44,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Image.destroy({
+      await models.Deparment.destroy({
         where: {
           id: deletes[i]
         }

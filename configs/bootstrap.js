@@ -1,13 +1,13 @@
-const indexRouter = require('../routes/index');
-const carrerRouter = require('../routes/carrer');
-const districtRouter = require('../routes/district');
-const errorRouter = require('../routes/error');
-const departmentRouter = require('../routes/department');
-const provinceRouter = require('../routes/province');
-const loginRouter = require('../routes/login');
-const imageRouter = require('../routes/image');
-const teacherRouter = require('../routes/teacher');
-const sexRouter = require('../routes/sex');
+const indexRouter = require('../api/controllers/index_controller');
+const carrerRouter = require('../api/controllers/carrer_controller');
+const districtRouter = require('../api/controllers/district_controller');
+const errorRouter = require('../api/controllers/error_controller');
+const departmentRouter = require('../api/controllers/department_controller');
+const provinceRouter = require('../api/controllers/province_controller');
+const loginRouter = require('../api/controllers/login_controller');
+const imageRouter = require('../api/controllers/image_controller');
+const teacherRouter = require('../api/controllers/teacher_controller');
+const sexRouter = require('../api/controllers/sex_controller');
 
 module.exports = function(app){
   app.use('/', indexRouter);
