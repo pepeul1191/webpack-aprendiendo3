@@ -8,6 +8,7 @@ const loginRouter = require('../api/controllers/login_controller');
 const imageRouter = require('../api/controllers/image_controller');
 const teacherRouter = require('../api/controllers/teacher_controller');
 const sexRouter = require('../api/controllers/sex_controller');
+const uploadRouter = require('../api/controllers/upload_controller');
 
 module.exports = function(app){
   app.use('/', indexRouter);
@@ -20,4 +21,5 @@ module.exports = function(app){
   app.use('/image', imageRouter);
   app.use('/teacher', teacherRouter);
   app.use('/sex', sexRouter);
+  app.use('/upload', uploadRouter);
 };

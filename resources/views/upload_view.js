@@ -54,6 +54,11 @@ var UploadView = Backbone.View.extend({
         allow: 60000,
         message: 'Archivo supera el máximo permitido',
       },
+      statusClasses: { // bootstrap classes by default
+        success: 'alert-success',
+        warning: 'alert-warning',
+        danger: 'alert-danger',
+      },
     });
   },
   // delegator methods
