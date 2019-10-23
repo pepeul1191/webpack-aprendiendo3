@@ -1,4 +1,4 @@
-function error404(){
+module.exports = function error404(){
   return function (req, res, next) {
     if ('GET' == req.method){
       var resource = req.path.split('.');
@@ -14,15 +14,3 @@ function error404(){
     }
   }
 }
-
-function errorHandler(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-}
-
-exports.error404 = error404;
-exports.errorHandler = errorHandler;
