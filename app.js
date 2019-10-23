@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 const error404 = require('./api/middlewares/error_404');
 const errorHandler = require('./api/middlewares/error_handler');
 const bootstrap = require('./configs/bootstrap');
+const preResponse = require('./api/middlewares/pre_response');
 // app
 const app = express();
 // view engine setup
@@ -18,6 +19,8 @@ app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// preResponse
+app.use(preResponse);
 // register routes
 bootstrap(app);
 // catch 404 and forward to error handler
