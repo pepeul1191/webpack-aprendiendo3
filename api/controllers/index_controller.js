@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var helpers = require('../../configs/helpers');
 var constants = require('../../configs/constants');
+var middlewareSessionTrue = require('../middlewares/session_true');
 var router = express.Router();
 
 var homeView = function(req, res, next) {
@@ -9,7 +10,7 @@ var homeView = function(req, res, next) {
 };
 
 /* GET home page. */
-router.get('/', homeView);
+router.get('/', middlewareSessionTrue, homeView);
 router.get('/user/create', homeView);
 router.get('/user/edit/:id', homeView);
 router.get('/autocomplete', homeView);
