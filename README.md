@@ -70,6 +70,10 @@ Sidemenu:
 
     https://www.youtube.com/watch?v=AhioxFWkYRg
 
+Preloader:
+
+    https://www.youtube.com/watch?v=g77WfQ-blxI
+
 ---
 
 Fuentes:
