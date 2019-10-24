@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../../configs/models');
+const database = require('../../configs/database');
+const Province = require('../models/province');
 
 router.get('/list', async function(req, res, next) {
   var respData = null;
   var respStatus = 200;
   try {
-    var provinces = await models.Province.findAll({
+    var provinces = await Province.findAll({
       where: {
         department_id: req.query.department_id
       }
@@ -31,10 +32,10 @@ router.post('/save', async function(req, res, next){
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Province.create({
+      var n = await Province.create({
         name: news[i].name,
         department_id: extra.departmentId,
       },{
@@ -47,7 +48,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Province.update({
+      await Province.update({
         name: edits[i].name,
       }, {
         where: {
@@ -59,7 +60,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Province.destroy({
+      await Province.destroy({
         where: {
           id: deletes[i]
         }
