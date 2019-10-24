@@ -1,5 +1,5 @@
 module.exports = function (req, res, next) {
-  if (Boolean(process.env.ENV_SESSION)){
+  if (JSON.parse(process.env.ENV_SESSION) == true){
     var forward = false;
     if(typeof req.session.state !== 'undefined'){
       if(req.session.state == 'inactive'){

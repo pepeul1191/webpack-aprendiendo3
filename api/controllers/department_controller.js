@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../../configs/models');
+const database = require('../../configs/database');
+const Deparment = require('../models/deparment');
 
 router.get('/list', async function(req, res, next) {
-  var deparments = await models.Deparment.findAll();
+  var deparments = await Deparment.findAll();
   res.send(JSON.stringify(deparments));
 });
 
@@ -17,10 +18,10 @@ router.post('/save', async function(req, res, next){
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Deparment.create({
+      var n = await Deparment.create({
         name: news[i].name,
       },{
         transaction: tx
@@ -32,7 +33,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Deparment.update({
+      await Deparment.update({
         name: edits[i].name,
       }, {
         where: {
@@ -44,7 +45,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Deparment.destroy({
+      await Deparment.destroy({
         where: {
           id: deletes[i]
         }
