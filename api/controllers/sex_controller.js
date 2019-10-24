@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../../configs/models');
+const Sex = require('../models/sex');
 
 router.get('/list', async function(req, res, next) {
-  var sexs = await models.Sex.findAll({});
+  var sexs = await Sex.findAll({});
   res.send(JSON.stringify(sexs));
 });
 

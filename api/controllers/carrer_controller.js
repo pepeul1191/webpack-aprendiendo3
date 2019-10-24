@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../../configs/models');
+const Carrer = require('../models/carrer');
 
 router.get('/list', async function(req, res, next) {
-  var carrers = await models.Carrer.findAll({});
+  var carrers = await Carrer.findAll({});
   res.send(JSON.stringify(carrers));
 });
 
 router.get('/name/count', async function(req, res, next) {
-  var count = await models.Carrer.count({
+  var count = await Carrer.count({
     where: {
       name: req.query.name,
     },
