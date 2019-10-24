@@ -1,10 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
+const database = require('../../configs/database');
+const Province = require('../models/province');
 
 router.get('/list', async function(req, res, next) {
-  var deparments = await models.Deparment.findAll();
-  res.send(JSON.stringify(deparments));
+  var respData = null;
+  var respStatus = 200;
+  try {
+    var provinces = await Province.findAll({
+      where: {
+        department_id: req.query.department_id
+      }
+    });
+    respData = JSON.stringify(provinces);
+  } catch (err) {
+    console.log(err);
+    respStatus = 501;
+    respData = err.message;
+  }
+  res.status(respStatus).send(respData);
 });
 
 router.post('/save', async function(req, res, next){
@@ -12,16 +26,18 @@ router.post('/save', async function(req, res, next){
   var news = data['new'];
   var edits = data['edit'];
   var deletes = data['delete'];
+  var extra = data['extra'];
   var createdIds = [];
   var respData = null;
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Deparment.create({
+      var n = await Province.create({
         name: news[i].name,
+        department_id: extra.departmentId,
       },{
         transaction: tx
       });
@@ -32,7 +48,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Deparment.update({
+      await Province.update({
         name: edits[i].name,
       }, {
         where: {
@@ -44,7 +60,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Deparment.destroy({
+      await Province.destroy({
         where: {
           id: deletes[i]
         }

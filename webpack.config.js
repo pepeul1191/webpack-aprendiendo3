@@ -4,9 +4,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 var entries = {
-  main: ['./resources/entries/index.js'],
-  vendors: ['backbone', 'jquery', 'underscore', ],
   vendors_login: ['jquery', ],
+  // admin
+  'admin': ['./resources/entries/admin.js'],
+  'admin.vendor.js': ['backbone', 'jquery', 'underscore'],
+  'admin.vendor.css': ['bootstrap/dist/css/bootstrap.min.css'],
+  // map
+  'map': ['./resources/entries/map.js'],
+  'map.vendor.js': ['ol'],
+  'map.vendor.css': ['ol/ol.css'],
 };
 
 var plugins = [
@@ -15,6 +21,7 @@ var plugins = [
     '$': 'jquery',
     'Backbone': 'backbone',
     '_': 'underscore',
+    'ol': 'ol',
   }),
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
@@ -61,12 +68,40 @@ var rules = [
 var optimization = {
   splitChunks: {
     cacheGroups: {       
+      /*
       vendor: {
         test: /node_modules/,
         name: 'vendors',
         chunks: 'all', 
         enforce: true
-      }
+      },
+      */
+      // admin
+      adminVendor: {
+        test: 'admin.vendor.js',
+        name: 'admin.vendor',
+        chunks: 'all', 
+        enforce: true,
+      },
+      adminVendorCSS: {
+        test: 'admin.vendor.css',
+        name: 'admin.vendor',
+        chunks: 'all', 
+        enforce: true,
+      },
+      // map
+      mapVendor: {
+        test: 'map.vendor.js',
+        name: 'map.vendor',
+        chunks: 'all', 
+        enforce: true,
+      },
+      mapVendorCSS: {
+        test: 'map.vendor.css',
+        name: 'map.vendor',
+        chunks: 'all', 
+        enforce: true,
+      },
     }
   }
 };

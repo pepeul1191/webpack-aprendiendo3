@@ -1,20 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
+const Teacher = require('../models/teacher');
+const database = require('../../configs/database');
+const VWTeacherLocation = require('../models/vw_teacher_location');
 
 router.get('/list', async function(req, res, next) {
   var teachers = [];
   var count = Math.ceil(
-    await models.VWTeacherLocation.count() / 
+    await VWTeacherLocation.count() / 
     parseInt(req.query.step)
   );
   if(
     typeof req.query.page === 'undefined' || 
     typeof req.query.step === 'undefined'
   ){
-    teachers = await models.VWTeacherLocation.findAll();
+    teachers = await VWTeacherLocation.findAll();
   }else{
-    teachers = await models.VWTeacherLocation.findAll({
+    teachers = await VWTeacherLocation.findAll({
       offset: (parseInt(req.query.page) - 1) * req.query.step, 
       limit: parseInt(req.query.step), 
     });
@@ -35,10 +37,10 @@ router.post('/save', async function(req, res, next){
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Teacher.create({
+      var n = await Teacher.create({
         names: news[i].names,
         last_names: news[i].last_names,
         district_id: news[i].district_id,
@@ -54,7 +56,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Teacher.update({
+      await Teacher.update({
         names: edits[i].names,
         last_names: edits[i].last_names,
         district_id: edits[i].district_id,
@@ -69,7 +71,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Teacher.destroy({
+      await Teacher.destroy({
         where: {
           id: deletes[i]
         }
@@ -109,11 +111,11 @@ router.get('/:teacher_id/carrers', async function(req, res, next) {
       ) P 
       ON P.id = T.id
     `;
-    var carrers = await models.db.query(sql, { 
+    var carrers = await database.db.query(sql, { 
       replacements:[
         req.params.teacher_id, 
       ],
-      type: models.db.QueryTypes.SELECT,
+      type: database.db.QueryTypes.SELECT,
     });
     respData = JSON.stringify(carrers);
   } catch (err) {
@@ -135,12 +137,12 @@ router.post('/carrer/save', async function(req, res, next) {
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // edits
     for(var i = 0; i < edits.length; i++){
       var carrerId = edits[i]['id'];
       var exist = edits[i]['exist'];
-      var e = await models.TeacherCarrer.findOne({
+      var e = await TeacherCarrer.findOne({
         where: {
           carrer_id: carrerId,
           teacher_id: teacherId,
@@ -152,7 +154,7 @@ router.post('/carrer/save', async function(req, res, next) {
         }
       }else if(exist == 1){
         if (e == null){
-          await models.TeacherCarrer.create({
+          await TeacherCarrer.create({
             carrer_id: carrerId,
             teacher_id: teacherId,
           },{

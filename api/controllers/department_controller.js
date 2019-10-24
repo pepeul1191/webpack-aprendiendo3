@@ -1,36 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
-const database = require('../configs/database');
-
-router.get('/search', async function(req, res, next) {
-  var districts = await models.LocationVW.findAll({
-    where: {
-      name:{
-        [database.Op.like]: '%' + req.query.name + '%',
-      },
-    },
-    limit: 10,
-  });
-  res.send(JSON.stringify(districts));
-});
+const database = require('../../configs/database');
+const Deparment = require('../models/deparment');
 
 router.get('/list', async function(req, res, next) {
-  var respData = null;
-  var respStatus = 200;
-  try {
-    var districts = await models.District.findAll({
-      where: {
-        province_id: req.query.province_id
-      }
-    });
-    respData = JSON.stringify(districts);
-  } catch (err) {
-    console.log(err);
-    respStatus = 501;
-    respData = err.message;
-  }
-  res.status(respStatus).send(respData);
+  var deparments = await Deparment.findAll();
+  res.send(JSON.stringify(deparments));
 });
 
 router.post('/save', async function(req, res, next){
@@ -38,18 +13,16 @@ router.post('/save', async function(req, res, next){
   var news = data['new'];
   var edits = data['edit'];
   var deletes = data['delete'];
-  var extra = data['extra'];
   var createdIds = [];
   var respData = null;
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.District.create({
+      var n = await Deparment.create({
         name: news[i].name,
-        province_id: extra.provinceId,
       },{
         transaction: tx
       });
@@ -60,7 +33,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.District.update({
+      await Deparment.update({
         name: edits[i].name,
       }, {
         where: {
@@ -72,7 +45,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.District.destroy({
+      await Deparment.destroy({
         where: {
           id: deletes[i]
         }

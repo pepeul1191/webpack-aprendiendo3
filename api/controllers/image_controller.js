@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../configs/models');
-const database = require('../configs/database');
+const database = require('../../configs/database');
+const Image = require('../models/image');
 
 router.get('/list', async function(req, res, next) {
   var respData = null;
   var respStatus = 200;
   try {
-    var images = await models.Image.findAll({});
+    var images = await Image.findAll({});
     respData = JSON.stringify(images);
   } catch (err) {
     console.log(err);
@@ -27,10 +27,10 @@ router.post('/save', async function(req, res, next){
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.Image.create({
+      var n = await Image.create({
         name: news[i].name,
         url: news[i].url,
       },{
@@ -43,7 +43,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.Image.update({
+      await Image.update({
         name: edits[i].name,
         url: edits[i].url,
       }, {
@@ -56,7 +56,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.Image.destroy({
+      await Image.destroy({
         where: {
           id: deletes[i]
         }
