@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../../configs/models');
 const database = require('../../configs/database');
+const VWLocation = require('../models/vw_location');
+const District = require('../models/district');
 
 router.get('/search', async function(req, res, next) {
-  var districts = await models.LocationVW.findAll({
+  var districts = await VWLocation.findAll({
     where: {
       name:{
         [database.Op.like]: '%' + req.query.name + '%',
@@ -19,7 +20,7 @@ router.get('/list', async function(req, res, next) {
   var respData = null;
   var respStatus = 200;
   try {
-    var districts = await models.District.findAll({
+    var districts = await District.findAll({
       where: {
         province_id: req.query.province_id
       }
@@ -44,10 +45,10 @@ router.post('/save', async function(req, res, next){
   var respStatus = 200;
   // do transaction
   try {
-    tx = await models.db.transaction();
+    tx = await database.db.transaction();
     // news
     for(var i = 0; i < news.length; i++){
-      var n = await models.District.create({
+      var n = await District.create({
         name: news[i].name,
         province_id: extra.provinceId,
       },{
@@ -60,7 +61,7 @@ router.post('/save', async function(req, res, next){
     } 
     // edits
     for(var i = 0; i < edits.length; i++){
-      await models.District.update({
+      await District.update({
         name: edits[i].name,
       }, {
         where: {
@@ -72,7 +73,7 @@ router.post('/save', async function(req, res, next){
     } 
     // deletes
     for(var i = 0; i < deletes.length; i++){
-      await models.District.destroy({
+      await District.destroy({
         where: {
           id: deletes[i]
         }

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 var database = require('../../configs/database');
+const Province = require('./province');
 
 var db = database.db;
 
