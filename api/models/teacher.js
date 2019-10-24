@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 var database = require('../../configs/database');
+const District = require('./district');
+const Sex = require('./sex');
 
 var db = database.db;
 
