@@ -73,6 +73,8 @@ Sidemenu:
 Preloader:
 
     https://www.youtube.com/watch?v=g77WfQ-blxI
+    https://www.youtube.com/watch?v=y0Ic8QcvyK8
+    https://www.youtube.com/watch?v=lJwDoT3ccpE
 
 ---
 
