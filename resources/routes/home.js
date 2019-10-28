@@ -10,6 +10,8 @@ import TableTeacherView from '../views/table_teacher_view';
 import TableCarrersView from '../views/table_carrers_view';
 import TableImageView from '../views/table_image_view';
 import TableTeacherCarrerView from '../views/table_teacher_carrer_view';
+import hideLoader from '../helpers/hide_loader';
+import showLoader from '../helpers/show_loader';
 
 var HomeRouter = Backbone.Router.extend({
   homeView: null,
@@ -48,35 +50,51 @@ var HomeRouter = Backbone.Router.extend({
     this.homeView.render();  
   },
   userCreate: function(){
-    if(this.userCreateView == null){
-      this.userCreateView = new UserCreateView();
-    }
-    this.userCreateView.render();  
+    showLoader();
+    setTimeout(function(){
+      if(this.userCreateView == null){
+        this.userCreateView = new UserCreateView();
+      }
+      this.userCreateView.render();
+      hideLoader();
+    }, 1000);
   },
   userEdit: function(id, queryString){
-    var params = parseQueryString(queryString);
-    var foo = '';
-    if(params.foo){
-        foo = params.foo;
-    }
-    if(this.userEditView == null){
-      this.userEditView = new UserEditView();
-    }
-    this.userEditView.render(id, foo);  
+    showLoader();
+    setTimeout(function(){
+      var params = parseQueryString(queryString);
+      var foo = '';
+      if(params.foo){
+          foo = params.foo;
+      }
+      if(this.userEditView == null){
+        this.userEditView = new UserEditView();
+      }
+      this.userEditView.render(id, foo);
+      hideLoader();
+    }, 1000);
   },
   autocomplete: function(){
-    if(this.autocompleteView == null){
-      this.autocompleteView = new AutocompleteView();
-    }
-    this.autocompleteView.render();
-    this.autocompleteView.loadComponents();
+    showLoader();
+    setTimeout(function(){
+      if(this.autocompleteView == null){
+        this.autocompleteView = new AutocompleteView();
+      }
+      this.autocompleteView.render();
+      this.autocompleteView.loadComponents();
+      hideLoader();
+    }, 1000);
   },
   upload: function(){
-    if(this.uploadView == null){
-      this.uploadView = new UploadView();
-    }
-    this.uploadView.render();
-    this.uploadView.loadComponents();
+    showLoader();
+    setTimeout(function(){
+      if(this.uploadView == null){
+        this.uploadView = new UploadView();
+      }
+      this.uploadView.render();
+      this.uploadView.loadComponents();
+      hideLoader();
+    }, 1000);
   },
   validationForm: function(){
     if(this.validationFormView == null){

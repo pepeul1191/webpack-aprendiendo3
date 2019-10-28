@@ -14,9 +14,15 @@
       const BASE_URL = 'http://localhost:3000/';
       const CSRF_KEY = 'key'; 
       const CSRF = 'alsdjflkadsjflkasdjflk';
+      var FIRST_LOAD = true;
     </script>
   </head>
-  <body>   
+  <body>
+    <div class="preloader">
+      <div class="wrapper">
+        <img src="/img/loading.gif" alt="Loading Symbol GIF" style="">
+      </div>
+    </div>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#modal" id="btnModal">
       Launch demo modal
