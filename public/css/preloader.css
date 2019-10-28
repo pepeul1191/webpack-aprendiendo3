@@ -40,8 +40,8 @@
   left: 45%;
   transform: translate(-50%, -50%);
   width: 30%;
+  z-index: 1000001;
 }
 .wrapper > img {
   width: fit-content;
-  z-index: 1000001;
 }
