@@ -4,7 +4,7 @@ const hideLoader = function(){
     $('.preloader').css('background', 'transparent'); 
     $('.wrapper').css('display', 'none'); 
     $('.preloader').css('z-index', 0); 
-  }, 1000);
+  }, 250);
   if(FIRST_LOAD){
     FIRST_LOAD = false;
   }

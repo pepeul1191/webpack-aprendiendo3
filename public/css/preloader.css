@@ -15,7 +15,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background: blue;
+  background: var(--bg-primary) !important;
   transition: 1s;
 }
 .preloader.complete:before{
@@ -27,7 +27,7 @@
   right: 0;
   width: 50%;
   height: 100%;
-  background: red;
+  background: var(--bg-secondary) !important;
   transition: 1s;
 }
 .preloader.complete:after{
@@ -37,9 +37,8 @@
 .wrapper{
   position: absolute;
   top: 45%;
-  left: 45%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 30%;
   z-index: 1000001;
 }
 .wrapper > img {

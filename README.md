@@ -76,6 +76,10 @@ Preloader:
     https://www.youtube.com/watch?v=y0Ic8QcvyK8
     https://www.youtube.com/watch?v=lJwDoT3ccpE
 
+Gifs animados:
+
+    https://loading.io
+
 ---
 
 Fuentes:

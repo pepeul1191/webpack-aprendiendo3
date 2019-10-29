@@ -44,10 +44,14 @@ var HomeRouter = Backbone.Router.extend({
     '*path' : 'default',
   },
   index: function(){
-    if(this.homeView == null){
-      this.homeView = new HomeView();
-    }
-    this.homeView.render();  
+    showLoader();
+    setTimeout(function(){
+      if(this.homeView == null){
+        this.homeView = new HomeView();
+      }
+      this.homeView.render(); 
+      hideLoader();
+    }, 1000);
   },
   userCreate: function(){
     showLoader();
