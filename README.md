@@ -80,6 +80,11 @@ Gifs animados:
 
     https://loading.io
 
+Dashboard:
+
+    https://gitlab.com/randyyaj/cherrypy-boilerplate/blob/master/webapps/app1/app.py
+    https://www.youtube.com/watch?v=82ub3brCJRU
+
 ---
 
 Fuentes:
